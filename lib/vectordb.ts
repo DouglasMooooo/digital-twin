@@ -197,7 +197,9 @@ export async function searchRelevantContext(
       filter: filter ? JSON.stringify(filter) : undefined,
     });
 
-    return results.map((result) => result.metadata as VectorMetadata);
+    return results
+      .filter((result) => result.metadata)
+      .map((result) => result.metadata as unknown as VectorMetadata);
   } catch (error) {
     console.error('Error searching vector database:', error);
     return [];
