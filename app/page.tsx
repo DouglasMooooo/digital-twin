@@ -18,6 +18,7 @@ export default function Home() {
               <a href="#experience" className="text-gray-600 hover:text-blue-600 transition-colors">Experience</a>
               <a href="#skills" className="text-gray-600 hover:text-blue-600 transition-colors">Skills</a>
               <a href="#education" className="text-gray-600 hover:text-blue-600 transition-colors">Education</a>
+              <a href="#tools" className="text-gray-600 hover:text-blue-600 transition-colors font-semibold">🛠️ Tools</a>
               <a href="#ai-chat" className="text-gray-600 hover:text-blue-600 transition-colors">AI Chat</a>
             </div>
             <div className="flex gap-4">
@@ -394,6 +395,176 @@ export default function Home() {
                   </p>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Integration Tools Section */}
+      <section id="tools" className="py-20 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h3 className="text-4xl font-bold text-gray-900 mb-4">
+              🛠️ Connect with <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">My AI Twin</span>
+            </h3>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Three powerful ways to interact with my professional profile and AI assistant
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* VS Code Extension */}
+            <div className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-8 border-t-4 border-blue-600">
+              <div className="text-5xl mb-4">💻</div>
+              <h4 className="text-2xl font-bold text-gray-900 mb-3">VS Code Extension</h4>
+              <p className="text-gray-600 mb-6 min-h-[60px]">
+                Access my professional data directly in your editor with the <code className="bg-gray-100 px-2 py-1 rounded">@douglas</code> chat participant
+              </p>
+              <div className="space-y-3 mb-6 bg-blue-50 p-4 rounded-lg">
+                <p className="text-sm font-semibold text-gray-900">Features:</p>
+                <ul className="text-sm text-gray-700 space-y-2">
+                  <li className="flex items-center gap-2">
+                    <span className="text-blue-600">✓</span> /experience - Work history
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-blue-600">✓</span> /skills - Technical stack
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-blue-600">✓</span> /projects - Portfolio
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-blue-600">✓</span> /interview - Interview prep
+                  </li>
+                </ul>
+              </div>
+              <div className="space-y-3">
+                <a 
+                  href="https://github.com/DouglasMooooo/digital-twin/raw/main/vscode-extension/douglas-digital-twin-copilot-1.0.0.vsix" 
+                  className="block w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white px-4 py-3 rounded-lg text-center font-semibold hover:from-blue-700 hover:to-blue-800 transition-all shadow-md hover:shadow-lg"
+                >
+                  📦 Download .vsix
+                </a>
+                <a 
+                  href="https://github.com/DouglasMooooo/digital-twin/tree/main/vscode-extension"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block w-full border-2 border-blue-600 text-blue-600 px-4 py-3 rounded-lg text-center font-semibold hover:bg-blue-50 transition-all"
+                >
+                  📚 Setup Guide
+                </a>
+              </div>
+              <p className="text-xs text-gray-500 mt-4 text-center">
+                For developers using VS Code
+              </p>
+            </div>
+
+            {/* ChatGPT GPT */}
+            <div className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-8 border-t-4 border-green-600">
+              <div className="text-5xl mb-4">🤖</div>
+              <h4 className="text-2xl font-bold text-gray-900 mb-3">ChatGPT GPT</h4>
+              <p className="text-gray-600 mb-6 min-h-[60px]">
+                Chat with my AI digital twin powered by RAG and OpenAI models - no installation needed
+              </p>
+              <div className="space-y-3 mb-6 bg-green-50 p-4 rounded-lg">
+                <p className="text-sm font-semibold text-gray-900">Features:</p>
+                <ul className="text-sm text-gray-700 space-y-2">
+                  <li className="flex items-center gap-2">
+                    <span className="text-green-600">✓</span> AI-powered responses
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-green-600">✓</span> Interview preparation
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-green-600">✓</span> Project deep dives
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-green-600">✓</span> Real-time feedback
+                  </li>
+                </ul>
+              </div>
+              <div className="space-y-3">
+                <a 
+                  href="https://chatgpt.com/g/g-6904ec1206488191959573c3c4822b4e-douglas-mo-ai-digital" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block w-full bg-gradient-to-r from-green-600 to-green-700 text-white px-4 py-3 rounded-lg text-center font-semibold hover:from-green-700 hover:to-green-800 transition-all shadow-md hover:shadow-lg"
+                >
+                  🚀 Open GPT
+                </a>
+                <button 
+                  onClick={() => {
+                    navigator.clipboard.writeText('https://chatgpt.com/g/g-6904ec1206488191959573c3c4822b4e-douglas-mo-ai-digital');
+                    alert('GPT link copied to clipboard!');
+                  }}
+                  className="block w-full border-2 border-green-600 text-green-600 px-4 py-3 rounded-lg text-center font-semibold hover:bg-green-50 transition-all"
+                >
+                  📋 Copy Link
+                </button>
+              </div>
+              <p className="text-xs text-gray-500 mt-4 text-center">
+                Perfect for recruiters & interviewers
+              </p>
+            </div>
+
+            {/* Local Chat */}
+            <div className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-8 border-t-4 border-purple-600">
+              <div className="text-5xl mb-4">💬</div>
+              <h4 className="text-2xl font-bold text-gray-900 mb-3">Local RAG Chat</h4>
+              <p className="text-gray-600 mb-6 min-h-[60px]">
+                Chat with RAG-powered responses without leaving this page - instant and private
+              </p>
+              <div className="space-y-3 mb-6 bg-purple-50 p-4 rounded-lg">
+                <p className="text-sm font-semibold text-gray-900">Features:</p>
+                <ul className="text-sm text-gray-700 space-y-2">
+                  <li className="flex items-center gap-2">
+                    <span className="text-purple-600">✓</span> Vector search
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-purple-600">✓</span> Quick responses
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-purple-600">✓</span> Context-aware AI
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-purple-600">✓</span> No signup needed
+                  </li>
+                </ul>
+              </div>
+              <div className="space-y-3">
+                <a 
+                  href="#ai-chat"
+                  className="block w-full bg-gradient-to-r from-purple-600 to-purple-700 text-white px-4 py-3 rounded-lg text-center font-semibold hover:from-purple-700 hover:to-purple-800 transition-all shadow-md hover:shadow-lg"
+                >
+                  💭 Start Chat
+                </a>
+                <a 
+                  href="https://github.com/DouglasMooooo/digital-twin#readme"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block w-full border-2 border-purple-600 text-purple-600 px-4 py-3 rounded-lg text-center font-semibold hover:bg-purple-50 transition-all"
+                >
+                  📖 Learn More
+                </a>
+              </div>
+              <p className="text-xs text-gray-500 mt-4 text-center">
+                Try it now - scroll down ↓
+              </p>
+            </div>
+          </div>
+
+          {/* Quick Stats */}
+          <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+            <div className="bg-white/80 backdrop-blur-sm p-6 rounded-xl shadow-md">
+              <p className="text-3xl font-bold text-blue-600 mb-2">3</p>
+              <p className="text-gray-700 font-medium">Integration Options</p>
+            </div>
+            <div className="bg-white/80 backdrop-blur-sm p-6 rounded-xl shadow-md">
+              <p className="text-3xl font-bold text-green-600 mb-2">24/7</p>
+              <p className="text-gray-700 font-medium">AI Availability</p>
+            </div>
+            <div className="bg-white/80 backdrop-blur-sm p-6 rounded-xl shadow-md">
+              <p className="text-3xl font-bold text-purple-600 mb-2">RAG</p>
+              <p className="text-gray-700 font-medium">Powered Accuracy</p>
             </div>
           </div>
         </div>
