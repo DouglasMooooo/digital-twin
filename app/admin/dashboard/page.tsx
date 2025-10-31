@@ -91,11 +91,29 @@ export default function DashboardPage() {
     );
   }
 
-  if (!analytics) {
+  if (!analytics || analytics.totalQueries === 0) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
-        <div className="text-center">
-          <p className="text-gray-600">No analytics data available</p>
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-6">
+        <div className="max-w-2xl bg-white rounded-lg shadow-lg p-8 text-center">
+          <MessageSquare className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">No Analytics Data Yet</h2>
+          <p className="text-gray-600 mb-6">
+            Start using the AI chat on the homepage to generate analytics data.
+          </p>
+          <div className="bg-blue-50 rounded-lg p-4 mb-4">
+            <p className="text-sm text-gray-700 mb-2">To generate test data:</p>
+            <ol className="text-left text-sm text-gray-600 space-y-1">
+              <li>1. Visit <a href="/" className="text-blue-600 hover:underline">the homepage</a></li>
+              <li>2. Ask the AI assistant some questions</li>
+              <li>3. Return to this dashboard to see the analytics</li>
+            </ol>
+          </div>
+          <a
+            href="/"
+            className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+          >
+            Go to Homepage
+          </a>
         </div>
       </div>
     );
