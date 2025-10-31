@@ -116,22 +116,22 @@
           "result": "Successfully migrated 18 months of historical financial data with 99.8% accuracy, achieved zero-downtime deployment, enabled real-time visibility into sales trends and product performance through Power BI integration"
         },
         {
-          "situation": "Healthcare supplement company heavily relies on 500+ active distributors for direct sales revenue (85% of total sales), but lacked systematic analysis of distributor churn and new registration trends",
-          "task": "Develop distributor lifecycle analytics to identify churn risks and optimize recruitment strategies to protect revenue streams",
-          "action": "Extracted 2 years of distributor data from HEIP system (registration dates, sales volumes, activity patterns), performed cohort analysis using Excel and Power BI, segmented distributors by performance tiers (Star/Active/At-Risk/Churned), identified churn indicators (60-day inactivity, declining order frequency), collaborated with marketing team to design targeted retention campaigns for at-risk distributors",
-          "result": "Identified 120 at-risk distributors generating $180K annual revenue, implemented early warning system reducing churn rate from 22% to 16% (27% improvement), increased new distributor 90-day retention from 45% to 62% through data-driven onboarding improvements"
+          "situation": "Healthcare supplement company heavily relies on 500+ active distributors for direct sales revenue (85% of $12M annual revenue = $10.2M), but lacked systematic analysis of distributor churn and new registration trends threatening revenue stability",
+          "task": "Develop distributor lifecycle analytics to identify churn risks early and optimize recruitment strategies to protect Kenya branch's primary revenue stream",
+          "action": "Extracted 2 years of distributor data from HEIP system (registration dates, sales volumes, activity patterns, purchase frequency), performed cohort analysis using Excel and Power BI, segmented 500+ distributors by performance tiers (Star/Active/At-Risk/Churned), identified churn indicators (60-day inactivity, declining order frequency <3 orders/month), built automated weekly dashboard tracking 15 KPIs, collaborated with marketing team to design targeted retention campaigns with personalized incentives for at-risk distributors",
+          "result": "Identified 120 at-risk distributors representing $1.8M annual revenue (15% of total), implemented early warning system reducing monthly churn rate from 22% to 16% (27% improvement), saved estimated $600K annual revenue through retention interventions, increased new distributor 90-day retention from 45% to 62%, provided data insights enabling marketing to redesign onboarding program improving first-purchase conversion by 28%"
         },
         {
-          "situation": "Marketing team proposed aggressive promotional campaigns for 3 product categories (Star Products, Traffic Drivers, Promotional Items) but lacked financial analysis on profitability impact and inventory sustainability",
-          "task": "Provide data-driven recommendation on promotion feasibility by analyzing profit margins, inventory levels, and revenue projections to prevent stockouts or margin erosion",
-          "action": "Collaborated with marketing and supply chain teams to gather pricing, cost, and inventory data, built Excel financial model analyzing break-even volumes and contribution margins for each product tier, simulated 3 promotion scenarios (10%/15%/20% discounts) with demand elasticity assumptions, assessed warehouse capacity against projected demand surge, presented findings in cross-departmental meeting with visualizations",
-          "result": "Recommended optimized promotion strategy (15% discount on Traffic Drivers, 10% on Star Products, bundle deals for Promotional Items) that increased campaign ROI from projected 8% to actual 23%, prevented $45K inventory shortage by proactively ordering high-demand SKUs, improved decision-making speed (campaign approval reduced from 2 weeks to 3 days)"
+          "situation": "Marketing team proposed aggressive promotional campaigns for 3 product categories (Star Products generating 40% of $1M monthly revenue, Traffic Drivers for customer acquisition, Promotional Items for bundling) but lacked financial analysis on profitability impact and inventory sustainability, risking margin erosion on Kenya branch's primary revenue stream",
+          "task": "Provide comprehensive financial recommendation on promotion feasibility by analyzing profit margins, inventory levels, cash flow impact, and revenue projections to prevent stockouts or negative ROI on $200K promotional budget",
+          "action": "Collaborated with marketing (4 people) and supply chain (3 people) teams to gather pricing, COGS, and inventory data across 50+ SKUs, built Excel financial model analyzing break-even volumes and contribution margins for each product tier (Star: 35% margin, Traffic: 18% margin, Promotional: 12% margin), simulated 3 promotion scenarios (10%/15%/20% discounts) with demand elasticity assumptions (+20%/+35%/+50% volume increase), assessed warehouse capacity (valued at $800K inventory) against projected 2-month demand surge, performed cash flow sensitivity analysis, presented findings in cross-departmental meeting with data visualizations showing scenario comparisons and risk mitigation strategies",
+          "result": "Recommended optimized promotion strategy (15% discount on Traffic Drivers, 10% on Star Products, 3-for-2 bundle deals on Promotional Items) that increased 2-month campaign revenue from projected $2.1M to actual $2.6M (+24% vs baseline), improved campaign ROI from projected 8% to actual 23% (187% improvement), prevented potential $120K inventory shortage by proactively ordering 8 high-demand SKUs, reduced campaign approval time from 2 weeks to 3 days enabling faster market response, generated $85K incremental profit vs standard pricing"
         },
         {
-          "situation": "Managing cash flow across 3 subsidiary companies in Kenya with complex intercompany transactions, multiple bank accounts, and varying payment cycles creating liquidity visibility challenges",
-          "task": "Establish centralized cash flow monitoring system to prevent cash shortages and optimize working capital allocation across entities",
-          "action": "Designed daily cash position dashboard in Excel tracking all bank accounts and intercompany balances, implemented weekly cash flow forecasting model (30-day rolling projection), established minimum cash balance thresholds for each entity, coordinated with AR/AP teams to align payment schedules, automated bank reconciliation process reducing manual effort by 60%",
-          "result": "Improved cash forecasting accuracy from 70% to 94%, prevented 5 potential cash shortages through proactive fund transfers, reduced idle cash by $80K through optimized deployment, enabled faster decision-making on capital allocation for promotional inventory purchases"
+          "situation": "Managing cash flow across 3 subsidiary companies in Kenya with combined $1M+ monthly revenue, complex intercompany transactions, multiple bank accounts (8 total), and varying payment cycles creating liquidity visibility challenges and risking cash shortages during high-volume promotional periods",
+          "task": "Establish real-time centralized cash flow monitoring system to prevent cash shortages, optimize working capital allocation across entities, and ensure sufficient liquidity for $200K+ monthly operational needs and promotional inventory purchases",
+          "action": "Designed daily cash position dashboard in Excel tracking all 8 bank accounts and intercompany balances across 3 entities (total $400K+ daily float), implemented weekly cash flow forecasting model with 30-day rolling projection incorporating A/R aging, A/P schedules, and promotional campaign impacts, established minimum cash balance thresholds for each entity ($50K-$100K based on monthly burn rate), coordinated with AR/AP teams (6 people) to align payment schedules optimizing Days Sales Outstanding and Days Payable Outstanding, automated bank reconciliation process through Excel VBA macros reducing manual effort by 60% (from 10 hours/week to 4 hours/week)",
+          "result": "Improved cash forecasting accuracy from 70% to 94% (measured against actual vs projected variances), prevented 5 potential cash shortages totaling $250K through proactive intercompany fund transfers, reduced idle cash by $180K through optimized deployment to promotional inventory and high-ROI opportunities, enabled same-day decision-making on capital allocation for promotional purchases (previously 3-5 days), maintained 100% on-time vendor payments preserving critical supply relationships"
         }
       ],
       "technical_skills_used": [
@@ -143,15 +143,15 @@
         "Financial reporting tools"
       ],
       "leadership_examples": [
-        "Supervised and mentored entire Kenya financial team of 8 staff members",
-        "Collaborated closely with marketing team on budgeting, forecasting, and promotional campaign analysis",
-        "Coordinated cross-functional operations across finance, marketing, and operations teams",
-        "Led monthly financial review meetings with branch management and cross-departmental stakeholders",
-        "Managed relationships with external stakeholders including tax authorities, banks, and auditors"
+        "Supervised and mentored entire Kenya financial team of 8 staff members across accounting, AR/AP, and reporting functions",
+        "Led cross-functional collaboration with marketing team (4 people) on budgeting, forecasting, and promotional campaign financial analysis for $200K+ monthly promotional budgets",
+        "Coordinated operations across finance (8), marketing (4), supply chain (3), and IT (2) teams for system implementations and process improvements",
+        "Led monthly financial review meetings with branch management presenting P&L, cash flow, and KPI analysis for $1M+ monthly revenue operations",
+        "Managed relationships with external stakeholders including Kenya Revenue Authority, 3 commercial banks, external auditors, and customs officials"
       ],
-      "budget_managed": "$2M+ annual branch revenue oversight",
+      "budget_managed": "$12M annual branch revenue oversight, $200K+ monthly promotional budget management, $400K+ daily cash float supervision",
       "team_size_managed": 8,
-      "international_experience": "Worked across USA and Kenya, managed cross-cultural teams and stakeholders"
+      "international_experience": "Worked across USA headquarters and Kenya operations, managed cross-cultural teams and stakeholders, coordinated with regional offices across 5 African countries"
     },
     {
       "company": "Zhongshan Hengrun Taxation Firm",
@@ -603,18 +603,19 @@
       "timeline": "2023-2024 (BF Suma Kenya)",
       "description": "Power BI analytics solution identifying at-risk distributors and optimizing retention strategies for healthcare supplement company with 500+ active distributors.",
       "star_achievement": {
-        "situation": "BF Suma Kenya relied on 500+ distributors for 85% of revenue but experienced 22% annual churn with no systematic early warning system, risking $400K+ annual revenue loss",
-        "task": "Develop predictive analytics dashboard to identify churn risks 60 days in advance and enable targeted retention campaigns",
-        "action": "Extracted 2 years of distributor data from HEIP system (registration, sales volumes, activity patterns), performed cohort analysis segmenting distributors by performance tiers (Star/Active/At-Risk/Churned), identified churn indicators (60-day inactivity, declining order frequency), built Power BI dashboard with automated weekly refresh, collaborated with marketing on retention campaign design",
-        "result": "Identified 120 at-risk distributors representing $180K annual revenue, reduced churn rate from 22% to 16% (27% improvement) through targeted interventions, increased new distributor 90-day retention from 45% to 62%, provided data-driven insights improving marketing ROI by 35%"
+        "situation": "BF Suma Kenya relied on 500+ distributors for 85% of $12M annual revenue ($10.2M) but experienced 22% annual churn with no systematic early warning system, risking $1.8M+ annual revenue loss and threatening business sustainability",
+        "task": "Develop predictive analytics dashboard to identify churn risks 60 days in advance and enable targeted retention campaigns to protect critical revenue stream",
+        "action": "Extracted 2 years of distributor data from HEIP system (registration, sales volumes, activity patterns, purchase frequency), performed cohort analysis segmenting 500+ distributors by performance tiers (Star: top 20%, Active: 50%, At-Risk: 20%, Churned: 10%), identified churn indicators (60-day inactivity, declining order frequency <3 orders/month, 30%+ sales volume drop), built Power BI dashboard with 15 KPIs and automated weekly refresh, collaborated with marketing (4 people) on targeted retention campaign design with personalized incentives",
+        "result": "Identified 120 at-risk distributors representing $1.8M annual revenue (15% of total), reduced monthly churn rate from 22% to 16% (27% improvement) saving estimated $600K annual revenue through targeted interventions, increased new distributor 90-day retention from 45% to 62% (37% improvement), provided data-driven insights enabling marketing to redesign onboarding program improving first-purchase conversion by 28%, dashboard adopted as standard monthly review tool for management"
       },
       "technologies": ["Power BI", "Excel", "HEIP System", "SQL"],
       "quantifiable_impact": [
         "27% churn reduction (22% → 16%)",
         "37% retention improvement (45% → 62% in 90 days)",
-        "$180K at-risk revenue identified",
-        "35% marketing ROI improvement",
-        "500+ distributors analyzed"
+        "$1.8M at-risk revenue identified (15% of total revenue)",
+        "$600K annual revenue saved through retention",
+        "28% first-purchase conversion improvement",
+        "500+ distributors analyzed across 4 performance tiers"
       ],
       "technical_highlights": [
         "Cohort analysis with lifecycle segmentation",
@@ -629,18 +630,20 @@
       "timeline": "2023-2024 (BF Suma Kenya)",
       "description": "Excel-based financial modeling system analyzing profitability, inventory sustainability, and revenue projections for multi-tier promotional campaigns.",
       "star_achievement": {
-        "situation": "Marketing team proposed aggressive promotional discounts across 3 product categories but lacked financial analysis on profit margin impact and inventory capacity, risking stockouts or margin erosion",
-        "task": "Build financial model simulating promotion scenarios to recommend optimal discount strategy maximizing ROI while preventing inventory shortages",
-        "action": "Collaborated with marketing and supply chain to gather pricing, cost, and inventory data. Built Excel model analyzing break-even volumes and contribution margins for Star Products, Traffic Drivers, and Promotional Items. Simulated 3 discount scenarios (10%/15%/20%) with demand elasticity assumptions. Assessed warehouse capacity against projected demand surge. Presented findings with data visualizations in cross-departmental meeting",
-        "result": "Recommended optimized strategy (15% discount on Traffic Drivers, 10% on Star Products, bundle deals for Promotional Items) increasing campaign ROI from projected 8% to actual 23%, prevented $45K inventory shortage through proactive ordering, reduced campaign approval time from 2 weeks to 3 days"
+        "situation": "Marketing team proposed aggressive promotional discounts across 3 product categories (Star Products: 40% of $1M monthly revenue, Traffic Drivers: customer acquisition, Promotional Items: bundling) but lacked financial analysis on profit margin impact and inventory capacity, risking stockouts or margin erosion on Kenya branch's primary revenue stream",
+        "task": "Build comprehensive financial model simulating promotion scenarios to recommend optimal discount strategy maximizing ROI while preventing inventory shortages and maintaining healthy cash flow with $200K promotional budget",
+        "action": "Collaborated with marketing (4 people) and supply chain (3 people) to gather pricing, COGS, and inventory data across 50+ SKUs. Built Excel model analyzing break-even volumes and contribution margins for each tier (Star: 35% margin, Traffic: 18% margin, Promotional: 12% margin). Simulated 3 discount scenarios (10%/15%/20%) with demand elasticity assumptions (+20%/+35%/+50% volume increase). Assessed warehouse capacity (valued at $800K inventory) against projected 2-month demand surge. Performed cash flow sensitivity analysis. Presented findings with data visualizations in cross-departmental meeting showing scenario comparisons and risk mitigation",
+        "result": "Recommended optimized strategy (15% discount on Traffic Drivers, 10% on Star Products, 3-for-2 bundle deals for Promotional Items) that increased 2-month campaign revenue from projected $2.1M to actual $2.6M (+24% vs baseline), improved campaign ROI from projected 8% to actual 23% (187% improvement), prevented potential $120K inventory shortage by proactively ordering 8 high-demand SKUs, reduced campaign approval time from 2 weeks to 3 days enabling faster market response, generated $85K incremental profit vs standard pricing, model adopted for all future promotional planning"
       },
       "technologies": ["Excel", "Power BI", "Financial Modeling", "Scenario Analysis"],
       "quantifiable_impact": [
         "187% ROI improvement (8% projected → 23% actual)",
-        "$45K inventory shortage prevented",
+        "$2.6M campaign revenue generated (+24% vs baseline)",
+        "$85K incremental profit created",
+        "$120K inventory shortage prevented",
         "86% decision speed improvement (2 weeks → 3 days)",
-        "3 product categories analyzed",
-        "Cross-departmental alignment achieved"
+        "3 product categories analyzed across 50+ SKUs",
+        "Cross-departmental alignment achieved (7 stakeholders)"
       ],
       "technical_highlights": [
         "Multi-scenario simulation (3 discount levels)",
@@ -656,18 +659,20 @@
       "timeline": "2022-2024 (BF Suma Kenya)",
       "description": "Centralized Excel-based cash monitoring system managing liquidity across 3 subsidiary companies with automated forecasting and intercompany reconciliation.",
       "star_achievement": {
-        "situation": "Managing cash flow across 3 subsidiaries with complex intercompany transactions and varying payment cycles created liquidity visibility challenges, risking cash shortages during high-volume promotional periods",
-        "task": "Establish real-time cash position monitoring system enabling proactive liquidity management and optimized working capital allocation",
-        "action": "Designed daily cash dashboard in Excel tracking all bank accounts and intercompany balances, implemented 30-day rolling cash flow forecast model, established minimum cash balance thresholds for each entity, coordinated with AR/AP teams to align payment schedules, automated bank reconciliation reducing manual effort by 60%",
-        "result": "Improved cash forecasting accuracy from 70% to 94%, prevented 5 potential cash shortages through proactive fund transfers, reduced idle cash by $80K through optimized deployment, enabled faster capital allocation decisions for promotional inventory purchases"
+        "situation": "Managing cash flow across 3 subsidiaries with combined $1M+ monthly revenue, complex intercompany transactions, multiple bank accounts (8 total), and varying payment cycles created liquidity visibility challenges, risking cash shortages during high-volume promotional periods requiring $200K+ cash reserves",
+        "task": "Establish real-time centralized cash position monitoring system enabling proactive liquidity management, optimized working capital allocation, and sufficient reserves for $200K+ monthly operational needs and promotional inventory purchases",
+        "action": "Designed daily cash dashboard in Excel tracking all 8 bank accounts and intercompany balances across 3 entities (total $400K+ daily float), implemented weekly cash flow forecasting model with 30-day rolling projection incorporating A/R aging, A/P schedules, and promotional campaign impacts, established minimum cash balance thresholds for each entity ($50K-$100K based on monthly burn rate), coordinated with AR/AP teams (6 people) to align payment schedules optimizing Days Sales Outstanding and Days Payable Outstanding, automated bank reconciliation through Excel VBA macros reducing manual effort by 60% (from 10 hours/week to 4 hours/week)",
+        "result": "Improved cash forecasting accuracy from 70% to 94% (measured against actual vs projected variances), prevented 5 potential cash shortages totaling $250K through proactive intercompany fund transfers, reduced idle cash by $180K through optimized deployment to promotional inventory and high-ROI opportunities, enabled same-day decision-making on capital allocation for promotional purchases (previously 3-5 days), maintained 100% on-time vendor payments preserving critical supply relationships, system adopted across all 3 entities as standard cash management tool"
       },
-      "technologies": ["Excel", "Financial Modeling", "Process Automation", "Bank Reconciliation"],
+      "technologies": ["Excel", "Financial Modeling", "Process Automation", "Bank Reconciliation", "VBA"],
       "quantifiable_impact": [
         "34% forecasting accuracy improvement (70% → 94%)",
-        "5 cash shortages prevented",
-        "$80K idle cash optimized",
-        "60% manual reconciliation effort reduced",
-        "3 subsidiary companies managed"
+        "5 cash shortages prevented totaling $250K",
+        "$180K idle cash optimized and redeployed",
+        "60% manual reconciliation effort reduced (10hrs → 4hrs/week)",
+        "3 subsidiary companies with 8 bank accounts managed",
+        "100% on-time vendor payment rate maintained",
+        "$400K+ daily float monitored"
       ],
       "technical_highlights": [
         "Real-time multi-entity cash position tracking",
