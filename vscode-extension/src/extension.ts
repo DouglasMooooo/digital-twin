@@ -39,91 +39,6 @@ interface DigitalTwinData {
 let mcpClient: any | undefined;
 let digitalTwinData: DigitalTwinData = {};
 
-// Default fallback data used when MCP is unavailable
-const DEFAULT_DIGITAL_TWIN_DATA: DigitalTwinData = {
-  personal: {
-    name: 'Douglas Mo',
-    title: 'AI / ML Engineer',
-    location: 'Remote',
-    email: 'douglas.mo@example.com',
-    summary: 'Experienced AI/ML engineer specializing in predictive analytics and health technology applications.'
-  },
-  experience: [
-    {
-      company: 'BF Suma Health Technology',
-      role: 'Senior Machine Learning Engineer',
-      period: '2021-2024',
-      location: 'Remote',
-      responsibilities: [
-        'Developed predictive models for patient risk assessment',
-        'Built real-time monitoring systems using streaming data',
-        'Collaborated with medical professionals to design ML solutions',
-        'Improved model accuracy by 25% through feature engineering'
-      ],
-      technologies: ['Python', 'TensorFlow', 'PyTorch', 'scikit-learn', 'Pandas', 'Docker', 'Kubernetes']
-    },
-    {
-      company: 'Tech Startup',
-      role: 'Data Scientist',
-      period: '2019-2021',
-      responsibilities: [
-        'Analyzed customer behavior data',
-        'Built recommendation systems',
-        'A/B testing and experimentation'
-      ],
-      technologies: ['Python', 'SQL', 'Tableau', 'AWS']
-    }
-  ],
-  skills: {
-    programming_languages: ['Python', 'TypeScript', 'JavaScript', 'SQL', 'R'],
-    ml_frameworks: ['TensorFlow', 'PyTorch', 'scikit-learn', 'Keras', 'XGBoost'],
-    data_tools: ['Pandas', 'NumPy', 'Matplotlib', 'Seaborn', 'Jupyter'],
-    cloud_platforms: ['AWS', 'Azure', 'GCP'],
-    devops: ['Docker', 'Kubernetes', 'Git', 'CI/CD'],
-    databases: ['PostgreSQL', 'MySQL', 'MongoDB', 'Redis']
-  },
-  projects: [
-    {
-      name: 'Patient Risk Prediction Model',
-      description: 'ML model to predict patient health risks using electronic health records',
-      technologies: ['Python', 'TensorFlow', 'scikit-learn', 'Docker'],
-      impact: 'Reduced emergency room visits by 15% through early intervention',
-      role: 'Lead ML Engineer'
-    },
-    {
-      name: 'Real-time Health Monitoring System',
-      description: 'Streaming analytics platform for continuous patient monitoring',
-      technologies: ['Python', 'Kafka', 'Spark', 'PostgreSQL'],
-      impact: 'Monitors 10,000+ patients in real-time',
-      role: 'Backend Developer & ML Engineer'
-    },
-    {
-      name: 'Recommendation Engine',
-      description: 'Personalized health product recommendation system',
-      technologies: ['Python', 'collaborative filtering', 'AWS'],
-      impact: 'Increased user engagement by 30%',
-      role: 'Data Scientist'
-    }
-  ],
-  interview_prep: {
-    elevator_pitch: 'I am an AI/ML engineer with 5+ years of experience building production ML systems in health tech. I specialize in predictive modeling, real-time analytics, and deploying scalable ML solutions. My work has directly improved patient outcomes and reduced healthcare costs.',
-    strengths: [
-      'Strong Python and ML framework expertise',
-      'Experience deploying models to production',
-      'Healthcare domain knowledge',
-      'Problem-solving and analytical thinking'
-    ],
-    star_examples: [
-      {
-        situation: 'Hospital needed to reduce emergency room overcrowding',
-        task: 'Build predictive model to identify high-risk patients',
-        action: 'Developed ML pipeline using patient EHR data, deployed to production with monitoring',
-        result: 'Reduced ER visits by 15%, saved $2M annually'
-      }
-    ]
-  }
-};
-
 /**
  * Initialize MCP client connection to digital twin server
  */
@@ -203,8 +118,6 @@ async function initializeMCPClient(context: vscode.ExtensionContext): Promise<vo
   } catch (error) {
     console.error('Failed to initialize MCP client:', error);
     vscode.window.showErrorMessage(`Douglas Digital Twin: MCP connection failed - ${error}`);
-    // Use fallback data so chat remains useful
-    digitalTwinData = DEFAULT_DIGITAL_TWIN_DATA;
   }
 }
 
@@ -213,8 +126,7 @@ async function initializeMCPClient(context: vscode.ExtensionContext): Promise<vo
  */
 async function loadDigitalTwinData(): Promise<void> {
   if (!mcpClient) {
-    console.log('MCP client not initialized; using fallback data');
-    digitalTwinData = DEFAULT_DIGITAL_TWIN_DATA;
+    console.log('MCP client not initialized');
     return;
   }
 
@@ -257,8 +169,6 @@ async function loadDigitalTwinData(): Promise<void> {
     console.log('Digital twin data loaded successfully');
   } catch (error) {
     console.error('Failed to load digital twin data:', error);
-    // If loading fails, fall back to default data
-    digitalTwinData = DEFAULT_DIGITAL_TWIN_DATA;
   }
 }
 
@@ -271,8 +181,6 @@ const chatRequestHandler: vscode.ChatRequestHandler = async (
   stream: vscode.ChatResponseStream,
   token: vscode.CancellationToken
 ): Promise<vscode.ChatResult> => {
-  
-  console.log('[Douglas Digital Twin] Chat request received:', request.prompt, 'command:', request.command);
   
   // Show thinking indicator
   stream.progress('Accessing Douglas\'s digital twin...');
@@ -299,33 +207,34 @@ const chatRequestHandler: vscode.ChatRequestHandler = async (
       relevantData = JSON.stringify(digitalTwinData, null, 2);
     }
 
-    // Craft prompt for Copilot - simplified to avoid content policy issues
-    const systemPrompt = `You are a helpful assistant. Please answer this question about Douglas Mo's professional background:
+    // Craft prompt for Copilot
+    const systemPrompt = `You are Douglas Mo's AI assistant. You have access to Douglas's complete professional profile including work experience, skills, projects, and education.
 
-${userQuery}
+Your role is to:
+1. Answer questions about Douglas's background professionally
+2. Provide specific examples from his experience using the STAR method when relevant
+3. Highlight relevant skills and projects based on the query
+4. Be concise but informative
 
-Here is Douglas's profile data:
+Douglas's Digital Twin Data:
 ${relevantData}
 
-Please provide a brief, professional response based on this data.`;
+User Question: ${userQuery}
+
+Please provide a helpful, professional response based on Douglas's actual experience and skills.`;
 
     // Select Copilot model
-    console.log('[Douglas Digital Twin] Selecting Copilot model...');
     const [model] = await vscode.lm.selectChatModels({
       vendor: 'copilot',
       family: 'gpt-4o'
     });
 
     if (!model) {
-      console.error('[Douglas Digital Twin] No Copilot model available');
       stream.markdown('❌ GitHub Copilot model not available. Please ensure you have Copilot access.');
       return { metadata: { command: request.command } };
     }
 
-    console.log('[Douglas Digital Twin] Model selected:', model.name, 'family:', model.family);
-    
     // Send request to Copilot
-    console.log('[Douglas Digital Twin] Sending request to Copilot...');
     const chatResponse = await model.sendRequest(
       [
         vscode.LanguageModelChatMessage.User(systemPrompt)
@@ -334,21 +243,19 @@ Please provide a brief, professional response based on this data.`;
       token
     );
 
-    console.log('[Douglas Digital Twin] Streaming response...');
     // Stream response
     for await (const chunk of chatResponse.text) {
       stream.markdown(chunk);
     }
 
-    console.log('[Douglas Digital Twin] Response completed');
     return { metadata: { command: request.command } };
 
   } catch (error) {
-    console.error('[Douglas Digital Twin] Chat request error:', error);
     if (error instanceof vscode.LanguageModelError) {
-      console.log('[Douglas Digital Twin] Language model error:', error.message, error.code, error.cause);
+      console.log('Language model error:', error.message, error.code);
       stream.markdown(`❌ Error: ${error.message}`);
     } else {
+      console.error('Chat request error:', error);
       stream.markdown('❌ An error occurred while processing your request.');
     }
     return { metadata: { command: request.command } };
@@ -361,14 +268,10 @@ Please provide a brief, professional response based on this data.`;
 export async function activate(context: vscode.ExtensionContext) {
   console.log('Douglas Digital Twin extension is now active!');
 
-  // Initialize with fallback data immediately
-  digitalTwinData = DEFAULT_DIGITAL_TWIN_DATA;
-  console.log('[Douglas Digital Twin] Initialized with fallback data');
-
   // Load MCP SDK
   await loadMCPSDK();
 
-  // Initialize MCP client (async, but fallback data is already set)
+  // Initialize MCP client
   initializeMCPClient(context).catch(console.error);
 
   // Register chat participant (ID must match package.json `chatParticipants[].id`)
