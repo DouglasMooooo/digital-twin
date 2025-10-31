@@ -155,7 +155,7 @@ export default function ChatInterface({ initialMessage }: ChatInterfaceProps) {
                   : 'bg-white border-2 border-gray-300'
               }`}
             >
-              <p className="text-base whitespace-pre-wrap font-bold leading-relaxed text-black">{message.content}</p>
+              <p className="text-base whitespace-pre-wrap font-extrabold leading-relaxed text-black">{message.content}</p>
               {message.interviewType && (
                 <span className="text-sm mt-2 block font-medium text-gray-700">
                   Context: {message.interviewType}
