@@ -281,13 +281,15 @@
         "Cloud vector databases (1 year) - Upstash"
       ],
       "ai_ml": [
-        "RAG System Architecture - Production implementation",
-        "Vector Embeddings - Semantic search and retrieval",
-        "LLM Integration - Groq API, OpenAI API",
-        "AI Agent Development - MCP protocol",
-        "Digital Twin Framework Design",
-        "Prompt Engineering - Optimized for business applications",
-        "Machine Learning for Business - Coursework in progress"
+        "RAG System Architecture - Production implementation with vector databases",
+        "Vector Embeddings - Semantic search and retrieval optimization",
+        "LLM Integration - Groq API, OpenAI API, Anthropic Claude API",
+        "AI-Assisted Development - Expert proficiency with Claude 3.5 Sonnet (industry-leading for code), GitHub Copilot, GPT-4",
+        "AI Agent Development - MCP protocol and multi-platform integration",
+        "Digital Twin Framework Design - Intelligent profile systems",
+        "Prompt Engineering - Optimized for business applications and code generation",
+        "Machine Learning for Business - Coursework in progress (Random Forest, KNN, model evaluation)",
+        "AI Tools Expertise: Cursor IDE, Claude Desktop, VS Code Copilot, ChatGPT"
       ],
       "data_tools": [
         "Power BI - Advanced dashboards and visualization",
@@ -296,12 +298,22 @@
         "Statistical Analysis - Business Statistics background"
       ],
       "development_tools": [
-        "VS Code Insiders - Primary IDE",
-        "GitHub Copilot - AI-assisted development",
-        "Claude Desktop - AI integration",
-        "Git - Version control",
-        "GitHub - Collaboration and CI/CD",
-        "Postman - API testing"
+        "VS Code Insiders - Primary IDE for TypeScript/Python development",
+        "Cursor - AI-first code editor with Claude integration",
+        "GitHub Copilot - AI pair programming assistant",
+        "Claude 3.5 Sonnet (via Cursor & Claude Desktop) - Industry-leading AI for code generation, debugging, and architecture design",
+        "Claude Desktop - MCP server integration and AI workflows",
+        "GPT-4 & GPT-4 Turbo - Advanced reasoning and code completion",
+        "Git - Version control and collaboration",
+        "GitHub - Repository management and CI/CD",
+        "Postman - API testing and development"
+      ],
+      "ai_coding_assistants": [
+        "Claude 3.5 Sonnet - Industry's best coding AI, exceptional for complex refactoring and system design",
+        "GitHub Copilot - Real-time code completion and suggestions",
+        "GPT-4 - Advanced problem-solving and documentation",
+        "Cursor AI - Integrated AI-first development environment",
+        "Proficiency: Expert in AI-assisted development workflow, leveraging multiple AI models for different coding tasks"
       ],
       "financial_systems": [
         "SAP - ERP testing and usage",
