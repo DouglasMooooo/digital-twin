@@ -3,6 +3,15 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   
+  // Exclude non-Next.js directories from build
+  webpack: (config, { isServer }) => {
+    config.watchOptions = {
+      ...config.watchOptions,
+      ignored: ['**/mcp-server/**', '**/vscode-extension/**', '**/node_modules/**'],
+    };
+    return config;
+  },
+  
   // Performance Optimizations
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
