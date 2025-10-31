@@ -11,6 +11,9 @@ const redis = new Redis({
   token: process.env.UPSTASH_REDIS_REST_TOKEN!,
 });
 
+// Export redis client for other modules
+export { redis };
+
 export interface ChatLog {
   id: string;
   timestamp: string;

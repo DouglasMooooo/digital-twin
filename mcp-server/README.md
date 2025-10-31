@@ -1,5 +1,7 @@
 # Douglas Mo Digital Twin MCP Server
 
+**Version 2.0 - TypeScript Edition**
+
 This MCP server provides Claude Desktop with direct access to Douglas Mo's digital twin data, enabling intelligent queries about professional experience, skills, education, and career preparation.
 
 ## 🚀 Features
@@ -32,12 +34,53 @@ cd mcp-server
 npm install
 ```
 
-### 2. Configure Claude Desktop
+### 2. Build TypeScript (Production)
+
+```bash
+npm run build
+```
+
+This compiles `index.ts` to `dist/index.js` with full type checking.
+
+### 3. Configure Claude Desktop
 
 Add to your Claude Desktop config file:
 
 **Windows:** `%APPDATA%\Claude\claude_desktop_config.json`
 **macOS:** `~/Library/Application Support/Claude/claude_desktop_config.json`
+
+#### Option A: TypeScript Development Mode (Recommended)
+
+```json
+{
+  "mcpServers": {
+    "digital-twin": {
+      "command": "npx",
+      "args": [
+        "tsx",
+        "D:\\上课\\Ai agent\\digital twin\\mcp-server\\index.ts"
+      ]
+    }
+  }
+}
+```
+
+#### Option B: Production Mode (Compiled JavaScript)
+
+```json
+{
+  "mcpServers": {
+    "digital-twin": {
+      "command": "node",
+      "args": [
+        "D:\\上课\\Ai agent\\digital twin\\mcp-server\\dist\\index.js"
+      ]
+    }
+  }
+}
+```
+
+#### Option C: Legacy JavaScript Mode
 
 ```json
 {
@@ -50,7 +93,7 @@ Add to your Claude Desktop config file:
 }
 ```
 
-### 3. Restart Claude Desktop
+### 4. Restart Claude Desktop
 
 The MCP server will be automatically loaded.
 
@@ -86,17 +129,76 @@ Read the digitaltwin://education resource
 
 ## 🛠️ Development
 
-### Test the server:
+### TypeScript Development (Hot Reload)
+
+```bash
+npm run dev
+```
+
+Uses `tsx --watch` for automatic reloading on file changes.
+
+### Type Checking
+
+```bash
+npm run typecheck
+```
+
+### Build for Production
+
+```bash
+npm run build
+```
+
+Creates compiled JavaScript in `dist/` folder with type declarations.
+
+### Run Production Build
 
 ```bash
 npm start
 ```
 
-### Watch mode (auto-reload):
+### Legacy JavaScript Mode
 
 ```bash
-npm run dev
+npm run start:js
 ```
+
+## 📂 Project Structure
+
+```
+mcp-server/
+├── index.ts              # TypeScript source (NEW - v2.0)
+├── index.js              # Legacy JavaScript (maintained for compatibility)
+├── package.json          # Updated with TypeScript scripts
+├── tsconfig.json         # TypeScript configuration
+├── dist/                 # Compiled output (after npm run build)
+│   ├── index.js
+│   ├── index.d.ts
+│   └── index.js.map
+├── README.md
+└── SETUP_CN.md
+```
+
+## 🆕 What's New in v2.0
+
+### TypeScript Migration Benefits
+
+✅ **Full Type Safety** - All MCP SDK types properly defined  
+✅ **Better IDE Support** - IntelliSense autocomplete for all tools and resources  
+✅ **Compile-Time Errors** - Catch bugs before runtime  
+✅ **Type Documentation** - Self-documenting interfaces for digital twin data  
+✅ **Maintainability** - Easier refactoring with type checking  
+
+### Type Definitions Added
+
+- `DigitalTwinData` - Main data structure interface
+- `PersonalInfo` - Personal information schema
+- `WorkExperience` - Work history with STAR achievements
+- `Education` - Academic background
+- `Skills` - Categorized skill portfolio
+- `Project` - Project metadata
+- `InterviewPrep` - Interview preparation materials
+- Tool argument interfaces for all 8 tools
 
 ## 📊 Data Source
 
@@ -104,7 +206,7 @@ The server reads from `../digitaltwin.json` which contains:
 - Personal information and contact details
 - 3 work experiences with STAR achievements
 - 2 education degrees with coursework
-- 40+ skills across 4 categories
+- 40+ skills across 8 categories
 - 5+ projects
 - Interview preparation materials
 
@@ -130,7 +232,7 @@ Returns: Array of education with degrees, institutions, coursework
 
 #### get_skills({ category?: string })
 Returns: Skills object or specific category
-Categories: programming_languages, ai_ml_skills, business_skills, financial_accounting
+Categories: programming_languages, ai_ml_skills, business_skills, financial_accounting, data_visualization, databases, cloud_platforms, tools
 
 #### get_projects()
 Returns: Array of projects with descriptions and technologies
@@ -151,6 +253,15 @@ This MCP server complements the web application:
 - **Website**: https://douglasmo.vercel.app/ (public access, AI chat)
 - **GitHub**: https://github.com/DouglasMooooo/digital-twin
 - **MCP Server**: Local Claude Desktop integration (private, direct data access)
+
+## 🧪 Testing
+
+The TypeScript version has been tested with:
+- ✅ All 8 tools functional
+- ✅ All 5 resources accessible
+- ✅ Type safety verified with `tsc --noEmit`
+- ✅ Compatible with Claude Desktop MCP integration
+- ✅ Hot reload works in development mode
 
 ## 📄 License
 
