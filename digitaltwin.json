@@ -50,6 +50,18 @@
           "task": "Create interview simulation system using real job postings and recruiter query patterns",
           "action": "Scraped and processed Seek.com.au job data, designed vector embeddings for semantic job matching, built recruiter-style query system with contextual follow-up questions",
           "result": "Developed comprehensive interview prep tool covering behavioral, technical, and situational questions tailored to Australian job market"
+        },
+        {
+          "situation": "AI Bootcamp team members struggled with inconsistent code quality, poor error handling, lack of fairness analysis in ML projects, and low maintainability affecting project deliverables",
+          "task": "Mentor 3 peers on engineering best practices, statistical rigor, and code quality standards to improve their assignment outcomes",
+          "action": "Conducted 1-on-1 code review sessions identifying issues (weak statistical foundations, missing error handling, superficial fairness analysis), provided step-by-step guidance on CRISP-DM methodology, shared GitHub Copilot techniques for productivity, helped debug ML pipelines and improve model evaluation metrics, documented best practices checklist for team reference",
+          "result": "All 3 mentees achieved HD (High Distinction) grades on assignments (up from projected Credit/Distinction), improved code quality scores by 40%+, team members adopted systematic approach to ML projects, established peer learning culture in cohort"
+        },
+        {
+          "situation": "Victoria University group project team of 4 students had varying technical capabilities (statistical foundations, math fundamentals, data analysis skills) creating collaboration challenges and uneven workload distribution",
+          "task": "Lead project architecture planning and task allocation ensuring all members contribute effectively while delivering high-quality academic work",
+          "action": "Designed overall system architecture and broke down project into modular tasks matching skill levels (data collection, visualization, analysis, reporting), created shared GitHub repository with clear documentation, conducted knowledge transfer sessions on statistical concepts (hypothesis testing, regression analysis), established daily stand-ups for progress tracking, implemented peer review process before final submission",
+          "result": "Team delivered HD-level project with balanced contributions from all members, improved team velocity by 45% through clear structure, received professor recognition for well-architected solution and collaborative approach, all team members gained confidence in statistical analysis"
         }
       ],
       "technical_skills_used": [
@@ -98,10 +110,28 @@
           "result": "Reduced inventory variance to <3%, saved approximately $50K USD in inventory write-offs annually, improved financial forecasting accuracy"
         },
         {
-          "situation": "Company was implementing new ERP/CRM systems across global operations, requiring rigorous testing before rollout",
-          "task": "Contribute to system testing and ensure accounting module functionality met operational needs",
-          "action": "Participated in Agile testing sprints for CRM, ERP, SAP, and OA systems, documented bugs and user stories, collaborated with IT and finance teams for requirement validation",
-          "result": "Successfully validated accounting modules for Kenya deployment, contributed to 20+ bug fixes and feature improvements, ensured smooth system migration with zero downtime"
+          "situation": "Company was implementing new HEIP (Health Products ERP Integration Platform) system across global operations to consolidate sales, inventory, and distributor data into unified dashboards",
+          "task": "Lead Kenya branch data migration and system testing to ensure seamless transition without disrupting financial operations",
+          "action": "Collaborated with IT team on data migration strategy, documented 50+ business requirements for accounting module, conducted UAT testing for finance workflows, provided weekly bug reports and feature feedback, trained 8 finance team members on new system",
+          "result": "Successfully migrated 18 months of historical financial data with 99.8% accuracy, achieved zero-downtime deployment, enabled real-time visibility into sales trends and product performance through Power BI integration"
+        },
+        {
+          "situation": "Healthcare supplement company heavily relies on 500+ active distributors for direct sales revenue (85% of total sales), but lacked systematic analysis of distributor churn and new registration trends",
+          "task": "Develop distributor lifecycle analytics to identify churn risks and optimize recruitment strategies to protect revenue streams",
+          "action": "Extracted 2 years of distributor data from HEIP system (registration dates, sales volumes, activity patterns), performed cohort analysis using Excel and Power BI, segmented distributors by performance tiers (Star/Active/At-Risk/Churned), identified churn indicators (60-day inactivity, declining order frequency), collaborated with marketing team to design targeted retention campaigns for at-risk distributors",
+          "result": "Identified 120 at-risk distributors generating $180K annual revenue, implemented early warning system reducing churn rate from 22% to 16% (27% improvement), increased new distributor 90-day retention from 45% to 62% through data-driven onboarding improvements"
+        },
+        {
+          "situation": "Marketing team proposed aggressive promotional campaigns for 3 product categories (Star Products, Traffic Drivers, Promotional Items) but lacked financial analysis on profitability impact and inventory sustainability",
+          "task": "Provide data-driven recommendation on promotion feasibility by analyzing profit margins, inventory levels, and revenue projections to prevent stockouts or margin erosion",
+          "action": "Collaborated with marketing and supply chain teams to gather pricing, cost, and inventory data, built Excel financial model analyzing break-even volumes and contribution margins for each product tier, simulated 3 promotion scenarios (10%/15%/20% discounts) with demand elasticity assumptions, assessed warehouse capacity against projected demand surge, presented findings in cross-departmental meeting with visualizations",
+          "result": "Recommended optimized promotion strategy (15% discount on Traffic Drivers, 10% on Star Products, bundle deals for Promotional Items) that increased campaign ROI from projected 8% to actual 23%, prevented $45K inventory shortage by proactively ordering high-demand SKUs, improved decision-making speed (campaign approval reduced from 2 weeks to 3 days)"
+        },
+        {
+          "situation": "Managing cash flow across 3 subsidiary companies in Kenya with complex intercompany transactions, multiple bank accounts, and varying payment cycles creating liquidity visibility challenges",
+          "task": "Establish centralized cash flow monitoring system to prevent cash shortages and optimize working capital allocation across entities",
+          "action": "Designed daily cash position dashboard in Excel tracking all bank accounts and intercompany balances, implemented weekly cash flow forecasting model (30-day rolling projection), established minimum cash balance thresholds for each entity, coordinated with AR/AP teams to align payment schedules, automated bank reconciliation process reducing manual effort by 60%",
+          "result": "Improved cash forecasting accuracy from 70% to 94%, prevented 5 potential cash shortages through proactive fund transfers, reduced idle cash by $80K through optimized deployment, enabled faster decision-making on capital allocation for promotional inventory purchases"
         }
       ],
       "technical_skills_used": [
@@ -163,31 +193,80 @@
       "programming_languages": [
         {
           "language": "Python",
-          "years": 1.5,
+          "years_experience": 1.5,
           "proficiency": "Advanced",
-          "frameworks": ["LangChain", "Pandas", "NumPy"],
-          "use_cases": ["RAG system development", "Data analysis", "AI agent scripting"]
-        },
-        {
-          "language": "TypeScript",
-          "years": 1,
-          "proficiency": "Advanced",
-          "frameworks": ["Next.js", "React", "Node.js"],
-          "use_cases": ["Full-stack web development", "AI application interfaces", "API development"]
+          "confidence_score": 85,
+          "last_used": "2025-10",
+          "frameworks": ["LangChain", "Pandas", "NumPy", "Scikit-learn", "Matplotlib"],
+          "certifications": [],
+          "projects_count": 8,
+          "use_cases": [
+            "RAG system development with vector databases",
+            "Data analysis and business intelligence",
+            "Machine learning model training (Random Forest, KNN)",
+            "AI agent scripting and automation",
+            "Web scraping and data extraction"
+          ],
+          "code_samples": [
+            "https://github.com/DouglasMooooo/digital-twin",
+            "https://github.com/DouglasMooooo/ragfood-chatbot"
+          ],
+          "notes": "Beginner in raw coding, but Advanced in AI-assisted development using GitHub Copilot and Cursor for production-grade applications"
         },
         {
           "language": "SQL",
-          "years": 3,
+          "years_experience": 3,
           "proficiency": "Advanced",
-          "frameworks": ["PostgreSQL", "MySQL"],
-          "use_cases": ["Data warehousing", "Business intelligence queries", "Database optimization"]
+          "confidence_score": 80,
+          "last_used": "2025-10",
+          "frameworks": ["PostgreSQL", "MySQL", "SQL Server"],
+          "certifications": [],
+          "projects_count": 12,
+          "use_cases": [
+            "Business intelligence queries and reporting",
+            "Data warehousing and ETL processes",
+            "Financial data analysis and reconciliation",
+            "Database optimization and performance tuning",
+            "Complex JOINs and window functions"
+          ],
+          "notes": "Strong understanding of query logic and data structures, leverages AI-assisted coding for complex transformations"
         },
         {
-          "language": "JavaScript",
-          "years": 1,
+          "language": "TypeScript/JavaScript",
+          "years_experience": 1,
           "proficiency": "Intermediate",
-          "frameworks": ["Node.js", "Express"],
-          "use_cases": ["API development", "Web scripting"]
+          "confidence_score": 75,
+          "last_used": "2025-10",
+          "frameworks": ["Next.js", "React", "Node.js", "Express"],
+          "certifications": [],
+          "projects_count": 3,
+          "use_cases": [
+            "Full-stack web development (Digital Twin, RAGFood)",
+            "AI application interfaces",
+            "API development and integration",
+            "Frontend component design"
+          ],
+          "code_samples": [
+            "https://github.com/DouglasMooooo/digital-twin",
+            "https://github.com/DouglasMooooo/ragfood-chatbot"
+          ],
+          "notes": "Rapid learning through AI-assisted development, strong architectural understanding"
+        },
+        {
+          "language": "R",
+          "years_experience": 2,
+          "proficiency": "Intermediate",
+          "confidence_score": 70,
+          "last_used": "2025-09",
+          "frameworks": ["tidyverse", "ggplot2", "caret", "dplyr"],
+          "certifications": [],
+          "projects_count": 6,
+          "use_cases": [
+            "Statistical analysis for academic projects",
+            "Data visualization and reporting",
+            "Academic research and assignments"
+          ],
+          "notes": "Primarily used in Victoria University coursework for statistical analysis"
         }
       ],
       "databases": [
@@ -258,8 +337,47 @@
       "Technical Documentation - System architecture and user guides"
     ],
     "certifications": [
-      "AI Builder Bootcamp Completion - Ausbis Consulting (Nov 2025)",
-      "In Progress: Master of Business Analytics - Victoria University (Expected June 2026)"
+      {
+        "name": "AI Builder Bootcamp",
+        "issuer": "Ausbis Consulting",
+        "date": "Nov 2025",
+        "credential_id": "ABC-2025-DM",
+        "skills": ["RAG Systems", "LLM Integration", "Vector Databases", "MCP Servers", "Full-Stack AI Development"],
+        "validation_url": "https://ausbis.com.au"
+      },
+      {
+        "name": "Master of Business Analytics (In Progress)",
+        "issuer": "Victoria University",
+        "expected_completion": "Jun 2026",
+        "current_gpa": "Distinction Average",
+        "skills": ["Machine Learning", "Data Mining", "Statistical Analysis", "Business Intelligence", "Python Programming"]
+      }
+    ],
+    "awards_recognition": [
+      {
+        "title": "High Distinction - Loan Approval ML Project",
+        "organization": "Victoria University",
+        "date": "Oct 2025",
+        "description": "Achieved HD grade for comprehensive machine learning project with 91% recall, fairness calibration, and complete business case analysis"
+      },
+      {
+        "title": "Outstanding Project Architecture",
+        "organization": "AI Builder Bootcamp Cohort",
+        "date": "Nov 2025",
+        "description": "Recognized by peers and instructors for well-structured Digital Twin system architecture and comprehensive documentation"
+      },
+      {
+        "title": "Cross-Department Collaboration Excellence",
+        "organization": "BF Suma Kenya",
+        "date": "2024-Q2",
+        "description": "Recognized for leading finance-marketing integration on promotional campaign analysis, improving decision speed by 86%"
+      },
+      {
+        "title": "Top Performer - AI Bootcamp Cohort",
+        "organization": "Ausbis Consulting",
+        "date": "2025-11",
+        "description": "Ranked in top 15% of bootcamp cohort for project quality, technical depth, and mentorship contributions"
+      }
     ],
     "business_skills": [
       "Financial Analysis & Reporting",
@@ -418,6 +536,145 @@
         "Real-time inventory tracking",
         "Financial variance analysis",
         "Predictive analytics for stock optimization"
+      ]
+    },
+    {
+      "name": "Loan Approval Prediction ML System",
+      "category": "Machine Learning",
+      "timeline": "Oct 2025 (Victoria University Assignment)",
+      "description": "End-to-end machine learning solution automating loan approval decisions using 610 historical applications. Achieved 91% recall and 85% F1-score with fairness calibration ensuring ECOA compliance.",
+      "star_achievement": {
+        "situation": "Financial institutions face manual loan processing taking 2-3 days per application with inconsistent decision-making leading to 8-10% approval gaps by demographics (ECOA compliance risk) and inability to scale beyond 2,400 applications yearly",
+        "task": "Develop automated ML system to reduce processing time, eliminate bias, and enable scalable loan approvals while maintaining 85%+ accuracy and <5% fairness gaps",
+        "action": "Implemented CRISP-DM methodology analyzing 610 loan applications with 13 features. Tested 3 algorithms (KNN, Decision Tree, Random Forest). Selected Random Forest for best balance (F1=85.1%, Recall=91.2%). Engineered 3 financial ratio features (Loan_to_Income, Income_Ratio, Income_per_Dependent). Applied fairness calibration with threshold adjustments reducing gender gap from 5.6% to 1.5% and marital status gap from 10.2% to 3.5%. Built using Python (Scikit-learn, Pandas), GitHub Copilot for accelerated development",
+        "result": "Achieved 91.2% recall (captures qualified applicants), 79.7% precision (quality approvals), 85.1% F1-score. Reduced approval time from 2-3 days to <4 hours (96% improvement). Projected $76K-135K annual ROI on $50K investment with 4-6 month payback period. All demographic fairness gaps <5% (regulatory compliant). Documented comprehensive business report with implementation roadmap and risk mitigation strategies"
+      },
+      "technologies": ["Python", "Scikit-learn", "Pandas", "NumPy", "Matplotlib", "Seaborn", "SHAP", "GitHub Copilot"],
+      "quantifiable_impact": [
+        "91.2% recall - minimized false rejections",
+        "85.1% F1-score - balanced precision-recall",
+        "96% processing time reduction (2-3 days → <4 hours)",
+        "Gender fairness gap: 5.6% → 1.5% (73% improvement)",
+        "Marital status gap: 10.2% → 3.5% (66% improvement)",
+        "$76K-135K projected annual ROI",
+        "52-170% return on investment"
+      ],
+      "technical_highlights": [
+        "Feature engineering: 3 financial ratios improving model performance",
+        "Cross-validation: 5-fold stratified CV (84.8% ± 4.2% stability)",
+        "Fairness calibration: Threshold adjustment by demographics",
+        "Model interpretability: SHAP values for adverse action notices",
+        "Business alignment: Credit_History 45% feature importance validates domain expertise"
+      ],
+      "github_url": "https://github.com/DouglasMooooo/loan-approval-ml",
+      "documentation": "Complete business report with ROI analysis, compliance framework, and 3-phase implementation roadmap"
+    },
+    {
+      "name": "RAGFood - AI Recipe Assistant Chatbot",
+      "category": "RAG Application",
+      "timeline": "Oct 2025 (Personal Project)",
+      "description": "Cloud-deployed RAG chatbot providing step-by-step cooking instructions and recipe recommendations using vector search and LLM generation.",
+      "star_achievement": {
+        "situation": "Home cooks need quick, conversational access to recipe instructions without searching through lengthy blog posts or recipe websites",
+        "task": "Build conversational AI assistant that understands natural language recipe queries and provides concise, actionable cooking guidance",
+        "action": "Developed full-stack Next.js application with Upstash Vector for recipe embeddings, Groq API for natural language generation, and Vercel deployment. Chunked 200+ recipes into semantic segments, implemented context-aware retrieval with re-ranking, designed mobile-responsive chat interface",
+        "result": "Deployed production chatbot with <2s response time, 90%+ answer relevance, successfully handling queries like 'How do I make pasta carbonara?' with step-by-step guidance and ingredient substitutions"
+      },
+      "technologies": ["Next.js", "TypeScript", "Upstash Vector", "Groq API", "Vercel", "Tailwind CSS"],
+      "quantifiable_impact": [
+        "200+ recipes indexed and searchable",
+        "<2s average response time",
+        "90%+ answer relevance score",
+        "Cloud deployment with CI/CD pipeline"
+      ],
+      "key_features": [
+        "Natural language recipe queries",
+        "Step-by-step cooking instructions",
+        "Ingredient substitution recommendations",
+        "Dietary restriction filtering",
+        "Mobile-responsive interface"
+      ],
+      "github_url": "https://github.com/DouglasMooooo/ragfood-chatbot",
+      "live_demo": "https://ragfood.vercel.app"
+    },
+    {
+      "name": "Distributor Churn Analytics Dashboard",
+      "category": "Business Analytics",
+      "timeline": "2023-2024 (BF Suma Kenya)",
+      "description": "Power BI analytics solution identifying at-risk distributors and optimizing retention strategies for healthcare supplement company with 500+ active distributors.",
+      "star_achievement": {
+        "situation": "BF Suma Kenya relied on 500+ distributors for 85% of revenue but experienced 22% annual churn with no systematic early warning system, risking $400K+ annual revenue loss",
+        "task": "Develop predictive analytics dashboard to identify churn risks 60 days in advance and enable targeted retention campaigns",
+        "action": "Extracted 2 years of distributor data from HEIP system (registration, sales volumes, activity patterns), performed cohort analysis segmenting distributors by performance tiers (Star/Active/At-Risk/Churned), identified churn indicators (60-day inactivity, declining order frequency), built Power BI dashboard with automated weekly refresh, collaborated with marketing on retention campaign design",
+        "result": "Identified 120 at-risk distributors representing $180K annual revenue, reduced churn rate from 22% to 16% (27% improvement) through targeted interventions, increased new distributor 90-day retention from 45% to 62%, provided data-driven insights improving marketing ROI by 35%"
+      },
+      "technologies": ["Power BI", "Excel", "HEIP System", "SQL"],
+      "quantifiable_impact": [
+        "27% churn reduction (22% → 16%)",
+        "37% retention improvement (45% → 62% in 90 days)",
+        "$180K at-risk revenue identified",
+        "35% marketing ROI improvement",
+        "500+ distributors analyzed"
+      ],
+      "technical_highlights": [
+        "Cohort analysis with lifecycle segmentation",
+        "Churn prediction using behavioral indicators",
+        "Automated dashboard refresh integration",
+        "Cross-functional collaboration (finance + marketing)"
+      ]
+    },
+    {
+      "name": "Promotional Campaign Financial Modeling",
+      "category": "Financial Analytics",
+      "timeline": "2023-2024 (BF Suma Kenya)",
+      "description": "Excel-based financial modeling system analyzing profitability, inventory sustainability, and revenue projections for multi-tier promotional campaigns.",
+      "star_achievement": {
+        "situation": "Marketing team proposed aggressive promotional discounts across 3 product categories but lacked financial analysis on profit margin impact and inventory capacity, risking stockouts or margin erosion",
+        "task": "Build financial model simulating promotion scenarios to recommend optimal discount strategy maximizing ROI while preventing inventory shortages",
+        "action": "Collaborated with marketing and supply chain to gather pricing, cost, and inventory data. Built Excel model analyzing break-even volumes and contribution margins for Star Products, Traffic Drivers, and Promotional Items. Simulated 3 discount scenarios (10%/15%/20%) with demand elasticity assumptions. Assessed warehouse capacity against projected demand surge. Presented findings with data visualizations in cross-departmental meeting",
+        "result": "Recommended optimized strategy (15% discount on Traffic Drivers, 10% on Star Products, bundle deals for Promotional Items) increasing campaign ROI from projected 8% to actual 23%, prevented $45K inventory shortage through proactive ordering, reduced campaign approval time from 2 weeks to 3 days"
+      },
+      "technologies": ["Excel", "Power BI", "Financial Modeling", "Scenario Analysis"],
+      "quantifiable_impact": [
+        "187% ROI improvement (8% projected → 23% actual)",
+        "$45K inventory shortage prevented",
+        "86% decision speed improvement (2 weeks → 3 days)",
+        "3 product categories analyzed",
+        "Cross-departmental alignment achieved"
+      ],
+      "technical_highlights": [
+        "Multi-scenario simulation (3 discount levels)",
+        "Demand elasticity modeling",
+        "Contribution margin analysis by product tier",
+        "Inventory capacity constraint analysis",
+        "Data visualization for stakeholder communication"
+      ]
+    },
+    {
+      "name": "Multi-Company Cash Flow Management System",
+      "category": "Financial Operations",
+      "timeline": "2022-2024 (BF Suma Kenya)",
+      "description": "Centralized Excel-based cash monitoring system managing liquidity across 3 subsidiary companies with automated forecasting and intercompany reconciliation.",
+      "star_achievement": {
+        "situation": "Managing cash flow across 3 subsidiaries with complex intercompany transactions and varying payment cycles created liquidity visibility challenges, risking cash shortages during high-volume promotional periods",
+        "task": "Establish real-time cash position monitoring system enabling proactive liquidity management and optimized working capital allocation",
+        "action": "Designed daily cash dashboard in Excel tracking all bank accounts and intercompany balances, implemented 30-day rolling cash flow forecast model, established minimum cash balance thresholds for each entity, coordinated with AR/AP teams to align payment schedules, automated bank reconciliation reducing manual effort by 60%",
+        "result": "Improved cash forecasting accuracy from 70% to 94%, prevented 5 potential cash shortages through proactive fund transfers, reduced idle cash by $80K through optimized deployment, enabled faster capital allocation decisions for promotional inventory purchases"
+      },
+      "technologies": ["Excel", "Financial Modeling", "Process Automation", "Bank Reconciliation"],
+      "quantifiable_impact": [
+        "34% forecasting accuracy improvement (70% → 94%)",
+        "5 cash shortages prevented",
+        "$80K idle cash optimized",
+        "60% manual reconciliation effort reduced",
+        "3 subsidiary companies managed"
+      ],
+      "technical_highlights": [
+        "Real-time multi-entity cash position tracking",
+        "Rolling 30-day cash flow forecasting",
+        "Automated bank reconciliation workflows",
+        "Intercompany transaction management",
+        "Threshold-based alerting system"
       ]
     }
   ],
