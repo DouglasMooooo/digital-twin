@@ -18,7 +18,9 @@
     "mcp",
     "ai-assistant"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "onChatParticipant:douglas-digital-twin"
+  ],
   "main": "./out/extension.js",
   "contributes": {
     "chatParticipants": [
