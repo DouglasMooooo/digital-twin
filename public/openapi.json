@@ -1,0 +1,413 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Douglas Mo Digital Twin API",
+    "description": "Query Douglas Mo's professional background, skills, projects, and experience through his AI-powered digital twin. This API provides access to comprehensive professional information including work history, technical skills, project portfolio, and interview preparation materials.",
+    "version": "2.0.0",
+    "contact": {
+      "name": "Douglas Mo",
+      "url": "https://douglasmo.vercel.app"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://douglasmo.vercel.app",
+      "description": "Production API (Vercel deployment)"
+    }
+  ],
+  "paths": {
+    "/api/chat": {
+      "post": {
+        "operationId": "queryDigitalTwin",
+        "summary": "Chat with Douglas Mo's digital twin",
+        "description": "Send a natural language question to Douglas's AI assistant. It will provide responses based on his actual professional background, using RAG (Retrieval-Augmented Generation) with vector search over his profile data.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["message"],
+                "properties": {
+                  "message": {
+                    "type": "string",
+                    "description": "Your question about Douglas's experience, skills, projects, or background. Examples: 'What is your Python experience?', 'Tell me about your machine learning projects', 'What are your key achievements?'",
+                    "minLength": 1,
+                    "maxLength": 1000
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response with AI-generated answer based on Douglas's profile",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "answer": {
+                      "type": "string",
+                      "description": "AI-generated response based on Douglas's actual professional data"
+                    },
+                    "sources": {
+                      "type": "array",
+                      "description": "Relevant profile sections used to generate the answer",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - Invalid or missing message"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/api/quality-improvement": {
+      "get": {
+        "operationId": "getQualityAnalysis",
+        "summary": "Get quality improvement analysis (Admin only)",
+        "description": "Retrieve feedback analysis and quality improvement recommendations. Returns summary of low-scoring queries, identified data gaps, and suggestions for improving the digital twin.",
+        "parameters": [
+          {
+            "name": "minRating",
+            "in": "query",
+            "description": "Minimum rating threshold (1-5). Queries below this rating are analyzed for improvements.",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 5,
+              "default": 3
+            }
+          },
+          {
+            "name": "format",
+            "in": "query",
+            "description": "Response format: 'summary' for quick overview, 'json' for full report",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": ["summary", "json"],
+              "default": "summary"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Quality analysis report",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "summary": {
+                      "type": "object",
+                      "description": "Quick summary of quality metrics",
+                      "properties": {
+                        "totalFeedback": {
+                          "type": "integer"
+                        },
+                        "lowScoringQueries": {
+                          "type": "integer"
+                        },
+                        "averageRating": {
+                          "type": "string"
+                        },
+                        "averageAccuracy": {
+                          "type": "string"
+                        },
+                        "totalGaps": {
+                          "type": "integer"
+                        },
+                        "highPriorityGaps": {
+                          "type": "integer"
+                        },
+                        "topGaps": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "topic": {
+                                "type": "string"
+                              },
+                              "priority": {
+                                "type": "string",
+                                "enum": ["HIGH", "MEDIUM", "LOW"]
+                              },
+                              "frequency": {
+                                "type": "integer"
+                              }
+                            }
+                          }
+                        },
+                        "topRecommendations": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/feedback": {
+      "get": {
+        "operationId": "getFeedbackList",
+        "summary": "Get user feedback history",
+        "description": "Retrieve list of user feedback with ratings and comments. Useful for understanding how well the digital twin is performing.",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Maximum number of feedback entries to return",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 50
+            }
+          },
+          {
+            "name": "minRating",
+            "in": "query",
+            "description": "Filter by minimum rating (1-5 stars)",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 5,
+              "default": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of feedback entries with statistics",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "feedbacks": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "questionId": {
+                            "type": "string"
+                          },
+                          "question": {
+                            "type": "string"
+                          },
+                          "rating": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 5
+                          },
+                          "comment": {
+                            "type": "string"
+                          },
+                          "category": {
+                            "type": "string"
+                          },
+                          "timestamp": {
+                            "type": "string",
+                            "format": "date-time"
+                          }
+                        }
+                      }
+                    },
+                    "stats": {
+                      "type": "object",
+                      "properties": {
+                        "totalFeedback": {
+                          "type": "integer"
+                        },
+                        "averageRating": {
+                          "type": "string"
+                        },
+                        "helpfulRate": {
+                          "type": "string"
+                        },
+                        "ratingDistribution": {
+                          "type": "object",
+                          "properties": {
+                            "5": {
+                              "type": "integer"
+                            },
+                            "4": {
+                              "type": "integer"
+                            },
+                            "3": {
+                              "type": "integer"
+                            },
+                            "2": {
+                              "type": "integer"
+                            },
+                            "1": {
+                              "type": "integer"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "total": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "submitFeedback",
+        "summary": "Submit feedback on a response",
+        "description": "Rate and provide feedback on the digital twin's response quality. Helps improve the system over time.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["questionId", "question", "answer", "rating"],
+                "properties": {
+                  "questionId": {
+                    "type": "string",
+                    "description": "Unique identifier for this question"
+                  },
+                  "question": {
+                    "type": "string",
+                    "description": "The question that was asked"
+                  },
+                  "answer": {
+                    "type": "string",
+                    "description": "The answer that was provided"
+                  },
+                  "rating": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 5,
+                    "description": "Rating from 1 (poor) to 5 (excellent)"
+                  },
+                  "comment": {
+                    "type": "string",
+                    "description": "Optional feedback comment"
+                  },
+                  "category": {
+                    "type": "string",
+                    "description": "Category of the question (technical, leadership, career, etc.)"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Feedback submitted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "feedbackId": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request - missing required fields or invalid rating"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ChatRequest": {
+        "type": "object",
+        "required": ["message"],
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Natural language question about Douglas's professional background"
+          }
+        }
+      },
+      "ChatResponse": {
+        "type": "object",
+        "properties": {
+          "answer": {
+            "type": "string",
+            "description": "AI-generated answer based on Douglas's profile data"
+          },
+          "sources": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Profile sections used to generate the answer"
+          }
+        }
+      },
+      "FeedbackRequest": {
+        "type": "object",
+        "required": ["questionId", "question", "answer", "rating"],
+        "properties": {
+          "questionId": {
+            "type": "string"
+          },
+          "question": {
+            "type": "string"
+          },
+          "answer": {
+            "type": "string"
+          },
+          "rating": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5
+          },
+          "comment": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
