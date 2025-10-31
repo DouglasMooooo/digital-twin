@@ -13,10 +13,19 @@
  */
 
 import * as vscode from 'vscode';
-import { Client } from '@modelcontextprotocol/sdk/client/index.js';
-import { StdioClientTransport } from '@modelcontextprotocol/sdk/client/stdio.js';
 import { spawn } from 'child_process';
 import * as path from 'path';
+
+// Dynamic import for MCP SDK (ES modules)
+let Client: any;
+let StdioClientTransport: any;
+
+async function loadMCPSDK() {
+  const sdk = await import('@modelcontextprotocol/sdk/client/index.js');
+  const stdio = await import('@modelcontextprotocol/sdk/client/stdio.js');
+  Client = sdk.Client;
+  StdioClientTransport = stdio.StdioClientTransport;
+}
 
 interface DigitalTwinData {
   personal?: unknown;
@@ -27,7 +36,7 @@ interface DigitalTwinData {
   interview_prep?: unknown;
 }
 
-let mcpClient: Client | undefined;
+let mcpClient: any | undefined;
 let digitalTwinData: DigitalTwinData = {};
 
 /**
@@ -35,6 +44,8 @@ let digitalTwinData: DigitalTwinData = {};
  */
 async function initializeMCPClient(context: vscode.ExtensionContext): Promise<void> {
   try {
+    // Load MCP SDK first
+    await loadMCPSDK();
     // Path to MCP server (adjust based on workspace)
     const workspaceFolder = vscode.workspace.workspaceFolders?.[0];
     if (!workspaceFolder) {
@@ -58,8 +69,8 @@ async function initializeMCPClient(context: vscode.ExtensionContext): Promise<vo
     });
 
     const transport = new StdioClientTransport({
-      reader: serverProcess.stdout,
-      writer: serverProcess.stdin
+      command: 'npx',
+      args: ['tsx', mcpServerPath]
     });
 
     // Initialize MCP client
@@ -122,11 +133,11 @@ async function loadDigitalTwinData(): Promise<void> {
 
     // Parse responses
     digitalTwinData = {
-      personal: personalInfo.content[0]?.text ? JSON.parse(personalInfo.content[0].text) : undefined,
-      experience: experience.content[0]?.text ? JSON.parse(experience.content[0].text) : undefined,
-      skills: skills.content[0]?.text ? JSON.parse(skills.content[0].text) : undefined,
-      projects: projects.content[0]?.text ? JSON.parse(projects.content[0].text) : undefined,
-      interview_prep: interviewPrep.content[0]?.text ? JSON.parse(interviewPrep.content[0].text) : undefined,
+      personal: (personalInfo.content as any)?.[0]?.text ? JSON.parse((personalInfo.content as any)[0].text) : undefined,
+      experience: (experience.content as any)?.[0]?.text ? JSON.parse((experience.content as any)[0].text) : undefined,
+      skills: (skills.content as any)?.[0]?.text ? JSON.parse((skills.content as any)[0].text) : undefined,
+      projects: (projects.content as any)?.[0]?.text ? JSON.parse((projects.content as any)[0].text) : undefined,
+      interview_prep: (interviewPrep.content as any)?.[0]?.text ? JSON.parse((interviewPrep.content as any)[0].text) : undefined,
     };
 
     console.log('Digital twin data loaded successfully');
@@ -198,7 +209,7 @@ Please provide a helpful, professional response based on Douglas's actual experi
     }
 
     // Send request to Copilot
-    const chatRequest = model.sendRequest(
+    const chatResponse = await model.sendRequest(
       [
         vscode.LanguageModelChatMessage.User(systemPrompt)
       ],
@@ -207,7 +218,7 @@ Please provide a helpful, professional response based on Douglas's actual experi
     );
 
     // Stream response
-    for await (const chunk of chatRequest.text) {
+    for await (const chunk of chatResponse.text) {
       stream.markdown(chunk);
     }
 
@@ -228,8 +239,11 @@ Please provide a helpful, professional response based on Douglas's actual experi
 /**
  * Extension activation
  */
-export function activate(context: vscode.ExtensionContext) {
+export async function activate(context: vscode.ExtensionContext) {
   console.log('Douglas Digital Twin extension is now active!');
+
+  // Load MCP SDK
+  await loadMCPSDK();
 
   // Initialize MCP client
   initializeMCPClient(context).catch(console.error);
