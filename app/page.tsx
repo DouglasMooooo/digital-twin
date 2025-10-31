@@ -1,4 +1,5 @@
 import ChatInterface from '@/components/ChatInterface';
+import CopyLinkButton from '@/components/CopyLinkButton';
 import { Github, Linkedin, Mail, Phone, MapPin, Briefcase, GraduationCap, Code, Award, Calendar, Building2, Sparkles } from 'lucide-react';
 import digitalTwinData from '@/digitaltwin.json';
 
@@ -491,15 +492,12 @@ export default function Home() {
                 >
                   🚀 Open GPT
                 </a>
-                <button 
-                  onClick={() => {
-                    navigator.clipboard.writeText('https://chatgpt.com/g/g-6904ec1206488191959573c3c4822b4e-douglas-mo-ai-digital');
-                    alert('GPT link copied to clipboard!');
-                  }}
+                <CopyLinkButton
+                  url="https://chatgpt.com/g/g-6904ec1206488191959573c3c4822b4e-douglas-mo-ai-digital"
                   className="block w-full border-2 border-green-600 text-green-600 px-4 py-3 rounded-lg text-center font-semibold hover:bg-green-50 transition-all"
                 >
                   📋 Copy Link
-                </button>
+                </CopyLinkButton>
               </div>
               <p className="text-xs text-gray-500 mt-4 text-center">
                 Perfect for recruiters & interviewers
