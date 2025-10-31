@@ -222,7 +222,7 @@ export default function Home() {
                       <span className="font-bold text-gray-900">{lang.language}</span>
                       <span className="text-sm font-semibold text-blue-600">{lang.proficiency}</span>
                     </div>
-                    <div className="text-sm text-gray-600 mb-2">{lang.years} years experience</div>
+                    <div className="text-sm text-gray-600 mb-2">{lang.years_experience} years experience</div>
                     <div className="flex flex-wrap gap-2">
                       {lang.frameworks.map((fw, idx) => (
                         <span key={idx} className="px-2 py-1 bg-blue-100 text-blue-700 rounded text-xs">
