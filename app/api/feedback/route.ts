@@ -150,22 +150,38 @@ async function updateFeedbackStats(rating: number, helpful: boolean) {
 async function getFeedbackStats() {
   try {
     const statsKey = 'digital_twin:feedback_stats';
-    const stats = await redis.hgetall(statsKey);
+    const stats = await redis.hgetall(statsKey) as Record<string, any>;
     
-    const totalCount = parseInt(stats.total_count || '0');
-    const ratingSum = parseInt(stats.rating_sum || '0');
-    const helpfulCount = parseInt(stats.helpful_count || '0');
+    // Handle null case
+    if (!stats || Object.keys(stats).length === 0) {
+      return {
+        totalFeedback: 0,
+        averageRating: '0',
+        helpfulPercentage: '0',
+        ratingDistribution: {
+          '1': 0,
+          '2': 0,
+          '3': 0,
+          '4': 0,
+          '5': 0
+        }
+      };
+    }
+    
+    const totalCount = parseInt(String(stats.total_count || '0'));
+    const ratingSum = parseInt(String(stats.rating_sum || '0'));
+    const helpfulCount = parseInt(String(stats.helpful_count || '0'));
     
     return {
       totalFeedback: totalCount,
       averageRating: totalCount > 0 ? (ratingSum / totalCount).toFixed(2) : '0',
       helpfulRate: totalCount > 0 ? ((helpfulCount / totalCount) * 100).toFixed(1) : '0',
       ratingDistribution: {
-        5: parseInt(stats.rating_5_count || '0'),
-        4: parseInt(stats.rating_4_count || '0'),
-        3: parseInt(stats.rating_3_count || '0'),
-        2: parseInt(stats.rating_2_count || '0'),
-        1: parseInt(stats.rating_1_count || '0'),
+        5: parseInt(String(stats.rating_5_count || '0')),
+        4: parseInt(String(stats.rating_4_count || '0')),
+        3: parseInt(String(stats.rating_3_count || '0')),
+        2: parseInt(String(stats.rating_2_count || '0')),
+        1: parseInt(String(stats.rating_1_count || '0')),
       }
     };
     
