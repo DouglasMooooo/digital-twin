@@ -71,7 +71,7 @@ export function generateChunks(): VectorMetadata[] {
     chunks.push({
       id: `skill-lang-${chunkId++}`,
       type: 'skill',
-      content: `Programming Language: ${lang.language} with ${lang.years} years experience. Proficiency: ${lang.proficiency}. Frameworks: ${lang.frameworks.join(', ')}. Use cases: ${lang.use_cases.join(', ')}.`,
+      content: `Programming Language: ${lang.language} with ${lang.years_experience} years experience. Proficiency: ${lang.proficiency}. Frameworks: ${lang.frameworks.join(', ')}. Use cases: ${lang.use_cases.join(', ')}.`,
       source: `Technical Skills - ${lang.language}`,
       category: 'programming',
     });
