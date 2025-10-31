@@ -149,15 +149,15 @@ export default function ChatInterface({ initialMessage }: ChatInterfaceProps) {
               </div>
             )}
             <div
-              className={`max-w-[70%] rounded-lg p-3 ${
+              className={`max-w-[70%] rounded-lg p-4 ${
                 message.role === 'user'
                   ? 'bg-blue-600 text-white'
-                  : 'bg-gray-50 text-gray-900'
+                  : 'bg-white border-2 border-gray-200 text-gray-900'
               }`}
             >
-              <p className="text-sm whitespace-pre-wrap font-medium">{message.content}</p>
+              <p className="text-base whitespace-pre-wrap font-semibold leading-relaxed">{message.content}</p>
               {message.interviewType && (
-                <span className="text-xs text-gray-600 mt-1 block font-normal">
+                <span className="text-sm text-gray-700 mt-2 block font-medium">
                   Context: {message.interviewType}
                 </span>
               )}
@@ -174,7 +174,7 @@ export default function ChatInterface({ initialMessage }: ChatInterfaceProps) {
             <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center flex-shrink-0">
               <Bot className="w-5 h-5 text-white" />
             </div>
-            <div className="bg-gray-50 rounded-lg p-3">
+            <div className="bg-white border-2 border-gray-200 rounded-lg p-4">
               <Loader2 className="w-5 h-5 animate-spin text-blue-600" />
             </div>
           </div>
