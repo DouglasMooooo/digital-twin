@@ -60,9 +60,9 @@ const nextConfig = {
     GROQ_API_KEY: process.env.GROQ_API_KEY,
   },
   
-  // Experimental features for better performance
+  // Experimental features for performance
   experimental: {
-    optimizeCss: true,
+    // optimizeCss: true, // Disabled - requires critters package
     optimizePackageImports: ['lucide-react'],
   },
 }

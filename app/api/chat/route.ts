@@ -38,13 +38,13 @@ export async function POST(req: NextRequest) {
         const responseTime = Date.now() - startTime;
         
         // Log cached response
-        await logChatInteraction({
-          message,
-          response: cachedResponse,
-          type: interviewType || 'hr',
+        logChatInteraction({
+          userMessage: message,
+          aiResponse: cachedResponse,
           responseTime,
+          interviewType: interviewType || 'hr',
+          contextChunks: 0,
           success: true,
-          fromCache: true,
         });
 
         return NextResponse.json({
