@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { searchRelevantContext } from '@/lib/vectordb';
 import { generateAIResponse, analyzeQuestionType, ChatMessage } from '@/lib/llm';
 import { logChatInteraction } from '@/lib/analytics';
+import { responseCache, generateCacheKey } from '@/lib/cache';
 
 export const runtime = 'edge';
 
@@ -12,6 +13,7 @@ export async function POST(req: NextRequest) {
   let responseText = '';
   let contextType: 'screening' | 'hr' | 'technical' | 'manager' | 'executive' = 'hr';
   let contextChunks = 0;
+  let fromCache = false;
 
   try {
     const { message, conversationHistory, interviewType } = await req.json();
@@ -21,6 +23,36 @@ export async function POST(req: NextRequest) {
         { error: 'Message is required' },
         { status: 400 }
       );
+    }
+
+    // Check cache for common questions (only if no conversation history)
+    if (!conversationHistory || conversationHistory.length === 0) {
+      const cacheKey = generateCacheKey(message, interviewType);
+      const cachedResponse = responseCache.get(cacheKey);
+      
+      if (cachedResponse) {
+        fromCache = true;
+        success = true;
+        responseText = cachedResponse;
+        
+        const responseTime = Date.now() - startTime;
+        
+        // Log cached response
+        await logChatInteraction({
+          message,
+          response: cachedResponse,
+          type: interviewType || 'hr',
+          responseTime,
+          success: true,
+          fromCache: true,
+        });
+
+        return NextResponse.json({
+          response: cachedResponse,
+          fromCache: true,
+          responseTime,
+        });
+      }
     }
 
     // Get session info from headers
@@ -47,6 +79,12 @@ export async function POST(req: NextRequest) {
     );
 
     success = true;
+
+    // Cache response for common questions (only if no conversation history)
+    if (!conversationHistory || conversationHistory.length === 0) {
+      const cacheKey = generateCacheKey(message, interviewType);
+      responseCache.set(cacheKey, responseText, 3600); // 1 hour TTL
+    }
 
     // Log the interaction
     const responseTime = Date.now() - startTime;

@@ -54,7 +54,7 @@
         {
           "situation": "AI Bootcamp team members struggled with inconsistent code quality, poor error handling, lack of fairness analysis in ML projects, and low maintainability affecting project deliverables",
           "task": "Mentor 3 peers on engineering best practices, statistical rigor, and code quality standards to improve their assignment outcomes",
-          "action": "Conducted 1-on-1 code review sessions identifying issues (weak statistical foundations, missing error handling, superficial fairness analysis), provided step-by-step guidance on CRISP-DM methodology, shared Cursor AI and Claude techniques for productivity, helped debug ML pipelines and improve model evaluation metrics, documented best practices checklist for team reference",
+          "action": "Conducted 1-on-1 code review sessions identifying issues (weak statistical foundations, missing error handling, superficial fairness analysis), provided step-by-step guidance on CRISP-DM methodology, shared GitHub Copilot techniques for productivity, helped debug ML pipelines and improve model evaluation metrics, documented best practices checklist for team reference",
           "result": "All 3 mentees achieved HD (High Distinction) grades on assignments (up from projected Credit/Distinction), improved code quality scores by 40%+, team members adopted systematic approach to ML projects, established peer learning culture in cohort"
         },
         {
@@ -211,7 +211,7 @@
             "https://github.com/DouglasMooooo/digital-twin",
             "https://github.com/DouglasMooooo/ragfood-chatbot"
           ],
-          "notes": "Expert in AI-assisted development with Cursor AI as primary IDE (best experience for AI coding). Proficient in leveraging Claude Sonnet 4.5, GitHub Copilot, and ChatGPT for production-grade applications. Strong architectural understanding and code quality focus while maximizing AI productivity tools."
+          "notes": "Beginner in raw coding, but Advanced in AI-assisted development using GitHub Copilot and Cursor for production-grade applications"
         },
         {
           "language": "SQL",
@@ -281,15 +281,13 @@
         "Cloud vector databases (1 year) - Upstash"
       ],
       "ai_ml": [
-        "RAG System Architecture - Production implementation with vector databases",
-        "Vector Embeddings - Semantic search and retrieval optimization",
-        "LLM Integration - Groq API, OpenAI API, Anthropic Claude API",
-        "AI-Assisted Development - Expert with Cursor AI (primary tool), leveraging Claude Sonnet 4.5 for best coding experience",
-        "AI Agent Development - MCP protocol and multi-platform integration",
-        "Digital Twin Framework Design - Intelligent profile systems",
-        "Prompt Engineering - Optimized for business applications and code generation",
-        "Machine Learning for Business - Coursework in progress (Random Forest, KNN, model evaluation)",
-        "AI Tools Expertise: Cursor AI (best experience), Claude Desktop, GitHub Copilot, ChatGPT"
+        "RAG System Architecture - Production implementation",
+        "Vector Embeddings - Semantic search and retrieval",
+        "LLM Integration - Groq API, OpenAI API",
+        "AI Agent Development - MCP protocol",
+        "Digital Twin Framework Design",
+        "Prompt Engineering - Optimized for business applications",
+        "Machine Learning for Business - Coursework in progress"
       ],
       "data_tools": [
         "Power BI - Advanced dashboards and visualization",
@@ -298,22 +296,12 @@
         "Statistical Analysis - Business Statistics background"
       ],
       "development_tools": [
-        "Cursor - Primary AI-first IDE, best for AI-assisted development (integrates Claude Sonnet 4.5)",
-        "VS Code Insiders - Secondary IDE for specific workflows",
-        "GitHub Copilot - AI pair programming for quick code suggestions",
-        "Claude Sonnet 4.5 via Cursor - Best coding experience, exceptional for complex refactoring and architecture",
-        "Claude Desktop - MCP server integration and AI workflows",
-        "Git - Version control and collaboration",
-        "GitHub - Repository management and CI/CD",
-        "Postman - API testing and development"
-      ],
-      "ai_coding_assistants": [
-        "Cursor AI - Primary tool, best AI coding experience (integrates Claude Sonnet 4.5 seamlessly)",
-        "Claude Sonnet 4.5 - Anthropic's latest model, best for system design and complex coding (Sep 2025)",
-        "GitHub Copilot - Quick code completions and suggestions",
-        "Claude Desktop - Advanced AI workflows and MCP integration",
-        "ChatGPT (GPT-5) - Problem-solving and documentation when needed",
-        "Proficiency: Expert in AI-assisted development, primary workflow built around Cursor AI for maximum productivity"
+        "VS Code Insiders - Primary IDE",
+        "GitHub Copilot - AI-assisted development",
+        "Claude Desktop - AI integration",
+        "Git - Version control",
+        "GitHub - Collaboration and CI/CD",
+        "Postman - API testing"
       ],
       "financial_systems": [
         "SAP - ERP testing and usage",
@@ -728,7 +716,7 @@
           "star_answer": {
             "situation": "Transitioned from pure accounting background to AI development with no prior programming experience",
             "task": "Master full-stack AI development including TypeScript, RAG systems, and cloud deployment within 10-week bootcamp",
-            "action": "Structured learning plan: 4 hours daily coding practice, built 5+ projects progressively increasing in complexity, leveraged Cursor AI (best AI coding tool) and Claude Sonnet 4.5 for accelerated learning, actively participated in peer code reviews",
+            "action": "Structured learning plan: 4 hours daily coding practice, built 5+ projects progressively increasing in complexity, leveraged GitHub Copilot and Claude for accelerated learning, actively participated in peer code reviews",
             "result": "Successfully deployed production-grade digital twin platform, received bootcamp completion, now proficient in TypeScript/Python with portfolio demonstrating advanced AI capabilities"
           }
         },
