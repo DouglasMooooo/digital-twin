@@ -1,0 +1,92 @@
+{
+  "schema_version": "v1",
+  "name_for_human": "Douglas Mo Digital Twin",
+  "name_for_model": "douglas_digital_twin",
+  "description_for_human": "Chat with Douglas Mo's AI-powered digital twin to learn about his professional experience, technical skills, project portfolio, and career achievements.",
+  "description_for_model": "Douglas Mo Digital Twin provides access to comprehensive professional information about Douglas Mo, an AI/ML specialist and business strategist with expertise in Python, machine learning, financial modeling, and business operations. You can query his work experience, technical skills, project portfolio, interview preparation materials, and career achievements. The system uses RAG (Retrieval-Augmented Generation) to provide accurate, context-aware responses based on his actual profile data.",
+  "auth": {
+    "type": "none"
+  },
+  "api": {
+    "type": "openapi",
+    "url": "https://douglasmo.vercel.app/chatgpt-actions/openapi.json",
+    "is_user_authenticated": false
+  },
+  "logo_url": "https://douglasmo.vercel.app/logo.png",
+  "contact_email": "contact@douglasmo.com",
+  "legal_info_url": "https://douglasmo.vercel.app/legal",
+  "conversation_starters": [
+    {
+      "text": "What is your experience with Python and machine learning?",
+      "category": "technical_skills"
+    },
+    {
+      "text": "Tell me about your most impressive project achievements",
+      "category": "projects"
+    },
+    {
+      "text": "What was your role and impact at BF Suma?",
+      "category": "work_experience"
+    },
+    {
+      "text": "How should I introduce myself in an interview?",
+      "category": "interview_prep"
+    },
+    {
+      "text": "What are your key leadership and business strategy skills?",
+      "category": "skills"
+    },
+    {
+      "text": "Describe your financial modeling and data analysis experience",
+      "category": "technical_skills"
+    },
+    {
+      "text": "What technologies have you used in production systems?",
+      "category": "projects"
+    },
+    {
+      "text": "What are your career goals and strengths?",
+      "category": "interview_prep"
+    }
+  ],
+  "capabilities": {
+    "supports_natural_language": true,
+    "supports_structured_queries": true,
+    "provides_sources": true,
+    "real_time_updates": false,
+    "feedback_collection": true,
+    "quality_analysis": true
+  },
+  "usage_instructions": {
+    "query_formats": [
+      "Natural language questions about Douglas's background (e.g., 'What is your Python experience?')",
+      "Direct skill queries (e.g., 'List your machine learning skills')",
+      "Project-focused questions (e.g., 'What projects have you built?')",
+      "Interview preparation queries (e.g., 'How should I answer behavioral questions?')",
+      "Work experience questions (e.g., 'Tell me about your role at BF Suma')"
+    ],
+    "best_practices": [
+      "Ask specific questions for more detailed responses",
+      "Use context like 'Python skills' or 'ML projects' for better targeting",
+      "Reference specific companies or projects for detailed information",
+      "Ask follow-up questions to dive deeper into topics",
+      "Provide feedback after responses to help improve the system"
+    ],
+    "example_queries": [
+      "What are your Python programming skills?",
+      "Tell me about your experience with machine learning and AI",
+      "What was your biggest achievement at BF Suma?",
+      "Show me projects where you used React and Next.js",
+      "How would you describe your leadership style?",
+      "What financial modeling tools do you use?",
+      "Give me a 30-second elevator pitch about yourself",
+      "What are your salary expectations?"
+    ]
+  },
+  "privacy_policy": {
+    "data_usage": "All queries are logged for quality improvement purposes. No personally identifiable information is stored beyond what you provide in queries.",
+    "data_retention": "Query logs are retained for 90 days for analytics and system improvement.",
+    "third_party_sharing": "Data is not shared with third parties. All processing happens within the digital twin system.",
+    "user_rights": "You can request deletion of your query history by contacting the administrator."
+  }
+}
