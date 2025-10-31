@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server';
-import openapiSchema from '@/chatgpt-actions/openapi.json';
 
 /**
  * GET /api/chatgpt-actions
@@ -16,6 +15,9 @@ import openapiSchema from '@/chatgpt-actions/openapi.json';
  */
 export async function GET() {
   try {
+    // 动态导入以支持路径别名
+    const openapiSchema = await import('@/chatgpt-actions/openapi.json').then(m => m.default);
+    
     return NextResponse.json(openapiSchema, {
       headers: {
         'Content-Type': 'application/json',
@@ -27,11 +29,14 @@ export async function GET() {
     });
   } catch (error) {
     console.error('[ChatGPT Actions] Failed to load OpenAPI schema:', error);
+    
+    // 如果动态导入失败，返回错误响应
     return NextResponse.json(
       {
         error: 'Failed to load OpenAPI schema',
         details: error instanceof Error ? error.message : 'Unknown error',
         timestamp: new Date().toISOString(),
+        hint: 'Make sure openapi.json exists in chatgpt-actions directory',
       },
       { 
         status: 500,
