@@ -57,6 +57,12 @@ export function logChatInteraction(log: Omit<ChatLog, 'id' | 'timestamp'>): void
   
   chatLogs.push(chatLog);
   
+  console.log('📊 Chat logged:', {
+    id: chatLog.id,
+    userMessage: chatLog.userMessage.substring(0, 50),
+    totalLogs: chatLogs.length
+  });
+  
   // Update session
   if (log.sessionId) {
     updateSession(log.sessionId, log);
@@ -102,6 +108,7 @@ function updateSession(sessionId: string, log: Omit<ChatLog, 'id' | 'timestamp'>
  * Get all chat logs
  */
 export function getChatLogs(limit?: number): ChatLog[] {
+  console.log('📊 Getting chat logs, total:', chatLogs.length);
   const sorted = [...chatLogs].sort((a, b) => 
     new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
   );
@@ -130,6 +137,8 @@ export function getVisitorSessions(): VisitorSession[] {
  * Get analytics metrics
  */
 export function getAnalyticsMetrics(timeRange: 'day' | 'week' | 'month' | 'all' = 'all'): AnalyticsMetrics {
+  console.log('📊 Getting analytics metrics, total logs:', chatLogs.length);
+  
   const now = new Date();
   const filteredLogs = chatLogs.filter(log => {
     const logDate = new Date(log.timestamp);

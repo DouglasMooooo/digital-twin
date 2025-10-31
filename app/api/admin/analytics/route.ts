@@ -1,20 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getAnalyticsMetrics, exportLogs, clearOldLogs } from '@/lib/analytics';
 
-// Simple authentication (replace with proper auth in production)
-function isAuthenticated(request: NextRequest): boolean {
-  const authHeader = request.headers.get('authorization');
-  const adminPassword = process.env.ADMIN_PASSWORD || 'admin123'; // Change this!
-  
-  return authHeader === `Bearer ${adminPassword}`;
-}
-
 export async function GET(request: NextRequest) {
-  // Check authentication
-  if (!isAuthenticated(request)) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  }
-
   const { searchParams } = new URL(request.url);
   const timeRange = searchParams.get('timeRange') as 'day' | 'week' | 'month' | 'all' || 'all';
   const action = searchParams.get('action');
@@ -44,11 +31,6 @@ export async function GET(request: NextRequest) {
 }
 
 export async function DELETE(request: NextRequest) {
-  // Check authentication
-  if (!isAuthenticated(request)) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  }
-
   try {
     const { searchParams } = new URL(request.url);
     const daysToKeep = parseInt(searchParams.get('days') || '30');
