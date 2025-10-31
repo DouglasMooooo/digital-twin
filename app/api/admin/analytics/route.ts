@@ -19,6 +19,23 @@ export async function GET(request: NextRequest) {
       
       default:
         const metrics = getAnalyticsMetrics(timeRange);
+        
+        // If no data, return sample data for demo purposes
+        if (metrics.totalQuestions === 0) {
+          return NextResponse.json({ 
+            metrics: {
+              totalVisitors: 0,
+              totalQuestions: 0,
+              averageResponseTime: 0,
+              successRate: 100,
+              topQuestions: [],
+              interviewTypeDistribution: {},
+              hourlyActivity: Array.from({ length: 24 }, (_, hour) => ({ hour, count: 0 })),
+              responseTimeDistribution: { fast: 0, medium: 0, slow: 0 }
+            }
+          });
+        }
+        
         return NextResponse.json({ metrics });
     }
   } catch (error) {
