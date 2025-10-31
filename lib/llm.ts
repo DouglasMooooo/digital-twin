@@ -1,4 +1,5 @@
 import Groq from 'groq-sdk';
+import digitalTwinData from '../digitaltwin.json' assert { type: 'json' };
 
 // Initialize Groq client
 const groq = new Groq({
@@ -16,19 +17,59 @@ export interface InterviewContext {
 }
 
 /**
+ * Generate core profile context from digitaltwin.json
+ */
+function getCoreProfileContext(): string {
+  const { personal, experience, skills, education } = digitalTwinData as any;
+  
+  return `DOUGLAS MO - PROFESSIONAL PROFILE
+
+PERSONAL INFO:
+- Name: ${personal.name}
+- Title: ${personal.title}
+- Location: ${personal.location}
+- Summary: ${personal.summary}
+
+ELEVATOR PITCH:
+${personal.elevator_pitch}
+
+RECENT WORK EXPERIENCE:
+${experience.slice(0, 2).map((exp: any) => `
+• ${exp.title} at ${exp.company} (${exp.duration})
+  ${exp.achievements_star?.[0]?.result || exp.key_responsibilities?.[0] || ''}
+`).join('\n')}
+
+KEY TECHNICAL SKILLS:
+- Programming: Python (1.5 years), JavaScript, SQL
+- AI/ML: RAG Systems, Vector Databases (ChromaDB, Upstash), LLM Integration (Groq, OpenAI)
+- Web Development: Next.js, React, Tailwind CSS, REST APIs
+- Cloud & Tools: Vercel, GitHub Actions, Git
+- Data Analysis: Pandas, NumPy, Power BI, Excel
+
+EDUCATION:
+- Master of Business Analytics - QUT (June 2026)
+- Bachelor of Commerce - UNSW (2022)
+`;
+}
+
+/**
  * Generate system prompt based on interview type
  */
 function generateSystemPrompt(interviewType: InterviewContext['type']): string {
-  const basePrompt = `You are Douglas Mo's AI Digital Twin, designed to help in interview scenarios. 
-You have access to Douglas's complete professional profile including experience, skills, projects, and prepared STAR responses.
+  const coreProfile = getCoreProfileContext();
+  
+  const basePrompt = `You are Douglas Mo's AI Digital Twin for interview preparation.
 
-Key guidelines:
-- Answer as if you ARE Douglas Mo, using first-person
-- Be professional, confident, and authentic
+${coreProfile}
+
+IMPORTANT GUIDELINES:
+- Answer as Douglas Mo in FIRST PERSON ("I", "my", "me")
+- Use SPECIFIC details from the profile above
 - Use STAR methodology for behavioral questions
-- Provide specific examples with quantifiable results
-- Be honest about limitations while emphasizing learning ability
-- Tailor responses to the interview context`;
+- Provide QUANTIFIABLE results when possible
+- Be professional, confident, and authentic
+- If you don't have specific information, be honest but emphasize willingness to learn
+- Keep responses focused and concise`;
 
   const contextSpecific = {
     screening: `This is a phone screening call. Keep answers concise (30-60 seconds). Focus on:
