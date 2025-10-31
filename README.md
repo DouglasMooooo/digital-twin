@@ -2,9 +2,15 @@
 
 An AI-powered professional profile and interview preparation platform built with Next.js, RAG (Retrieval-Augmented Generation), and modern AI technologies.
 
+## 🔗 Live Demo
+
+- **Website**: https://douglasmo.vercel.app/
+- **GitHub**: https://github.com/DouglasMooooo/digital-twin
+
 ## 🌟 Features
 
 - **Interactive Digital Twin**: AI-powered chatbot that answers interview questions based on Douglas Mo's professional profile
+- **Claude Desktop Integration**: MCP server for direct access to profile data from Claude Desktop
 - **Admin Dashboard**: Comprehensive analytics and monitoring for chat interactions
 - **Comprehensive Profile**: Detailed showcase of experience, skills, projects, and achievements
 - **RAG System**: Semantic search across professional experiences using Upstash Vector database
