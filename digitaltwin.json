@@ -211,7 +211,7 @@
             "https://github.com/DouglasMooooo/digital-twin",
             "https://github.com/DouglasMooooo/ragfood-chatbot"
           ],
-          "notes": "Beginner in raw coding, but Advanced in AI-assisted development using GitHub Copilot and Cursor for production-grade applications"
+          "notes": "Expert in AI-assisted development using Claude Sonnet 4.5 (Anthropic's best model for coding, Sep 2025) and GPT-5 (OpenAI's latest flagship, Aug 2025). Proficient in leveraging cutting-edge AI models for production-grade applications while maintaining strong architectural understanding and code quality."
         },
         {
           "language": "SQL",
@@ -283,13 +283,13 @@
       "ai_ml": [
         "RAG System Architecture - Production implementation with vector databases",
         "Vector Embeddings - Semantic search and retrieval optimization",
-        "LLM Integration - Groq API, OpenAI API, Anthropic Claude API",
-        "AI-Assisted Development - Expert proficiency with Claude 3.5 Sonnet (industry-leading for code), GitHub Copilot, GPT-4",
+        "LLM Integration - Groq API, OpenAI GPT-5 API, Anthropic Claude Sonnet 4.5 API",
+        "AI-Assisted Development - Expert proficiency with Claude Sonnet 4.5 (world's best for coding, Sep 2025) and GPT-5 (OpenAI's latest flagship, Aug 2025)",
         "AI Agent Development - MCP protocol and multi-platform integration",
         "Digital Twin Framework Design - Intelligent profile systems",
         "Prompt Engineering - Optimized for business applications and code generation",
         "Machine Learning for Business - Coursework in progress (Random Forest, KNN, model evaluation)",
-        "AI Tools Expertise: Cursor IDE, Claude Desktop, VS Code Copilot, ChatGPT"
+        "AI Tools Expertise: Cursor IDE (Claude Sonnet 4.5), VS Code Copilot (GPT-5), Claude Desktop, ChatGPT"
       ],
       "data_tools": [
         "Power BI - Advanced dashboards and visualization",
@@ -299,21 +299,21 @@
       ],
       "development_tools": [
         "VS Code Insiders - Primary IDE for TypeScript/Python development",
-        "Cursor - AI-first code editor with Claude integration",
-        "GitHub Copilot - AI pair programming assistant",
-        "Claude 3.5 Sonnet (via Cursor & Claude Desktop) - Industry-leading AI for code generation, debugging, and architecture design",
+        "Cursor - AI-first code editor with Claude Sonnet 4.5 integration",
+        "GitHub Copilot - AI pair programming powered by latest GPT models",
+        "Claude Sonnet 4.5 (via Cursor & Claude Desktop) - Industry's best model for coding, agents, and computer use (Anthropic, Sep 2025)",
+        "GPT-5 - Latest OpenAI model for advanced reasoning and code generation (OpenAI, Aug 2025)",
         "Claude Desktop - MCP server integration and AI workflows",
-        "GPT-4 & GPT-4 Turbo - Advanced reasoning and code completion",
         "Git - Version control and collaboration",
         "GitHub - Repository management and CI/CD",
         "Postman - API testing and development"
       ],
       "ai_coding_assistants": [
-        "Claude 3.5 Sonnet - Industry's best coding AI, exceptional for complex refactoring and system design",
-        "GitHub Copilot - Real-time code completion and suggestions",
-        "GPT-4 - Advanced problem-solving and documentation",
-        "Cursor AI - Integrated AI-first development environment",
-        "Proficiency: Expert in AI-assisted development workflow, leveraging multiple AI models for different coding tasks"
+        "Claude Sonnet 4.5 - Anthropic's best model for coding and system design (released Sep 2025)",
+        "GPT-5 - OpenAI's latest flagship model for advanced reasoning (released Aug 2025)",
+        "GitHub Copilot - Real-time code completion powered by latest GPT models",
+        "Cursor AI - Integrated AI-first IDE with Claude Sonnet 4.5",
+        "Proficiency: Expert in AI-assisted development workflow, leveraging Claude Sonnet 4.5 and GPT-5 for production-grade coding"
       ],
       "financial_systems": [
         "SAP - ERP testing and usage",
