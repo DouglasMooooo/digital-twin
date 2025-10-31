@@ -413,7 +413,7 @@ export default function Home() {
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {/* VS Code Extension */}
             <div className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-8 border-t-4 border-blue-600">
               <div className="text-5xl mb-4">💻</div>
@@ -504,6 +504,53 @@ export default function Home() {
               </p>
             </div>
 
+            {/* Claude Desktop MCP */}
+            <div className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-8 border-t-4 border-orange-600">
+              <div className="text-5xl mb-4">🧠</div>
+              <h4 className="text-2xl font-bold text-gray-900 mb-3">Claude Desktop</h4>
+              <p className="text-gray-600 mb-6 min-h-[60px]">
+                MCP server integration bringing my professional profile directly into Claude Desktop
+              </p>
+              <div className="space-y-3 mb-6 bg-orange-50 p-4 rounded-lg">
+                <p className="text-sm font-semibold text-gray-900">Features:</p>
+                <ul className="text-sm text-gray-700 space-y-2">
+                  <li className="flex items-center gap-2">
+                    <span className="text-orange-600">✓</span> Native integration
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-orange-600">✓</span> Vector search
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-orange-600">✓</span> Real-time queries
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-orange-600">✓</span> MCP protocol
+                  </li>
+                </ul>
+              </div>
+              <div className="space-y-3">
+                <a 
+                  href="https://github.com/DouglasMooooo/digital-twin/blob/main/CLAUDE_DESKTOP_QUICKSTART.md"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block w-full bg-gradient-to-r from-orange-600 to-orange-700 text-white px-4 py-3 rounded-lg text-center font-semibold hover:from-orange-700 hover:to-orange-800 transition-all shadow-md hover:shadow-lg"
+                >
+                  ⚙️ Setup Guide
+                </a>
+                <a 
+                  href="https://github.com/DouglasMooooo/digital-twin/tree/main/mcp-server"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block w-full border-2 border-orange-600 text-orange-600 px-4 py-3 rounded-lg text-center font-semibold hover:bg-orange-50 transition-all"
+                >
+                  💾 MCP Server
+                </a>
+              </div>
+              <p className="text-xs text-gray-500 mt-4 text-center">
+                For Claude Desktop users
+              </p>
+            </div>
+
             {/* Local Chat */}
             <div className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-8 border-t-4 border-purple-600">
               <div className="text-5xl mb-4">💬</div>
@@ -551,9 +598,9 @@ export default function Home() {
           </div>
 
           {/* Quick Stats */}
-          <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+          <div className="mt-16 grid grid-cols-1 md:grid-cols-4 gap-6 text-center">
             <div className="bg-white/80 backdrop-blur-sm p-6 rounded-xl shadow-md">
-              <p className="text-3xl font-bold text-blue-600 mb-2">3</p>
+              <p className="text-3xl font-bold text-blue-600 mb-2">4</p>
               <p className="text-gray-700 font-medium">Integration Options</p>
             </div>
             <div className="bg-white/80 backdrop-blur-sm p-6 rounded-xl shadow-md">
