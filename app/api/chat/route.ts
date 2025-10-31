@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { searchRelevantContext } from '@/lib/vectordb';
 import { generateAIResponse, analyzeQuestionType, ChatMessage } from '@/lib/llm';
-import { logChatInteraction } from '@/lib/analytics';
+import { logChatInteraction } from '@/lib/redis-analytics';
 import { responseCache, generateCacheKey } from '@/lib/cache';
 
 export const runtime = 'edge';

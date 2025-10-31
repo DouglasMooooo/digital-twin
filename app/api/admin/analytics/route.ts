@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getAnalyticsMetrics, exportLogs, clearOldLogs } from '@/lib/analytics';
+import { getAnalyticsMetrics, exportLogs, clearOldLogs } from '@/lib/redis-analytics';
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
@@ -9,7 +9,7 @@ export async function GET(request: NextRequest) {
   try {
     switch (action) {
       case 'export':
-        const exportData = exportLogs();
+        const exportData = await exportLogs();
         return new NextResponse(exportData, {
           headers: {
             'Content-Type': 'application/json',
@@ -18,7 +18,7 @@ export async function GET(request: NextRequest) {
         });
       
       default:
-        const metrics = getAnalyticsMetrics(timeRange);
+        const metrics = await getAnalyticsMetrics(timeRange);
         
         // If no data, return sample data for demo purposes
         if (metrics.totalQuestions === 0) {
@@ -52,7 +52,7 @@ export async function DELETE(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const daysToKeep = parseInt(searchParams.get('days') || '30');
     
-    const deletedCount = clearOldLogs(daysToKeep);
+    const deletedCount = await clearOldLogs(daysToKeep);
     
     return NextResponse.json({ 
       success: true, 
