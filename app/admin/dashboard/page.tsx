@@ -4,12 +4,18 @@ import { useState, useEffect } from 'react';
 import { LineChart, BarChart3, TrendingUp, Clock, MessageSquare, Star } from 'lucide-react';
 
 interface AnalyticsData {
-  totalQueries: number;
-  avgResponseTime: number;
+  totalVisitors: number;
+  totalQuestions: number;
+  averageResponseTime: number;
   successRate: number;
   topQuestions: { question: string; count: number }[];
-  responseTimeHistory: { timestamp: string; time: number }[];
-  queryTypeDistribution: { type: string; count: number }[];
+  interviewTypeDistribution: Record<string, number>;
+  hourlyActivity: { hour: number; count: number }[];
+  responseTimeDistribution: {
+    fast: number;
+    medium: number;
+    slow: number;
+  };
 }
 
 export default function DashboardPage() {
@@ -23,7 +29,8 @@ export default function DashboardPage() {
       const response = await fetch('/api/admin/analytics');
       if (response.ok) {
         const data = await response.json();
-        setAnalytics(data);
+        // API returns { metrics: {...} }, extract metrics
+        setAnalytics(data.metrics || data);
       }
     } catch (error) {
       console.error('Failed to fetch analytics:', error);
@@ -91,7 +98,7 @@ export default function DashboardPage() {
     );
   }
 
-  if (!analytics || analytics.totalQueries === 0) {
+  if (!analytics || analytics.totalQuestions === 0) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-6">
         <div className="max-w-2xl bg-white rounded-lg shadow-lg p-8 text-center">
@@ -133,14 +140,14 @@ export default function DashboardPage() {
           <MetricCard
             icon={<MessageSquare className="w-6 h-6" />}
             label="Total Queries"
-            value={analytics.totalQueries}
+            value={analytics.totalQuestions}
             trend="+12% vs last week"
             color="blue"
           />
           <MetricCard
             icon={<Clock className="w-6 h-6" />}
             label="Avg Response Time"
-            value={`${analytics.avgResponseTime.toFixed(2)}s`}
+            value={`${analytics.averageResponseTime.toFixed(2)}s`}
             trend="-5% vs last week"
             color="green"
           />
@@ -165,22 +172,22 @@ export default function DashboardPage() {
           {/* Response Time Trend */}
           <div className="bg-white rounded-2xl shadow-lg p-6">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-bold text-gray-900">Response Time Trend</h2>
+              <h2 className="text-xl font-bold text-gray-900">Hourly Activity</h2>
               <LineChart className="w-5 h-5 text-blue-600" />
             </div>
             <div className="h-64 flex items-end justify-between space-x-2">
-              {analytics.responseTimeHistory.slice(-12).map((item, i) => {
-                const maxTime = Math.max(...analytics.responseTimeHistory.map(x => x.time));
-                const height = (item.time / maxTime) * 100;
+              {analytics.hourlyActivity.slice(-12).map((item, i) => {
+                const maxCount = Math.max(...analytics.hourlyActivity.map(x => x.count));
+                const height = maxCount > 0 ? (item.count / maxCount) * 100 : 0;
                 return (
                   <div key={i} className="flex-1 flex flex-col items-center">
                     <div
                       className="w-full bg-gradient-to-t from-blue-500 to-blue-300 rounded-t-lg hover:from-blue-600 hover:to-blue-400 transition-all cursor-pointer"
-                      style={{ height: `${height}%` }}
-                      title={`${item.time.toFixed(2)}s`}
+                      style={{ height: `${height}%`, minHeight: item.count > 0 ? '8px' : '0' }}
+                      title={`${item.count} queries at ${item.hour}:00`}
                     />
-                    <span className="text-xs text-gray-500 mt-2 rotate-45 origin-left">
-                      {new Date(item.timestamp).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}
+                    <span className="text-xs text-gray-500 mt-2">
+                      {item.hour}h
                     </span>
                   </div>
                 );
@@ -188,22 +195,22 @@ export default function DashboardPage() {
             </div>
           </div>
 
-          {/* Query Type Distribution */}
+          {/* Interview Type Distribution */}
           <div className="bg-white rounded-2xl shadow-lg p-6">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-bold text-gray-900">Query Type Distribution</h2>
+              <h2 className="text-xl font-bold text-gray-900">Interview Type Distribution</h2>
               <BarChart3 className="w-5 h-5 text-purple-600" />
             </div>
             <div className="space-y-4">
-              {analytics.queryTypeDistribution.map((item, i) => {
-                const total = analytics.queryTypeDistribution.reduce((sum, x) => sum + x.count, 0);
-                const percentage = (item.count / total) * 100;
+              {Object.entries(analytics.interviewTypeDistribution).map(([type, count], i) => {
+                const total = Object.values(analytics.interviewTypeDistribution).reduce((sum, val) => sum + val, 0);
+                const percentage = total > 0 ? (count / total) * 100 : 0;
                 const colors = ['bg-blue-500', 'bg-purple-500', 'bg-green-500', 'bg-yellow-500', 'bg-red-500'];
                 return (
                   <div key={i}>
                     <div className="flex justify-between items-center mb-1">
-                      <span className="text-sm font-medium text-gray-700 capitalize">{item.type}</span>
-                      <span className="text-sm text-gray-600">{item.count} ({percentage.toFixed(1)}%)</span>
+                      <span className="text-sm font-medium text-gray-700 capitalize">{type}</span>
+                      <span className="text-sm text-gray-600">{count} ({percentage.toFixed(1)}%)</span>
                     </div>
                     <div className="w-full bg-gray-200 rounded-full h-2">
                       <div
