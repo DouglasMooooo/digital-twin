@@ -170,6 +170,81 @@
         }
       }
     },
+    "/api/profile/education": {
+      "get": {
+        "operationId": "getEducation",
+        "summary": "Get Douglas's education background",
+        "description": "Retrieve complete education information including current Master's degree and undergraduate degree with details.",
+        "responses": {
+          "200": {
+            "description": "Complete education information",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "current": {
+                      "type": "object",
+                      "properties": {
+                        "university": {
+                          "type": "string",
+                          "example": "Victoria University"
+                        },
+                        "degree": {
+                          "type": "string",
+                          "example": "Master of Business Analytics"
+                        },
+                        "location": {
+                          "type": "string",
+                          "example": "Brisbane, Australia"
+                        },
+                        "duration": {
+                          "type": "string",
+                          "example": "July 2024 - Present"
+                        },
+                        "expected_graduation": {
+                          "type": "string",
+                          "example": "June 2026"
+                        },
+                        "focus": {
+                          "type": "string",
+                          "example": "Bridging business strategy with AI/ML implementation"
+                        }
+                      }
+                    },
+                    "undergraduate": {
+                      "type": "object",
+                      "properties": {
+                        "university": {
+                          "type": "string",
+                          "example": "Lingnan Normal University"
+                        },
+                        "degree": {
+                          "type": "string",
+                          "example": "Bachelor of Management (Financial Accounting Education)"
+                        },
+                        "location": {
+                          "type": "string",
+                          "example": "Zhanjiang, China"
+                        },
+                        "graduation_year": {
+                          "type": "integer",
+                          "example": 2022
+                        },
+                        "foundation": {
+                          "type": "string",
+                          "example": "Strong quantitative and analytical foundation with emphasis on data-driven decision making"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/feedback": {
       "get": {
         "operationId": "getFeedbackList",
