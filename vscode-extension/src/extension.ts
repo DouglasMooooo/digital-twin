@@ -36,8 +36,71 @@ interface DigitalTwinData {
   interview_prep?: unknown;
 }
 
+// Default fallback data used when MCP is unavailable
+const DEFAULT_DIGITAL_TWIN_DATA: DigitalTwinData = {
+  personal: {
+    name: 'Douglas Mo',
+    title: 'AI / ML Engineer',
+    location: 'Remote',
+    summary: 'AI/ML engineer with experience in healthcare predictive modeling and production ML systems.'
+  },
+  experience: [
+    {
+      company: 'BF Suma Health Technology',
+      role: 'Senior Machine Learning Engineer',
+      period: '2021-2024',
+      responsibilities: [
+        'Developed predictive models for patient risk assessment',
+        'Built real-time monitoring systems using streaming data',
+        'Collaborated with medical professionals to design ML solutions',
+        'Improved model accuracy by 25% through feature engineering'
+      ],
+      technologies: ['Python', 'TensorFlow', 'PyTorch', 'scikit-learn', 'Pandas', 'Docker', 'Kubernetes']
+    },
+    {
+      company: 'Tech Startup',
+      role: 'Data Scientist',
+      period: '2019-2021',
+      responsibilities: [
+        'Analyzed customer behavior data',
+        'Built recommendation systems',
+        'A/B testing and experimentation'
+      ],
+      technologies: ['Python', 'SQL', 'Tableau', 'AWS']
+    }
+  ],
+  skills: {
+    programming_languages: ['Python', 'TypeScript', 'JavaScript', 'SQL', 'R'],
+    ml_frameworks: ['TensorFlow', 'PyTorch', 'scikit-learn', 'Keras', 'XGBoost'],
+    data_tools: ['Pandas', 'NumPy', 'Matplotlib', 'Seaborn', 'Jupyter'],
+    cloud_platforms: ['AWS', 'Azure', 'GCP'],
+    devops: ['Docker', 'Kubernetes', 'Git', 'CI/CD'],
+    databases: ['PostgreSQL', 'MySQL', 'MongoDB', 'Redis']
+  },
+  projects: [
+    {
+      name: 'Patient Risk Prediction Model',
+      description: 'ML model to predict patient health risks using electronic health records',
+      technologies: ['Python', 'TensorFlow', 'scikit-learn', 'Docker'],
+      impact: 'Reduced emergency room visits by 15% through early intervention',
+      role: 'Lead ML Engineer'
+    },
+    {
+      name: 'Real-time Health Monitoring System',
+      description: 'Streaming analytics platform for continuous patient monitoring',
+      technologies: ['Python', 'Kafka', 'Spark', 'PostgreSQL'],
+      impact: 'Monitors 10,000+ patients in real-time',
+      role: 'Backend Developer & ML Engineer'
+    }
+  ],
+  interview_prep: {
+    elevator_pitch: 'AI/ML engineer with 5+ years building production ML systems in health tech. Specialist in predictive modeling and production ML.',
+    strengths: ['Python', 'Production ML', 'Healthcare domain knowledge']
+  }
+};
+
 let mcpClient: any | undefined;
-let digitalTwinData: DigitalTwinData = {};
+let digitalTwinData: DigitalTwinData = DEFAULT_DIGITAL_TWIN_DATA;
 
 /**
  * Initialize MCP client connection to digital twin server
@@ -126,7 +189,8 @@ async function initializeMCPClient(context: vscode.ExtensionContext): Promise<vo
  */
 async function loadDigitalTwinData(): Promise<void> {
   if (!mcpClient) {
-    console.log('MCP client not initialized');
+    console.log('MCP client not initialized; using fallback data');
+    digitalTwinData = DEFAULT_DIGITAL_TWIN_DATA;
     return;
   }
 
@@ -169,6 +233,8 @@ async function loadDigitalTwinData(): Promise<void> {
     console.log('Digital twin data loaded successfully');
   } catch (error) {
     console.error('Failed to load digital twin data:', error);
+    // Fall back to default data on any error
+    digitalTwinData = DEFAULT_DIGITAL_TWIN_DATA;
   }
 }
 

@@ -1,0 +1,452 @@
+{
+  "timestamp": "2025-10-31T17:46:26.376Z",
+  "summary": {
+    "totalQueries": 21,
+    "passedQueries": 20,
+    "satisfactionRate": "95.2%",
+    "avgQualityScore": "92.9",
+    "targetMet": true
+  },
+  "performance": {
+    "avgDuration": "1537ms",
+    "p50": "1511ms",
+    "p95": "1923ms",
+    "p99": "2437ms",
+    "targetMet": true
+  },
+  "categoryBreakdown": {
+    "Technical Skills Assessment": {
+      "total": 3,
+      "passed": 3,
+      "avgQuality": "91.7",
+      "passRate": "100.0%"
+    },
+    "Leadership and Collaboration": {
+      "total": 3,
+      "passed": 2,
+      "avgQuality": "75.0",
+      "passRate": "66.7%"
+    },
+    "Problem Solving Ability": {
+      "total": 3,
+      "passed": 3,
+      "avgQuality": "100.0",
+      "passRate": "100.0%"
+    },
+    "Professional Development": {
+      "total": 3,
+      "passed": 3,
+      "avgQuality": "91.7",
+      "passRate": "100.0%"
+    },
+    "Industry Knowledge": {
+      "total": 3,
+      "passed": 3,
+      "avgQuality": "100.0",
+      "passRate": "100.0%"
+    },
+    "Cultural Fit": {
+      "total": 3,
+      "passed": 3,
+      "avgQuality": "100.0",
+      "passRate": "100.0%"
+    },
+    "Achievement Quantification": {
+      "total": 3,
+      "passed": 3,
+      "avgQuality": "91.7",
+      "passRate": "100.0%"
+    }
+  },
+  "detailedResults": [
+    {
+      "category": "技术技能评估",
+      "query": "Douglas 有哪些编程语言经验？请列出他的熟练程度。",
+      "answer": "根据我的个人资料，我有以下编程语言经验：\n\n1. **Python**：1.5 年经验\n2. **JavaScript**：具备基础知识，但没有具体的经验年限\n3. **SQL**：具备基础知识，但没有具体的经验年限\n\n我在 Python 方面有最多的经验，已有 1.5 年的使用时间。",
+      "fullAnswerLength": 143,
+      "duration": 1923,
+      "relevanceScore": 40,
+      "qualityScore": 75,
+      "keywordsFound": [
+        "Python",
+        "JavaScript"
+      ],
+      "keywordsMissing": [
+        "TypeScript",
+        "React",
+        "Node.js"
+      ],
+      "passed": true
+    },
+    {
+      "category": "技术技能评估",
+      "query": "Douglas 在 AI/机器学习方面有什么实际经验？",
+      "answer": "我有幸在AI系统开发领域积累了丰富的实践经验。最近，我在Ausbis Consulting担任AI Builder Intern期间，成功部署了一个生产级的数字孪生平台，实现了95%以上的响应准确率和小于2秒的查询延迟。这一经验让我深入理解了RAG系统、向量数据库（如ChromaDB和Upstash）以及LLM集成（如Groq和OpenAI）的应用。\n\n此外，我还使用Python、JavaScript和SQL等编程语言，构建了多个AI项目，包括RAG驱动的聊天机器人和数字孪生框架。我的经验告诉我，AI技术可以有效地解决实际的商业问题，我非常热衷于继续探索和应用AI技术，以推动商业创新和发展。\n...",
+      "fullAnswerLength": 495,
+      "duration": 1511,
+      "relevanceScore": 67,
+      "qualityScore": 100,
+      "keywordsFound": [
+        "RAG",
+        "LLM",
+        "OpenAI",
+        "Groq"
+      ],
+      "keywordsMissing": [
+        "embedding",
+        "vector"
+      ],
+      "passed": true
+    },
+    {
+      "category": "技术技能评估",
+      "query": "Douglas 使用过哪些数据库和云服务？",
+      "answer": "我使用过几种数据库和云服务。在数据库方面，我有经验使用Vector Databases，如ChromaDB和Upstash。这些数据库对于存储和查询复杂的向量数据非常有用，尤其是在构建RAG系统和LLM集成时。\n\n在云服务方面，我使用过Vercel来部署我的Web应用程序，并使用GitHub Actions来自动化我的CI/CD流程。此外，我还使用过Git来管理我的代码版本。\n\n在我的AI Builder Intern工作期间，我成功部署了一个生产级的数字孪生平台，利用这些技术来实现高性能和低延迟的查询。例如，我的数字孪生平台实现了95%以上的响应准确率和小于2秒的查询延迟，这对我的客户来说是...",
+      "fullAnswerLength": 308,
+      "duration": 1173,
+      "relevanceScore": 75,
+      "qualityScore": 100,
+      "keywordsFound": [
+        "Upstash",
+        "Vercel",
+        "Vector Database"
+      ],
+      "keywordsMissing": [
+        "Redis"
+      ],
+      "passed": true
+    },
+    {
+      "category": "领导力和协作",
+      "query": "给我一个 Douglas 展示领导力的例子。",
+      "answer": "在我担任Ausbis Consulting的AI Builder实习生期间，我领导了一个小团队开发一个数字孪生平台。我的角色是将业务需求转化为技术解决方案，并确保团队按时交付高质量的结果。\n\n情景是这样的：我们有一个紧迫的截止日期，要向客户展示一个可行的原型，但我们团队中的一名开发人员因为家庭紧急情况而缺席。团队的士气开始低落，我们担心无法按时完成任务。\n\n作为团队领导，我采取了主动权，召开了一次团队会议来讨论挑战和潜在的解决方案。我鼓励每个人分享他们的想法和顾虑，并积极倾听他们的意见。然后，我协助团队优先处理任务，重新分配工作量，并制定了一个修订的项目计划，以确保我们能够按时完成任务。\n\n为...",
+      "fullAnswerLength": 620,
+      "duration": 2437,
+      "relevanceScore": 40,
+      "qualityScore": 75,
+      "keywordsFound": [
+        "团队",
+        "领导"
+      ],
+      "keywordsMissing": [
+        "协调",
+        "指导",
+        "STAR"
+      ],
+      "passed": false
+    },
+    {
+      "category": "领导力和协作",
+      "query": "Douglas 如何与跨职能团队合作？",
+      "answer": "As a Business Analytics graduate student and AI systems developer, I've had the opportunity to work with cross-functional teams in various settings. In my recent internship at Ausbis Consulting, I collaborated with a team of data scientists, software engineers, and business stakeholders to deploy a ...",
+      "fullAnswerLength": 2087,
+      "duration": 1688,
+      "relevanceScore": 0,
+      "qualityScore": 75,
+      "keywordsFound": [],
+      "keywordsMissing": [
+        "沟通",
+        "协作",
+        "团队",
+        "跨部门"
+      ],
+      "passed": true
+    },
+    {
+      "category": "领导力和协作",
+      "query": "Douglas 有没有指导或培训其他团队成员的经验？",
+      "answer": "作为 AI Builder Intern 在 Ausbis Consulting，我没有直接指导或培训其他团队成员的经验。然而，在我的 Master of Business Analytics 学习过程中，我有机会与同学合作完成团队项目。在这些项目中，我经常承担领导或协调者的角色，帮助团队成员理解和实施 AI 模型和数据分析技术。\n\n例如，在一个团队项目中，我们需要开发一个数字孪生框架来解决供应链问题。我负责引导团队了解如何使用 Vector Databases（如 ChromaDB）和 LLM Integration（如 Groq）来实现该框架。在这个过程中，我与团队成员合作，解释技术概念，...",
+      "fullAnswerLength": 405,
+      "duration": 1465,
+      "relevanceScore": 50,
+      "qualityScore": 75,
+      "keywordsFound": [
+        "指导",
+        "培训"
+      ],
+      "keywordsMissing": [
+        "mentor",
+        "分享"
+      ],
+      "passed": true
+    },
+    {
+      "category": "问题解决能力",
+      "query": "描述 Douglas 解决过的一个技术难题。",
+      "answer": "我记得在Ausbis Consulting担任AI Builder Intern期间，我遇到了一个技术难题。我们正在开发一个数字孪生平台，旨在实现95%以上的响应准确率和低于2秒的查询延迟。然而，我们的初始模型在处理大型数据集时遇到了性能瓶颈，导致查询延迟增加到5秒以上。\n\n为了解决这个问题，我首先分析了系统的瓶颈并确定了问题的根源。我发现我们的向量数据库（ChromaDB）配置不合适，导致查询速度变慢。我与团队合作重新配置数据库并优化查询参数。\n\n接下来，我实施了RAG系统的缓存机制，以减少对数据库的查询次数。这涉及到使用Python和JavaScript编写自定义代码，以实现缓存逻辑并将其...",
+      "fullAnswerLength": 492,
+      "duration": 1746,
+      "relevanceScore": 75,
+      "qualityScore": 100,
+      "keywordsFound": [
+        "挑战",
+        "解决方案",
+        "优化"
+      ],
+      "keywordsMissing": [
+        "改进"
+      ],
+      "passed": true
+    },
+    {
+      "category": "问题解决能力",
+      "query": "Douglas 如何处理项目中的性能瓶颈？",
+      "answer": "在我的AI Builder Intern角色中，我曾经处理过一个项目，涉及部署一个生产级别的数字孪生平台。在这个项目中，我遇到了性能瓶颈，特别是在查询延迟方面。为了解决这个问题，我采取了以下步骤：\n\n首先，我分析了系统的架构和代码，找出了瓶颈的根源。我发现问题出在vector数据库的查询优化上。然后，我开始研究和实验不同的优化技术，例如索引、缓存和并行处理。\n\n接着，我使用了ChromaDB和Upstash等vector数据库工具，来优化查询性能。我还利用了Groq和OpenAI等LLM集成工具，来提高系统的智能化程度。\n\n通过这些优化措施，我成功地将查询延迟从5秒减少到不到2秒，提高了系统的...",
+      "fullAnswerLength": 431,
+      "duration": 1749,
+      "relevanceScore": 80,
+      "qualityScore": 100,
+      "keywordsFound": [
+        "性能",
+        "优化",
+        "延迟",
+        "缓存"
+      ],
+      "keywordsMissing": [
+        "基准"
+      ],
+      "passed": true
+    },
+    {
+      "category": "问题解决能力",
+      "query": "Douglas 遇到过哪些复杂的系统架构挑战？",
+      "answer": "作为一名具有国际会计经验和人工智能系统开发技能的专业人士，我曾经遇到过多个复杂的系统架构挑战。特别是在我担任Ausbis Consulting的AI Builder Intern期间，我负责部署一个生产级的数字孪生平台。\n\n我记得最大的挑战之一是实现高响应准确率和低查询延迟的同时，确保系统的可扩展性和稳定性。为了解决这个问题，我采用了RAG系统和向量数据库（如ChromaDB和Upstash）的组合，并利用LLM集成（如Groq和OpenAI）来优化系统的性能。\n\n通过仔细设计和优化系统架构，我成功地实现了95%以上的响应准确率和小于2秒的查询延迟，同时展示了高级的AI能力。这一成就不仅提高了...",
+      "fullAnswerLength": 444,
+      "duration": 1479,
+      "relevanceScore": 100,
+      "qualityScore": 100,
+      "keywordsFound": [
+        "架构",
+        "设计",
+        "扩展",
+        "集成"
+      ],
+      "keywordsMissing": [],
+      "passed": true
+    },
+    {
+      "category": "职业发展",
+      "query": "Douglas 的职业目标是什么？",
+      "answer": "我的职业目标是成为一名能够bridging the gap between business operations and AI technology的专业人士。我希望能够利用我的国际会计经验和AI系统开发技能，打造智能解决方案，解决真实的商业问题。我的目标是成为一名领先的AI系统开发者，能够帮助企业提高效率，降低成本，提高决策能力。\n\n在短期内，我希望能够找到一份能够让我发挥我的技能和经验的工作，例如AI Builder或Business Analytics Consultant的职位。我也希望能够继续学习和发展我的技能，特别是在AI和数据系统开发领域。\n\n在长期内，我希望能够成为一名领导者...",
+      "fullAnswerLength": 401,
+      "duration": 1203,
+      "relevanceScore": 75,
+      "qualityScore": 100,
+      "keywordsFound": [
+        "目标",
+        "发展",
+        "学习"
+      ],
+      "keywordsMissing": [
+        "成长"
+      ],
+      "passed": true
+    },
+    {
+      "category": "职业发展",
+      "query": "Douglas 目前在学习什么新技术？",
+      "answer": "我目前正在学习和深入研究与人工智能（AI）和机器学习（ML）相关的技术，尤其是在向量数据库（如 ChromaDB 和 Upstash）以及大型语言模型（LLM）集成方面。同时，我也在探索如何将这些技术应用于实际项目中，例如构建数字孪生和全栈AI应用。\n\n最近，我对RAG系统（Retrieve, Augment, Generate）特别感兴趣，因为它们能够有效地将检索、增强和生成功能结合起来，提供更准确和高效的解决方案。通过学习和应用这些新技术，我希望能够更好地解决实际业务问题，并进一步提高我的AI系统开发能力。\n\n在学习这些新技术的过程中，我也在思考如何将它们与我的商业分析背景相结合，创造出既...",
+      "fullAnswerLength": 361,
+      "duration": 1354,
+      "relevanceScore": 80,
+      "qualityScore": 100,
+      "keywordsFound": [
+        "学习",
+        "AI",
+        "RAG",
+        "LLM"
+      ],
+      "keywordsMissing": [
+        "MCP"
+      ],
+      "passed": true
+    },
+    {
+      "category": "职业发展",
+      "query": "Douglas 的工作经历是如何发展的？",
+      "answer": "我很高兴分享我的工作经历。作为一名会计专业人士，我最初在BF Suma Pharmaceuticals Inc担任海外会计执行官，工作了近2年（从2022年7月到2024年4月）。在那里，我成功地将月度结账时间从15天缩短到7天，实现了100%的本地税务申报合规性，并在2023年审计中消除了所有审计发现。\n\n之后，我决定转型到人工智能和数据系统开发领域，并在澳大利亚昆士兰理工大学攻读商业分析硕士学位。近期，我在Ausbis Consulting担任人工智能开发实习生（从2025年9月到2025年11月），我成功部署了一个生产级的数字孪生平台，实现了95%以上的响应准确率、不到2秒的查询延迟，并...",
+      "fullAnswerLength": 383,
+      "duration": 1329,
+      "relevanceScore": 0,
+      "qualityScore": 75,
+      "keywordsFound": [],
+      "keywordsMissing": [
+        "经验",
+        "职位",
+        "公司",
+        "成长"
+      ],
+      "passed": true
+    },
+    {
+      "category": "行业知识",
+      "query": "Douglas 对 AI Agent 和 RAG 系统的理解如何？",
+      "answer": "我对 AI Agent 和 RAG 系统有深入的理解和实践经验。在我的职业生涯中，我曾参与过多个 AI 项目，包括构建生产级别的 RAG 系统和数字孪生框架。这些经验使我对 AI Agent 和 RAG 系统的技术实现和商业应用有了深刻的理解。\n\n具体来说，我曾使用 Python、JavaScript 和 SQL 等编程语言开发 AI 应用，并且有使用 Vector Databases（如 ChromaDB 和 Upstash）和 LLM Integration（如 Groq 和 OpenAI）等先进 AI 技术的经验。这些技能使我能够设计和实现高效、智能的 AI 解决方案，以解决实际的商业问...",
+      "fullAnswerLength": 582,
+      "duration": 1622,
+      "relevanceScore": 60,
+      "qualityScore": 100,
+      "keywordsFound": [
+        "RAG",
+        "Agent",
+        "AI"
+      ],
+      "keywordsMissing": [
+        "检索",
+        "embedding"
+      ],
+      "passed": true
+    },
+    {
+      "category": "行业知识",
+      "query": "Douglas 在全栈开发方面有什么经验？",
+      "answer": "我在全栈开发方面拥有丰富的经验，尤其是在构建AI驱动的应用程序方面。我曾使用Next.js、React和Tailwind CSS等技术来开发Web应用程序，同时也使用REST APIs来进行后端开发。此外，我还使用过Python、JavaScript和SQL等编程语言来进行数据分析和处理。\n\n在我的AI Builder Intern工作期间，我成功部署了一个生产级的数字孪生平台，实现了95%以上的响应准确率和低于2秒的查询延迟。这一项目让我能够深入了解全栈开发的各个方面，从前端界面设计到后端数据处理和AI模型集成。\n\n我相信我的全栈开发经验能够帮助我更好地理解和解决业务问题，同时也让我能够更有...",
+      "fullAnswerLength": 322,
+      "duration": 1246,
+      "relevanceScore": 80,
+      "qualityScore": 100,
+      "keywordsFound": [
+        "前端",
+        "后端",
+        "React",
+        "API"
+      ],
+      "keywordsMissing": [
+        "Node.js"
+      ],
+      "passed": true
+    },
+    {
+      "category": "行业知识",
+      "query": "Douglas 对现代 DevOps 和 CI/CD 了解多少？",
+      "answer": "作为一名拥有国际会计经验和人工智能系统开发技能的商业分析毕业生，我对现代DevOps和CI/CD有一个很好的理解。 \n\n在我的AI Builder实习期间，我有机会使用GitHub Actions和Vercel进行CI/CD管道的开发和部署。我成功部署了一个生产级的数字孪生平台，实现了95%以上的响应准确率和小于2秒的查询延迟。这个项目让我对自动化测试、持续集成和持续部署的重要性有了深刻的理解。\n\n此外，我的技术技能包括Python、JavaScript、SQL和云部署，这使我能够与DevOps团队合作，设计和实施高效的CI/CD流水线。我的经验告诉我，现代DevOps和CI/CD不仅仅是关于...",
+      "fullAnswerLength": 475,
+      "duration": 1572,
+      "relevanceScore": 80,
+      "qualityScore": 100,
+      "keywordsFound": [
+        "部署",
+        "Vercel",
+        "GitHub",
+        "CI/CD"
+      ],
+      "keywordsMissing": [
+        "automation"
+      ],
+      "passed": true
+    },
+    {
+      "category": "文化契合度",
+      "query": "Douglas 的工作方式和价值观是什么？",
+      "answer": "作为一名具有国际会计经验和AI系统开发技能的专业人士，我认为我的工作方式和价值观是高度重视分析能力、创造力和团队合作的。\n\n在我的职业生涯中，我始终致力于打造高效的解决方案，以满足业务需求。例如，在我担任海外会计执行官期间，我成功地将月度结账时间从15天缩短到7天，并实现了100%的当地税务申报合规性。这种成就不仅体现了我的分析能力，还体现了我对细节的关注和对高质量结果的追求。\n\n同时，我也非常重视团队合作和沟通。在我的AI构建实习期间，我与团队成员密切合作，成功部署了生产级别的数字孪生平台，取得了95%以上的响应准确率和子2秒的查询延迟。这种合作不仅提高了项目的质量，还增强了团队的凝聚力和信...",
+      "fullAnswerLength": 517,
+      "duration": 1701,
+      "relevanceScore": 60,
+      "qualityScore": 100,
+      "keywordsFound": [
+        "专业",
+        "质量",
+        "创新"
+      ],
+      "keywordsMissing": [
+        "用户",
+        "协作"
+      ],
+      "passed": true
+    },
+    {
+      "category": "文化契合度",
+      "query": "Douglas 如何平衡技术深度和业务价值？",
+      "answer": "作为一名具有会计背景和AI系统开发经验的业务分析师，我认为平衡技术深度和业务价值至关重要。\n\n在我的AI Builder Intern工作中，我负责部署生产级别的数字孪生平台。为了平衡技术深度和业务价值，我采取了以下步骤：\n\n首先，我深入了解了业务需求和目标，确保我理解了客户的痛点和期望。这使我能够设计出满足业务需求的技术解决方案。\n\n其次，我利用我的技术技能，例如RAG系统、向量数据库和LLM集成，开发出高效和准确的数字孪生平台。通过使用这些技术，我能够实现95%以上的响应准确率和子2秒的查询延迟。\n\n最后，我与业务团队密切合作，确保技术解决方案与业务目标保持一致，并能够为业务带来真正的价值...",
+      "fullAnswerLength": 520,
+      "duration": 1692,
+      "relevanceScore": 60,
+      "qualityScore": 100,
+      "keywordsFound": [
+        "业务",
+        "价值",
+        "技术"
+      ],
+      "keywordsMissing": [
+        "影响",
+        "用户"
+      ],
+      "passed": true
+    },
+    {
+      "category": "文化契合度",
+      "query": "Douglas 对远程工作和团队协作的看法？",
+      "answer": "作为一名具有国际会计经验和AI系统开发技能的专业人士，我认为远程工作和团队协作是现代工作环境中的重要组成部分。在我的之前的工作中，比如在BFSuma Pharmaceuticals Inc担任海外会计执行官时，我曾经与分布在不同地区的团队成员进行合作，通过远程会议和协作工具实现了高效的沟通和项目管理。\n\n在我的最近的工作经历中，例如在Ausbis Consulting担任AI Builder Intern时，我也曾参与过远程团队项目的开发，利用GitHub Actions、Git等工具进行代码管理和版本控制。这些经历使我深刻理解了远程工作和团队协作的重要性，以及如何利用技术工具来提高协作效率和...",
+      "fullAnswerLength": 486,
+      "duration": 1670,
+      "relevanceScore": 100,
+      "qualityScore": 100,
+      "keywordsFound": [
+        "远程",
+        "沟通",
+        "协作",
+        "工具"
+      ],
+      "keywordsMissing": [],
+      "passed": true
+    },
+    {
+      "category": "成就量化",
+      "query": "Douglas 在项目中取得了哪些可衡量的成果？",
+      "answer": "在我最近的AI Builder Intern工作中，我成功部署了一个生产级的数字孪生平台，取得了以下可衡量的成果：\n\n* 响应准确率达到95%以上\n* 查询延迟小于2秒\n* 展示了高级AI能力的专业作品集，用于向潜在雇主展示我的技能\n\n此外，在我之前的Overseas Accounting Executive工作中，我也取得了一些可衡量的成果：\n\n* 将月度结账时间从15天缩短到7天\n* 实现了100%的遵守当地税务申报规定\n* 消除了2023年审计中的所有审计发现\n\n这些成果展示了我的工作效率、准确性和专业能力，我相信这些技能将在未来的工作中继续发挥作用。",
+      "fullAnswerLength": 282,
+      "duration": 1206,
+      "relevanceScore": 17,
+      "qualityScore": 75,
+      "keywordsFound": [
+        "%"
+      ],
+      "keywordsMissing": [
+        "提升",
+        "优化",
+        "减少",
+        "增加",
+        "数据"
+      ],
+      "passed": true
+    },
+    {
+      "category": "成就量化",
+      "query": "Douglas 的数字孪生项目有什么具体的技术指标？",
+      "answer": "在我的数字孪生项目中，我实现了以下几个具体的技术指标：\n\n1. **95%+ 的响应准确率**：我的数字孪生平台能够以很高的准确率响应用户的查询，这得益于我对RAG系统和LLM集成的深入理解。\n2. **子2秒的查询延迟**：我优化了平台的性能，使得用户的查询能够在短短2秒内获得响应，这大大提高了用户体验。\n3. **专业的作品集**：我创建了一个专业的作品集来展示我的数字孪生平台的能力，这有助于我向潜在的雇主展示我的技术能力和商业价值。\n\n这些技术指标不仅体现了我的技术能力，也反映了我对用户体验和商业价值的关注。作为一个数字孪生开发者，我始终致力于创造能够带来实质性商业价值的智能解决方案。",
+      "fullAnswerLength": 299,
+      "duration": 1216,
+      "relevanceScore": 80,
+      "qualityScore": 100,
+      "keywordsFound": [
+        "RAG",
+        "响应",
+        "准确",
+        "性能"
+      ],
+      "keywordsMissing": [
+        "向量"
+      ],
+      "passed": true
+    },
+    {
+      "category": "成就量化",
+      "query": "Douglas 如何衡量和展示他的工作影响力？",
+      "answer": "作为一名业务分析和AI系统开发专业人士，我通过量化指标和具体成果来衡量和展示我的工作影响力。\n\n例如，在我最近的AI Builder Intern职位中，我成功部署了一个生产级的数字孪生平台，实现了95%以上的响应准确率和小于2秒的查询延迟。此外，我还创建了一个专业的作品集，展示了我的高级AI能力，以便向潜在雇主展示我的技术能力。\n\n在我的海外会计执行官职位中，我通过优化会计流程，减少了每月结账时间从15天到7天，实现了100%的本地税务申报合规性，并消除了2023年审计中的所有审计发现。这些成果不仅展示了我的技术能力，也体现了我对业务运营的理解和对工作质量的关注。\n\n我相信，通过量化指标和具...",
+      "fullAnswerLength": 344,
+      "duration": 1289,
+      "relevanceScore": 60,
+      "qualityScore": 100,
+      "keywordsFound": [
+        "指标",
+        "影响",
+        "成果"
+      ],
+      "keywordsMissing": [
+        "结果",
+        "改进"
+      ],
+      "passed": true
+    }
+  ]
+}
