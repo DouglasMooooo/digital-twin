@@ -46,7 +46,7 @@
 | ✅ GitHub Repository | Complete | https://github.com/DouglasMooooo/digital-twin |
 | ✅ Live Demo | Complete | https://douglasmo.vercel.app |
 | ✅ Technical Documentation Package | Complete | 4 detailed documents |
-| ✅ MCP Server | Complete | mcp-server/dist/index.js |
+| ✅ MCP Server | Complete | claude-mcp-server/dist/index.js |
 | ✅ Optimization Report | Complete | TEST_RESULTS.json + PERFORMANCE_REPORT.md |
 
 **Completion Rate: 10/10 (100%)**

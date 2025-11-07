@@ -44,7 +44,7 @@
 
 **预期结果**:
 - ✅ 工作区打开
-- ✅ 可以看到 `mcp-server/` 文件夹
+- ✅ 可以看到 `claude-mcp-server/` 文件夹
 - ✅ 右下角可能显示 MCP 连接通知
 
 ---
@@ -300,12 +300,12 @@
 **症状**: 通知显示 "MCP connection failed"
 
 **可能原因**:
-- 工作区不包含 mcp-server/
+- 工作区不包含 claude-mcp-server/
 - MCP 服务器文件不存在
 
 **解决方法**:
 1. 确认在 `d:\上课\Ai agent\digital twin` 工作区中
-2. 检查 `mcp-server/index.ts` 存在
+2. 检查 `claude-mcp-server/index.ts` 存在
 3. 查看详细错误消息
 
 **备注**: 即使 MCP 失败，扩展仍应工作（使用模拟数据）

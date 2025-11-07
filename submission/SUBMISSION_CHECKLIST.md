@@ -12,7 +12,7 @@
 | 6 | GitHub repository URL | https://github.com/DouglasMooooo/digital-twin | ✅ Live | Full code available |
 | 7 | Live demo URL or comprehensive video (5-7 min) | https://douglasmo.vercel.app | ✅ Active | Can record video |
 | 8 | Technical documentation package | `TECHNICAL_ARCHITECTURE.md`, `TESTING_GUIDE.md`, `PERFORMANCE_REPORT.md`, `TEST_ANALYTICS.md` | ✅ Complete | Comprehensive docs |
-| 9 | MCP server foundation with integration testing | `mcp-server/dist/index.js` | ✅ Tested | 8 tools, 5 resources |
+| 9 | MCP server foundation with integration testing | `claude-mcp-server/dist/index.js` | ✅ Tested | 8 tools, 5 resources |
 | 10 | Professional profile optimization report | `TEST_RESULTS.json` | ✅ Complete | 95.2% satisfaction |
 
 ---
@@ -57,7 +57,7 @@
 ```
 1. GitHub Repository: https://github.com/DouglasMooooo/digital-twin
 2. Live Demo: https://douglasmo.vercel.app
-3. MCP Server: https://github.com/DouglasMooooo/digital-twin/tree/main/mcp-server
+3. MCP Server: https://github.com/DouglasMooooo/digital-twin/tree/main/claude-mcp-server
 4. Test Suite: https://github.com/DouglasMooooo/digital-twin/blob/main/scripts/test-recruiter-queries.mjs
 ```
 
@@ -113,7 +113,7 @@ Before submitting, verify:
 - [ ] TECHNICAL_ARCHITECTURE.md is comprehensive
 - [ ] digitaltwin.json has 15+ STAR achievements
 - [ ] README.md provides clear overview
-- [ ] MCP server is in mcp-server/dist/index.js
+- [ ] MCP server is in claude-mcp-server/dist/index.js
 - [ ] IMPLEMENTATION_ROADMAP.md covers Week 6-8
 - [ ] All URLs are working
 

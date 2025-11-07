@@ -110,8 +110,8 @@ npm run package
 **症状**: 响应说"无法连接MCP服务器"
 
 **解决**:
-1. 确保在包含 `mcp-server/` 的工作区中
-2. 检查 `mcp-server/index.ts` 存在
+1. 确保在包含 `claude-mcp-server/` 的工作区中
+2. 检查 `claude-mcp-server/index.ts` 存在
 3. 查看 VS Code 通知栏的错误信息
 
 ### TypeScript 错误

@@ -22,7 +22,7 @@
 | 6 | GitHub Repository URL | https://github.com/DouglasMooooo/digital-twin | ✅ |
 | 7 | Live Demo URL | https://douglasmo.vercel.app | ✅ |
 | 8 | Technical Documentation Package | `TECHNICAL_ARCHITECTURE.md`, `TESTING_GUIDE.md`, `PERFORMANCE_REPORT.md`, `TEST_ANALYTICS.md` | ✅ |
-| 9 | MCP Server + Integration Tests | mcp-server/dist/index.js (Compiled) | ✅ |
+| 9 | MCP Server + Integration Tests | claude-mcp-server/dist/index.js (Compiled) | ✅ |
 | 10 | Professional Profile Optimization Report | `TEST_RESULTS.json` | ✅ |
 
 ---
@@ -173,7 +173,7 @@ Based on evaluation standards:
 
 ### Development Repository
 - **Main Repository**: https://github.com/DouglasMooooo/digital-twin
-- **MCP Server**: https://github.com/DouglasMooooo/digital-twin/tree/main/mcp-server
+- **MCP Server**: https://github.com/DouglasMooooo/digital-twin/tree/main/claude-mcp-server
 - **Test Suite**: https://github.com/DouglasMooooo/digital-twin/blob/main/scripts/test-recruiter-queries.mjs
 
 ### Live Demo
@@ -192,7 +192,7 @@ Based on evaluation standards:
 
 ### Step 2: View Implementation
 1. Visit GitHub repository: https://github.com/DouglasMooooo/digital-twin
-2. Check MCP server implementation in mcp-server/ directory
+2. Check MCP server implementation in claude-mcp-server/ directory
 3. Review web app code in app/ directory
 
 ### Step 3: Test Functionality

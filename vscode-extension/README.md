@@ -67,7 +67,7 @@ Then install the generated `.vsix` file.
 ## Setup
 
 1. **Ensure MCP Server is in your workspace:**
-   - The extension looks for `mcp-server/index.ts` in your workspace root
+   - The extension looks for `claude-mcp-server/index.ts` in your workspace root
    - The digital twin MCP server should be properly configured
 
 2. **Enable MCP Connection:**
@@ -194,10 +194,10 @@ The extension uses the following VS Code APIs:
 ### "MCP connection failed"
 
 **Solution:**
-1. Ensure `mcp-server/index.ts` exists in workspace root
+1. Ensure `claude-mcp-server/index.ts` exists in workspace root
 2. Check that MCP server dependencies are installed:
    ```bash
-   cd mcp-server
+   cd claude-mcp-server
    npm install
    ```
 3. Run command: `Douglas Digital Twin: Enable MCP Connection`

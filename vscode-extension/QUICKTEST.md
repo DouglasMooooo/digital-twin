@@ -65,7 +65,7 @@
 2. 重新加载窗口：**Ctrl+Shift+P** → "Reload Window"
 
 ### MCP 连接失败
-- 确保在包含 `mcp-server/` 的工作区中
+- 确保在包含 `claude-mcp-server/` 的工作区中
 - 查看通知栏的错误信息
 
 ### 需要重新编译

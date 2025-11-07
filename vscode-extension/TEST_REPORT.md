@@ -261,7 +261,7 @@ vscode-extension/
 - [ ] 点击建议触发新查询
 
 #### 5.6 MCP 集成测试
-1. [ ] 打开包含 mcp-server/ 的工作区
+1. [ ] 打开包含 claude-mcp-server/ 的工作区
 2. [ ] 检查通知："MCP connection established!"
 3. [ ] 查询返回真实数据（不是模拟数据）
 4. [ ] 公司名、项目名正确
