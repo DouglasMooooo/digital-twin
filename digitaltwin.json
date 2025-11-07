@@ -1,10 +1,10 @@
 {
   "personal": {
     "name": "Douglas Mo",
-    "title": "Business Analytics Graduate | AI Systems Developer",
+    "title": "Business Analytics Graduate | AI Systems Developer | Accounting Executive",
     "location": "Brisbane, Australia",
     "summary": "Analytically-driven professional transitioning from financial accounting to AI/data systems development. Master's student in Business Analytics with hands-on experience building production RAG systems, digital twins, and full-stack AI applications. Combines 2+ years of international accounting experience with cutting-edge AI development skills including vector databases, LLM integration, and cloud deployment.",
-    "elevator_pitch": "I'm Douglas Mo, a Business Analytics graduate student who bridges the gap between business operations and AI technology. With international accounting experience and recent training in AI systems development, I build intelligent solutions that solve real business problems—from RAG-powered chatbots to digital twin frameworks. My unique background helps me understand both the technical implementation and business impact of AI systems.",
+    "elevator_pitch": "I'm Douglas Mo, bridging business operations and AI technology. With 2+ years international accounting experience (managing $12M annual revenue) and intensive AI development training, I build production-grade intelligent systems that solve real business problems. My unique cross-functional background—from reducing distributor churn 27% at BF Suma to deploying 95% accuracy RAG systems—helps me understand both technical implementation and measurable business impact. I turn data into decisions and AI into ROI.",
     "contact": {
       "email": "d157156@gmail.com",
       "phone": "0434 001 262",
@@ -34,157 +34,154 @@
       "team_structure": "10-week intensive bootcamp cohort, collaborated with 20+ peers and industry mentors",
       "achievements_star": [
         {
-          "situation": "Organizations struggle to prepare professionals for AI-driven interviews and career transitions with traditional static resume approaches",
-          "task": "Design and develop an intelligent Digital Twin system that could simulate interview scenarios and provide personalized responses based on candidate profiles",
-          "action": "Built end-to-end RAG system using Upstash Vector for semantic search, Groq API for LLM integration, and Next.js for web deployment. Implemented STAR methodology framework for structured achievement documentation. Created MCP server architecture for multi-platform integration with VS Code and Claude Desktop.",
-          "result": "Successfully deployed production-grade digital twin platform with 95%+ response accuracy, sub-2-second query latency, and professional portfolio showcasing advanced AI capabilities to potential employers"
+          "category": "Production Digital Twin System",
+          "situation": "Need production-grade AI system demonstrating RAG capabilities for professional portfolio",
+          "task": "Build and deploy full-stack Digital Twin interview assistant with semantic search and multi-LLM support",
+          "action": "Designed RAG pipeline with Upstash Vector and Groq API; deployed via Vercel and GitHub Actions. Created 5+ AI projects showcasing end-to-end deployment and cost-optimized infrastructure.",
+          "result": "Built production-grade Digital Twin with 95% accuracy and <2s response time. Designed RAG pipeline with Upstash Vector and Groq API; deployed via Vercel and GitHub Actions.",
+          "metrics": {
+            "accuracy": "95%",
+            "response_time": "<2 seconds",
+            "projects_completed": "5+",
+            "technologies_mastered": "15+"
+          }
         },
         {
-          "situation": "Need to demonstrate practical AI development skills beyond theoretical knowledge for competitive job market entry",
-          "task": "Build production-ready AI applications with industry-standard tools and deployment practices",
-          "action": "Developed local and cloud RAG systems using ChromaDB and Upstash Vector, integrated authentication and analytics into Next.js applications, implemented CI/CD pipelines with GitHub Actions and Vercel deployment, optimized infrastructure for cost-efficiency",
-          "result": "Created portfolio of 5+ deployed AI projects demonstrating full-stack capabilities from database design to production monitoring, validated through successful bootcamp completion"
+          "category": "MCP Server Integration",
+          "situation": "Required standardized protocol for AI model integration across VS Code and Claude Desktop",
+          "task": "Build Model Context Protocol server with 20+ tools for digital twin capabilities",
+          "action": "Developed Node.js MCP Protocol with VS Code and Claude Desktop integration using TypeScript and @modelcontextprotocol/sdk",
+          "result": "Built interview simulation tool from Seek.com.au data for semantic job matching",
+          "metrics": {
+            "tools_developed": "20+",
+            "integration_platforms": "2 (VS Code + Claude Desktop)"
+          }
         },
         {
-          "situation": "Interview preparation requires realistic simulation with actual job market data",
-          "task": "Create interview simulation system using real job postings and recruiter query patterns",
-          "action": "Scraped and processed Seek.com.au job data, designed vector embeddings for semantic job matching, built recruiter-style query system with contextual follow-up questions",
-          "result": "Developed comprehensive interview prep tool covering behavioral, technical, and situational questions tailored to Australian job market"
-        },
-        {
-          "situation": "AI Bootcamp team members struggled with inconsistent code quality, poor error handling, lack of fairness analysis in ML projects, and low maintainability affecting project deliverables",
-          "task": "Mentor 3 peers on engineering best practices, statistical rigor, and code quality standards to improve their assignment outcomes",
-          "action": "Conducted 1-on-1 code review sessions identifying issues (weak statistical foundations, missing error handling, superficial fairness analysis), provided step-by-step guidance on CRISP-DM methodology, shared GitHub Copilot techniques for productivity, helped debug ML pipelines and improve model evaluation metrics, documented best practices checklist for team reference",
-          "result": "All 3 mentees achieved HD (High Distinction) grades on assignments (up from projected Credit/Distinction), improved code quality scores by 40%+, team members adopted systematic approach to ML projects, established peer learning culture in cohort"
-        },
-        {
-          "situation": "Victoria University group project team of 4 students had varying technical capabilities (statistical foundations, math fundamentals, data analysis skills) creating collaboration challenges and uneven workload distribution",
-          "task": "Lead project architecture planning and task allocation ensuring all members contribute effectively while delivering high-quality academic work",
-          "action": "Designed overall system architecture and broke down project into modular tasks matching skill levels (data collection, visualization, analysis, reporting), created shared GitHub repository with clear documentation, conducted knowledge transfer sessions on statistical concepts (hypothesis testing, regression analysis), established daily stand-ups for progress tracking, implemented peer review process before final submission",
-          "result": "Team delivered HD-level project with balanced contributions from all members, improved team velocity by 45% through clear structure, received professor recognition for well-architected solution and collaborative approach, all team members gained confidence in statistical analysis"
+          "category": "AI/ML Projects Portfolio",
+          "situation": "Need diverse project portfolio demonstrating end-to-end AI/ML capabilities",
+          "task": "Complete 5+ production-quality projects across RAG, ML classification, and analytics",
+          "action": "Built Job Market RAG System (Seek.com scraping + Pinecone embeddings), Loan Approval ML Model (91% recall with XGBoost), Multi-LLM Comparison Tool (ChatGPT/Claude/Gemini/Groq), Financial Analytics Dashboard (Streamlit + Monte Carlo simulations)",
+          "result": "Created 5+ AI projects showcasing end-to-end deployment and cost-optimized infrastructure",
+          "metrics": {
+            "projects_completed": "5+",
+            "ml_model_recall": "91%",
+            "technologies_used": "Python, TypeScript, React, Vector DBs, LLMs, Cloud platforms"
+          }
         }
       ],
       "technical_skills_used": [
-        "TypeScript",
-        "Next.js",
-        "Python",
-        "Upstash Vector",
-        "ChromaDB",
-        "Groq API",
-        "Vercel",
-        "GitHub Actions",
-        "VS Code Insiders",
-        "Claude Desktop",
-        "LangChain"
+        "Next.js 14 (App Router, Edge Runtime)",
+        "TypeScript, React, Tailwind CSS",
+        "Upstash Vector, ChromaDB, Pinecone",
+        "Groq API, OpenAI, LLM Integration",
+        "Model Context Protocol (MCP)",
+        "Python (scikit-learn, pandas, Streamlit)",
+        "Vercel, GitHub Actions CI/CD",
+        "PostgreSQL, Redis"
       ],
       "leadership_examples": [
-        "Led peer code reviews during bootcamp projects",
-        "Shared best practices for RAG system optimization with cohort",
-        "Documented comprehensive system architecture for knowledge transfer"
+        "Independently architected and deployed production RAG system",
+        "Presented project demos to consulting team with technical documentation",
+        "Mentored 3 peers on ML best practices at Victoria University, improving grades to HD level"
       ],
       "projects_delivered": [
-        "Digital Twin professional profiling system",
-        "RAG-powered interview chatbot",
-        "MCP server for VS Code/Claude integration",
-        "Production portfolio website with analytics"
+        "Digital Twin Framework for Professional Profile - Built production RAG system with Next.js and vector databases",
+        "Interview Preparation RAG System - Implemented semantic search and LLM integration for interview Q&A",
+        "Business Analytics Dashboard Development - Created interactive Power BI dashboards for business insights",
+        "Predictive Analytics for Customer Segmentation - Applied machine learning algorithms for business decisions",
+        "Job Market RAG System (Seek.com scraping + semantic matching)",
+        "Loan Approval ML Model (91% Recall, 4-6 mo ROI recovery)"
       ]
     },
     {
       "company": "BF Suma Pharmaceuticals Inc",
       "title": "Overseas Accounting Executive",
-      "duration": "July 2022 - April 2024 (1 year 10 months)",
-      "location": "Los Angeles, USA / Nairobi, Kenya",
-      "company_context": "International pharmaceutical company with operations across Africa and North America",
-      "team_structure": "Led entire Kenya financial team (8 members), collaborated cross-functionally with marketing team, reported to Regional Finance Manager in USA",
+      "duration": "Jul 2022 - Apr 2024 (1 year 10 months)",
+      "location": "Los Angeles / Nairobi",
+      "company_context": "Led 8-person finance team, reporting to Regional Manager. Managed $12M annual revenue.",
+      "team_structure": "Led 8-person finance team across accounting, AR/AP, and reporting functions",
       "achievements_star": [
         {
-          "situation": "Kenya branch lacked standardized accounting processes, leading to compliance risks and delayed financial reporting",
-          "task": "Establish full-cycle accounting operations compliant with local regulations and company policies",
-          "action": "Designed and implemented standardized accounting workflows, conducted monthly reconciliations, established relationships with local tax authorities and banks, coordinated quarterly audits",
-          "result": "Reduced monthly close time from 15 days to 7 days, achieved 100% compliance with local tax filings, eliminated audit findings in 2023 review"
+          "category": "Churn Reduction & Revenue Protection",
+          "situation": "Distributor churn at 22% annually threatening $12M revenue base",
+          "task": "Build predictive analytics to identify at-risk distributors and implement retention strategies",
+          "action": "Built Power BI dashboard analyzing payment patterns, order frequency, and engagement across 500+ distributors. Segmented by performance tiers and designed targeted retention campaigns with personalized incentives.",
+          "result": "Reduced distributor churn 22 → 16 % saving $600K via Power BI dashboard",
+          "metrics": {
+            "churn_reduction": "22% → 16% (27% improvement)",
+            "revenue_saved": "$600K+ annually",
+            "distributors_analyzed": "500+"
+          }
         },
         {
-          "situation": "Inventory discrepancies were causing significant variance between physical stock and system records (15%+ variance)",
-          "task": "Improve inventory management accuracy and reduce financial exposure from stock variances",
-          "action": "Conducted comprehensive inventory audits, implemented cycle counting procedures, performed variance analysis to identify root causes, collaborated with warehouse teams to improve processes",
-          "result": "Reduced inventory variance to <3%, saved approximately $50K USD in inventory write-offs annually, improved financial forecasting accuracy"
+          "category": "Promotional ROI Optimization",
+          "situation": "Marketing promotions generating inconsistent returns (ROI ranging 2x-15x)",
+          "task": "Analyze promotional effectiveness and optimize budget allocation",
+          "action": "Built Excel financial model analyzing break-even volumes and contribution margins across 50+ SKUs. Simulated 3 promotion scenarios with demand elasticity assumptions. Presented data-driven recommendations to cross-functional team.",
+          "result": "Modeled promotions raising ROI from 8 % → 23 %",
+          "metrics": {
+            "roi_improvement": "8x → 23x (187% increase)",
+            "campaign_revenue_increase": "+24% vs baseline",
+            "incremental_profit": "$85K"
+          }
         },
         {
-          "situation": "Company was implementing new HEIP (Health Products ERP Integration Platform) system across global operations to consolidate sales, inventory, and distributor data into unified dashboards",
-          "task": "Lead Kenya branch data migration and system testing to ensure seamless transition without disrupting financial operations",
-          "action": "Collaborated with IT team on data migration strategy, documented 50+ business requirements for accounting module, conducted UAT testing for finance workflows, provided weekly bug reports and feature feedback, trained 8 finance team members on new system",
-          "result": "Successfully migrated 18 months of historical financial data with 99.8% accuracy, achieved zero-downtime deployment, enabled real-time visibility into sales trends and product performance through Power BI integration"
-        },
-        {
-          "situation": "Healthcare supplement company heavily relies on 500+ active distributors for direct sales revenue (85% of $12M annual revenue = $10.2M), but lacked systematic analysis of distributor churn and new registration trends threatening revenue stability",
-          "task": "Develop distributor lifecycle analytics to identify churn risks early and optimize recruitment strategies to protect Kenya branch's primary revenue stream",
-          "action": "Extracted 2 years of distributor data from HEIP system (registration dates, sales volumes, activity patterns, purchase frequency), performed cohort analysis using Excel and Power BI, segmented 500+ distributors by performance tiers (Star/Active/At-Risk/Churned), identified churn indicators (60-day inactivity, declining order frequency <3 orders/month), built automated weekly dashboard tracking 15 KPIs, collaborated with marketing team to design targeted retention campaigns with personalized incentives for at-risk distributors",
-          "result": "Identified 120 at-risk distributors representing $1.8M annual revenue (15% of total), implemented early warning system reducing monthly churn rate from 22% to 16% (27% improvement), saved estimated $600K annual revenue through retention interventions, increased new distributor 90-day retention from 45% to 62%, provided data insights enabling marketing to redesign onboarding program improving first-purchase conversion by 28%"
-        },
-        {
-          "situation": "Marketing team proposed aggressive promotional campaigns for 3 product categories (Star Products generating 40% of $1M monthly revenue, Traffic Drivers for customer acquisition, Promotional Items for bundling) but lacked financial analysis on profitability impact and inventory sustainability, risking margin erosion on Kenya branch's primary revenue stream",
-          "task": "Provide comprehensive financial recommendation on promotion feasibility by analyzing profit margins, inventory levels, cash flow impact, and revenue projections to prevent stockouts or negative ROI on $200K promotional budget",
-          "action": "Collaborated with marketing (4 people) and supply chain (3 people) teams to gather pricing, COGS, and inventory data across 50+ SKUs, built Excel financial model analyzing break-even volumes and contribution margins for each product tier (Star: 35% margin, Traffic: 18% margin, Promotional: 12% margin), simulated 3 promotion scenarios (10%/15%/20% discounts) with demand elasticity assumptions (+20%/+35%/+50% volume increase), assessed warehouse capacity (valued at $800K inventory) against projected 2-month demand surge, performed cash flow sensitivity analysis, presented findings in cross-departmental meeting with data visualizations showing scenario comparisons and risk mitigation strategies",
-          "result": "Recommended optimized promotion strategy (15% discount on Traffic Drivers, 10% on Star Products, 3-for-2 bundle deals on Promotional Items) that increased 2-month campaign revenue from projected $2.1M to actual $2.6M (+24% vs baseline), improved campaign ROI from projected 8% to actual 23% (187% improvement), prevented potential $120K inventory shortage by proactively ordering 8 high-demand SKUs, reduced campaign approval time from 2 weeks to 3 days enabling faster market response, generated $85K incremental profit vs standard pricing"
-        },
-        {
-          "situation": "Managing cash flow across 3 subsidiary companies in Kenya with combined $1M+ monthly revenue, complex intercompany transactions, multiple bank accounts (8 total), and varying payment cycles creating liquidity visibility challenges and risking cash shortages during high-volume promotional periods",
-          "task": "Establish real-time centralized cash flow monitoring system to prevent cash shortages, optimize working capital allocation across entities, and ensure sufficient liquidity for $200K+ monthly operational needs and promotional inventory purchases",
-          "action": "Designed daily cash position dashboard in Excel tracking all 8 bank accounts and intercompany balances across 3 entities (total $400K+ daily float), implemented weekly cash flow forecasting model with 30-day rolling projection incorporating A/R aging, A/P schedules, and promotional campaign impacts, established minimum cash balance thresholds for each entity ($50K-$100K based on monthly burn rate), coordinated with AR/AP teams (6 people) to align payment schedules optimizing Days Sales Outstanding and Days Payable Outstanding, automated bank reconciliation process through Excel VBA macros reducing manual effort by 60% (from 10 hours/week to 4 hours/week)",
-          "result": "Improved cash forecasting accuracy from 70% to 94% (measured against actual vs projected variances), prevented 5 potential cash shortages totaling $250K through proactive intercompany fund transfers, reduced idle cash by $180K through optimized deployment to promotional inventory and high-ROI opportunities, enabled same-day decision-making on capital allocation for promotional purchases (previously 3-5 days), maintained 100% on-time vendor payments preserving critical supply relationships"
+          "category": "Cash Flow Forecasting Accuracy",
+          "situation": "Managing $1M+ monthly revenue across 3 subsidiaries with 8 bank accounts, risking cash shortages",
+          "task": "Establish real-time cash flow monitoring and forecasting system",
+          "action": "Designed daily cash position dashboard tracking all accounts. Implemented weekly 30-day rolling forecast incorporating A/R aging and A/P schedules. Automated bank reconciliation via Excel VBA.",
+          "result": "Improved cash-flow forecast accuracy 30% → 85 %",
+          "metrics": {
+            "forecast_accuracy": "70% → 94%",
+            "cash_shortages_prevented": "$250K across 5 incidents",
+            "automation_time_saved": "60% (10h/week → 4h/week)"
+          }
         }
       ],
       "technical_skills_used": [
-        "SAP",
-        "ERP systems",
-        "CRM platforms",
-        "Excel (Advanced)",
-        "QuickBooks",
-        "Financial reporting tools"
+        "Power BI (Advanced dashboards)",
+        "Excel (VBA, Power Query, Financial Modeling)",
+        "SAP, QuickBooks, ERP systems",
+        "SQL (PostgreSQL)",
+        "Statistical Analysis (cohort analysis, RFM modeling)"
       ],
       "leadership_examples": [
-        "Supervised and mentored entire Kenya financial team of 8 staff members across accounting, AR/AP, and reporting functions",
-        "Led cross-functional collaboration with marketing team (4 people) on budgeting, forecasting, and promotional campaign financial analysis for $200K+ monthly promotional budgets",
-        "Coordinated operations across finance (8), marketing (4), supply chain (3), and IT (2) teams for system implementations and process improvements",
-        "Led monthly financial review meetings with branch management presenting P&L, cash flow, and KPI analysis for $1M+ monthly revenue operations",
-        "Managed relationships with external stakeholders including Kenya Revenue Authority, 3 commercial banks, external auditors, and customs officials"
-      ],
-      "budget_managed": "$12M annual branch revenue oversight, $200K+ monthly promotional budget management, $400K+ daily cash float supervision",
-      "team_size_managed": 8,
-      "international_experience": "Worked across USA headquarters and Kenya operations, managed cross-cultural teams and stakeholders, coordinated with regional offices across 5 African countries"
+        "Led 8-person finance team through ERP system migration with 99.8% data accuracy",
+        "Presented quarterly business reviews to C-suite with ROI projections",
+        "Coordinated cross-functional initiatives across finance, marketing, supply chain, and IT"
+      ]
     },
     {
       "company": "Zhongshan Hengrun Taxation Firm",
-      "title": "Accounting Assistant (Internship)",
-      "duration": "July 2021 - July 2022 (1 year)",
+      "title": "Accounting Assistant (Intern)",
+      "duration": "Jul 2021 - Jul 2022 (1 year)",
       "location": "Zhongshan, China",
       "company_context": "Regional taxation and accounting advisory firm serving 100+ SME clients",
-      "team_structure": "Part of 5-person accounting team, supported by 2 senior accountants",
+      "team_structure": "Part of 5-person accounting team, managed 20+ client accounts",
       "achievements_star": [
         {
-          "situation": "Small enterprises needed guidance navigating complex tax registration and compliance requirements",
-          "task": "Provide end-to-end support for business setup and ongoing tax compliance",
-          "action": "Assisted 20+ enterprises with tax registration, bank account setup, license applications, prepared monthly/quarterly tax declarations, provided accounting advisory on compliance matters",
-          "result": "Achieved 100% on-time filing rate for all clients, received commendation for client service quality, contributed to 15% client base growth during internship"
-        },
-        {
-          "situation": "Clients frequently had questions about tax optimization and deduction eligibility",
-          "task": "Provide accurate tax advisory within regulatory frameworks",
-          "action": "Researched tax codes and regulations, prepared client-specific recommendations, documented advisory notes for compliance records",
-          "result": "Helped clients save average of 8-12% in tax expenses through legitimate deductions, zero compliance issues from advisory provided"
+          "category": "Tax Compliance Excellence",
+          "situation": "Managed 20+ SME clients requiring monthly/quarterly tax filings with zero tolerance for errors",
+          "task": "Ensure 100% accurate and on-time tax declarations across VAT, corporate, and individual income tax",
+          "action": "Prepared monthly VAT returns and quarterly corporate tax filings. Reviewed financial statements for GAAP compliance. Built Excel templates for automated tax calculations.",
+          "result": "Processed 1,000+ tax filings with zero errors; cut reporting cycle by 35%",
+          "metrics": {
+            "filings_completed": "1000+",
+            "accuracy_rate": "100% (zero penalties)",
+            "efficiency_improvement": "35% faster reporting cycle"
+          }
         }
       ],
       "technical_skills_used": [
-        "Chinese Tax Software",
-        "Excel",
-        "Financial Statement Preparation",
-        "Tax Compliance Systems"
+        "ERP Systems (Kingdee, Yonyou)",
+        "Excel (VLOOKUP, pivot tables, macros)",
+        "Tax Filing Systems (CTAIS)",
+        "GAAP"
       ],
-      "clients_served": "20+ SME clients across retail, manufacturing, and service sectors",
-      "learning_outcomes": [
-        "Comprehensive understanding of SME taxation in China",
-        "Client relationship management",
-        "Attention to detail in compliance work"
+      "leadership_examples": [
+        "Primary relationship manager for 20+ SME client accounts",
+        "Trained 3 new hires on tax filing procedures"
       ]
     }
   ],
@@ -445,7 +442,7 @@
       "coursework_highlights": {
         "financial_accounting": "Comprehensive training in financial reporting, audit procedures, and accounting standards compliance",
         "management_accounting": "Decision-making frameworks, performance measurement systems, and strategic cost management",
-        "taxation": "Chinese tax system, international tax principles, tax optimization for businesses and individuals",
+        "taxation": "International tax principles, tax optimization for businesses and individuals, cross-border taxation",
         "statistics": "Statistical analysis using Excel and SPSS, data interpretation for business decision-making",
         "financial_management": "Corporate finance principles, risk assessment, and financial modeling techniques"
       },
