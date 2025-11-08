@@ -1,7 +1,7 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { Redis } from '@upstash/redis';
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     // Check if environment variables are set
     if (!process.env.UPSTASH_REDIS_REST_URL || !process.env.UPSTASH_REDIS_REST_TOKEN) {

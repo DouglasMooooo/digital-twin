@@ -1,7 +1,7 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import digitaltwinData from '@/digitaltwin.json';
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     // Extract education information from digitaltwin.json
     const education = digitaltwinData.education;

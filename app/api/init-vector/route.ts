@@ -116,7 +116,7 @@ function generateEmbedding(text: string): number[] {
   return vec;
 }
 
-export async function POST(request: NextRequest) {
+export async function POST() {
   try {
     const chunks = generateChunks();
     console.log(`📊 Generated ${chunks.length} chunks for vector DB`);
