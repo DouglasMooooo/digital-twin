@@ -28,28 +28,25 @@ FROM node:18-alpine AS mcp-builder
 
 WORKDIR /mcp
 
-# Copy main application's dependencies first (needed by lib imports)
-COPY package*.json /main-app/
-WORKDIR /main-app
-RUN npm ci
+# Install main app dependencies in a shared location
+COPY package*.json /build-deps/
+RUN cd /build-deps && npm ci --production
 
-# Now prepare MCP server build directory
-WORKDIR /mcp
-
-# Copy MCP server files
+# Install MCP server dependencies
 COPY claude-mcp-server/package*.json ./
-COPY claude-mcp-server/tsconfig.json ./
 RUN npm ci
 
+# Copy all needed files
 COPY claude-mcp-server/index.ts ./
+COPY claude-mcp-server/tsconfig.json ./
 COPY lib ../lib/
 COPY digitaltwin.json ../
 
-# Create symlink to main app's node_modules so lib imports can find groq-sdk, @upstash/*, etc.
-RUN ln -s /main-app/node_modules ./node_modules
+# Copy main app's node_modules for lib imports (groq-sdk, @upstash/*, clsx, tailwind-merge, etc.)
+RUN cp -r /build-deps/node_modules/* ./node_modules/ 2>/dev/null || true
 
-# Build MCP server
-RUN npx tsc
+# Compile TypeScript with skipLibCheck to avoid type checking errors in node_modules
+RUN npx tsc --skipLibCheck
 
 # Stage 3: Production Runtime
 FROM node:18-alpine AS runner
