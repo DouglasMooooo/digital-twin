@@ -23,6 +23,6 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["index.ts", "*.ts", "../lib/**/*.ts"],
+  "include": ["index.ts", "*.ts", "*.d.ts", "../lib/**/*.ts"],
   "exclude": ["node_modules", "dist"]
 }
