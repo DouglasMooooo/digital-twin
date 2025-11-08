@@ -33,7 +33,9 @@ export async function POST(req: NextRequest) {
       const cachedResponse = responseCache.get(cacheKey);
       
       if (cachedResponse) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         isFromCache = true;
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         successResponse = true;
         responseText = cachedResponse;
         
@@ -80,6 +82,7 @@ export async function POST(req: NextRequest) {
       conversationHistory || []
     );
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     successResponse = true;
 
     // Cache response for common questions (only if no conversation history)
@@ -131,7 +134,7 @@ export async function POST(req: NextRequest) {
         success: false,
         error: errorMessage,
       });
-    } catch (e) {
+    } catch (_e) {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       // Ignore logging errors
     }

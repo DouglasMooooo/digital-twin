@@ -182,6 +182,7 @@ class AdvancedAnalytics extends EventEmitter {
       const filePath = path.join(this.dataDir, 'snapshots.json');
       const data = await fs.readFile(filePath, 'utf-8');
       this.snapshots = JSON.parse(data);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (_error) {
       // File doesn't exist yet
     }

@@ -9,7 +9,7 @@ const client = new Index({
   token: process.env.UPSTASH_VECTOR_REST_TOKEN!,
 });
 
-export async function POST(_request: NextRequest) {
+export async function POST() {
   try {
     console.log('Starting vector database initialization...');
 
