@@ -125,7 +125,8 @@ jobs:
     name: Build & Push Docker Image
     runs-on: ubuntu-latest
     needs: build
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    # Only attempt to build and push Docker image when Docker credentials are configured
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && secrets.DOCKER_USERNAME && secrets.DOCKER_PASSWORD }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
