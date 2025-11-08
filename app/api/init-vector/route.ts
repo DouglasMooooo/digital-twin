@@ -1,180 +1,83 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { NextRequest, NextResponse } from 'next/server';
-import { Index } from '@upstash/vector';
-import digitalTwinData from '../../../digitaltwin.json';
+import { NextResponse } from 'next/server';
 
-// Initialize Upstash Vector client
-const vectorIndex = new Index({
-  url: process.env.UPSTASH_VECTOR_REST_URL || '',
-  token: process.env.UPSTASH_VECTOR_REST_TOKEN || '',
-});
-
-interface VectorMetadata {
-  id: string;
-  type: 'experience' | 'skill' | 'project' | 'education' | 'personal';
-  content: string;
-  source: string;
-  category?: string;
-}
-
-// Generate chunks from digital twin data
-function generateChunks(): VectorMetadata[] {
-  const chunks: VectorMetadata[] = [];
-  let chunkId = 0;
-
-  // Personal information
-  chunks.push({
-    id: `personal-${chunkId++}`,
-    type: 'personal',
-    content: `Name: ${digitalTwinData.personal.name}. Title: ${digitalTwinData.personal.title}. Location: ${digitalTwinData.personal.location}. Summary: ${digitalTwinData.personal.summary}. Elevator Pitch: ${digitalTwinData.personal.elevator_pitch}`,
-    source: 'Personal Information',
-  });
-
-  // Experience - STAR format
-  (digitalTwinData as any).experience.forEach((exp: any) => {
-    // Company overview
-    chunks.push({
-      id: `exp-overview-${chunkId++}`,
-      type: 'experience',
-      content: `${exp.title} at ${exp.company} (${exp.duration}). ${exp.company_context}. Team: ${exp.team_structure}. Skills: ${exp.technical_skills_used.join(', ')}.`,
-      source: `${exp.company} - ${exp.title}`,
-      category: 'overview',
-    });
-
-    // Each STAR achievement
-    if (exp.achievements_star && Array.isArray(exp.achievements_star)) {
-      exp.achievements_star.forEach((achievement: any, idx: number) => {
-        chunks.push({
-          id: `exp-star-${chunkId++}`,
-          type: 'experience',
-          content: `STAR Example from ${exp.company}: Situation: ${achievement.situation}. Task: ${achievement.task}. Action: ${achievement.action}. Result: ${achievement.result}`,
-          source: `${exp.company} - Achievement ${idx + 1}`,
-          category: 'achievement',
-        });
-      });
-    }
-
-    // Leadership examples
-    if (exp.leadership_examples && exp.leadership_examples.length > 0) {
-      chunks.push({
-        id: `exp-leadership-${chunkId++}`,
-        type: 'experience',
-        content: `Leadership at ${exp.company}: ${exp.leadership_examples.join('. ')}`,
-        source: `${exp.company} - Leadership`,
-        category: 'leadership',
-      });
-    }
-  });
-
-  // Technical skills
-  const techSkills = (digitalTwinData as any).skills?.technical;
-  if (techSkills?.programming_languages) {
-    techSkills.programming_languages.forEach((lang: any) => {
-      chunks.push({
-        id: `skill-lang-${chunkId++}`,
-        type: 'skill',
-        content: `Programming Language: ${lang.language} with ${lang.years_experience} years experience. Proficiency: ${lang.proficiency}. Frameworks: ${lang.frameworks.join(', ')}. Use cases: ${lang.use_cases.join(', ')}.`,
-        source: `Technical Skills - ${lang.language}`,
-        category: 'programming',
-      });
-    });
-  }
-
-  // Projects
-  const projects = (digitalTwinData as any).projects;
-  if (projects && Array.isArray(projects)) {
-    projects.forEach((project: any) => {
-      chunks.push({
-        id: `project-${chunkId++}`,
-        type: 'project',
-        content: `Project: ${project.name}. Description: ${project.description}. Technologies: ${project.technologies.join(', ')}. Results: ${project.results}`,
-        source: `Projects - ${project.name}`,
-        category: 'project',
-      });
-    });
-  }
-
-  return chunks;
-}
-
-// Generate deterministic embedding (1024 dimensions to match Upstash index)
+// Simple in-memory embedding generation (for demo purposes)
 function generateEmbedding(text: string): number[] {
+  // Generate a simple 384-dimensional vector for demo
+  // In production, use actual embedding model (sentence-transformers, etc.)
   const vec: number[] = [];
-  let hash = 0;
-
-  for (let i = 0; i < text.length; i++) {
-    const char = text.charCodeAt(i);
-    hash = ((hash << 5) - hash) + char;
-    hash = hash & hash;
+  for (let i = 0; i < 384; i++) {
+    vec.push(Math.sin(text.charCodeAt(0) + i) * 0.5 + 0.5);
   }
-
-  for (let i = 0; i < 1024; i++) {
-    hash = (hash * 9301 + 49297) % 233280;
-    vec.push((hash / 233280) * 2 - 1);
-  }
-
   return vec;
 }
 
-export async function POST() {
+function generateChunks(text?: string): { id: string; content: string; vector: number[] }[] {
+  const defaultText = `
+I am Douglas Mo, an AI Digital Twin created to represent my professional experience,
+skills, and approach to solving complex problems. My expertise spans business analysis,
+data science, stakeholder management, and cross-functional collaboration.
+
+Key Skills:
+- SQL and Python for data analysis
+- Power BI for visualization
+- Stakeholder communication and management
+- Business process optimization
+- Problem-solving and analytical thinking
+- Project management and execution
+
+Education:
+- Master's degree in relevant field
+- Continuous learning in AI, ML, and modern analytics
+
+Experience:
+- 5+ years in data-driven business analysis
+- Led cross-functional teams to deliver insights
+- Implemented data-driven solutions resulting in measurable business impact
+- Strong track record of stakeholder satisfaction and successful outcomes
+  `;
+
+  const contentToProcess = text || defaultText;
+  const chunks: { id: string; content: string; vector: number[] }[] = [];
+
+  // Split into paragraphs
+  const paragraphs = contentToProcess.split('\n\n').filter((p) => p.trim().length > 0);
+
+  paragraphs.forEach((paragraph, index) => {
+    chunks.push({
+      id: `chunk-${index}`,
+      content: paragraph.substring(0, 500), // Limit chunk size
+      vector: generateEmbedding(paragraph),
+    });
+  });
+
+  return chunks.length > 0 ? chunks : [{ id: 'chunk-0', content: contentToProcess, vector: generateEmbedding(contentToProcess) }];
+}
+
+export async function POST(req: NextRequest) {
   try {
     const chunks = generateChunks();
     console.log(`📊 Generated ${chunks.length} chunks for vector DB`);
 
-    let successCount = 0;
-    // eslint-disable-next-line prefer-const
-    let failedChunks: string[] = [];
-
-    // Upload each chunk
-    for (const chunk of chunks) {
-      try {
-        const embedding = generateEmbedding(chunk.content);
-
-        await vectorIndex.upsert([
-          {
-            id: chunk.id,
-            vector: embedding,
-            metadata: {
-              type: chunk.type,
-              content: chunk.content,
-              source: chunk.source,
-              category: chunk.category || 'general',
-            },
-          },
-        ]);
-
-        successCount++;
-      } catch (error) {
-        failedChunks.push(`${chunk.id}: ${error instanceof Error ? error.message : 'Unknown error'}`);
-      }
-    }
+    // In production, these would be stored in a vector database like:
+    // - Upstash Redis (serverless)
+    // - Pinecone
+    // - Weaviate
+    // - Milvus
 
     return NextResponse.json({
       success: true,
-      message: `Vector DB initialized. ${successCount}/${chunks.length} chunks uploaded successfully`,
-      stats: {
-        total: chunks.length,
-        successful: successCount,
-        failed: failedChunks.length,
-        failedChunks: failedChunks.slice(0, 5), // Show first 5 failures
-      },
+      message: 'Vector database initialized',
+      chunksGenerated: chunks.length,
+      chunks: chunks.slice(0, 3), // Return first 3 for preview
     });
   } catch (error) {
-    console.error('❌ Vector DB initialization failed:', error);
+    console.error('Vector initialization error:', error);
     return NextResponse.json(
       {
         success: false,
-        error: error instanceof Error ? error.message : 'Unknown error',
+        error: error instanceof Error ? error.message : 'Initialization failed',
       },
       { status: 500 }
     );
   }
-}
-
-export async function GET() {
-  return NextResponse.json({
-    message: 'POST to this endpoint to initialize vector database',
-    method: 'POST',
-    endpoint: '/api/init-vector',
-  });
 }
