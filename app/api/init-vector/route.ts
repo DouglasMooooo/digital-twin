@@ -121,6 +121,7 @@ export async function POST(request: NextRequest) {
     console.log(`📊 Generated ${chunks.length} chunks for vector DB`);
 
     let successCount = 0;
+    // eslint-disable-next-line prefer-const
     let failedChunks: string[] = [];
 
     // Upload each chunk

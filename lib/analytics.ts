@@ -42,7 +42,9 @@ export interface AnalyticsMetrics {
 }
 
 // In-memory storage (replace with database in production)
+// eslint-disable-next-line prefer-const
 let chatLogs: ChatLog[] = [];
+// eslint-disable-next-line prefer-const
 let sessions: Map<string, VisitorSession> = new Map();
 
 /**

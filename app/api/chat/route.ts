@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { searchRelevantContext } from '@/lib/vectordb';
-import { generateAIResponse, analyzeQuestionType, ChatMessage } from '@/lib/llm';
+import { generateAIResponse, analyzeQuestionType } from '@/lib/llm';
 import { logChatInteraction } from '@/lib/redis-analytics';
 import { responseCache, generateCacheKey } from '@/lib/cache';
 
@@ -8,12 +8,12 @@ export const runtime = 'edge';
 
 export async function POST(req: NextRequest) {
   const startTime = Date.now();
-  let success = false;
+  let successResponse = false;
   let errorMessage: string | undefined;
   let responseText = '';
   let contextType: 'screening' | 'hr' | 'technical' | 'manager' | 'executive' = 'hr';
   let contextChunks = 0;
-  let fromCache = false;
+  let isFromCache = false;
 
   try {
     const { message, conversationHistory, interviewType } = await req.json();
@@ -31,8 +31,8 @@ export async function POST(req: NextRequest) {
       const cachedResponse = responseCache.get(cacheKey);
       
       if (cachedResponse) {
-        fromCache = true;
-        success = true;
+        isFromCache = true;
+        successResponse = true;
         responseText = cachedResponse;
         
         const responseTime = Date.now() - startTime;
@@ -78,7 +78,7 @@ export async function POST(req: NextRequest) {
       conversationHistory || []
     );
 
-    success = true;
+    successResponse = true;
 
     // Cache response for common questions (only if no conversation history)
     if (!conversationHistory || conversationHistory.length === 0) {

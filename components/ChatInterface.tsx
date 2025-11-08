@@ -129,7 +129,7 @@ export default function ChatInterface({ initialMessage }: ChatInterfaceProps) {
       <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-4 rounded-t-lg">
         <h2 className="text-xl font-bold flex items-center gap-2">
           <Bot className="w-6 h-6" />
-          Douglas Mo's AI Digital Twin
+          Douglas Mo&apos;s AI Digital Twin
         </h2>
         <p className="text-sm text-blue-100 mt-1">Ask me anything about my professional background</p>
       </div>

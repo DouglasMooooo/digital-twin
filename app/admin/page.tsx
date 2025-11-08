@@ -50,6 +50,7 @@ export default function AdminDashboard() {
   const [logs, setLogs] = useState<ChatLog[]>([]);
   const [timeRange, setTimeRange] = useState<'day' | 'week' | 'month' | 'all'>('all');
   const [searchKeyword, setSearchKeyword] = useState('');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [loading, setLoading] = useState(false);
   const [selectedLog, setSelectedLog] = useState<ChatLog | null>(null);
 
@@ -149,7 +150,8 @@ export default function AdminDashboard() {
     if (isAuthenticated) {
       fetchMetrics();
     }
-  }, [timeRange]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [timeRange, isAuthenticated]);
 
   if (!isAuthenticated) {
     return (
@@ -205,7 +207,7 @@ export default function AdminDashboard() {
               {/* Time Range Selector */}
               <select
                 value={timeRange}
-                onChange={(e) => setTimeRange(e.target.value as any)}
+                onChange={(e) => setTimeRange(e.target.value as 'day' | 'week' | 'month' | 'all')}
                 className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
               >
                 <option value="day">Last 24 Hours</option>

@@ -40,7 +40,7 @@ export default function Home() {
       {/* Hero Section */}
       <section id="home" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="text-center animate-fade-in">
-          <p className="text-gray-600 text-lg mb-4">Hi, I'm</p>
+          <p className="text-gray-600 text-lg mb-4">Hi, I&apos;m</p>
           <h2 className="text-6xl md:text-7xl font-bold mb-4">
             <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
               Douglas Mo
@@ -99,7 +99,7 @@ export default function Home() {
             </div>
             <div className="bg-gradient-to-br from-green-50 to-green-100 p-8 rounded-2xl shadow-md hover:shadow-xl transition-shadow">
               <GraduationCap className="w-12 h-12 text-green-600 mb-4" />
-              <p className="text-4xl font-bold text-gray-900 mb-2">Master's</p>
+              <p className="text-4xl font-bold text-gray-900 mb-2">Master&apos;s</p>
               <p className="text-gray-700 font-medium">Business Analytics</p>
             </div>
             <div className="bg-gradient-to-br from-orange-50 to-orange-100 p-8 rounded-2xl shadow-md hover:shadow-xl transition-shadow">
