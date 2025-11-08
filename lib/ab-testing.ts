@@ -152,7 +152,7 @@ class ABTestingFramework {
    */
   async generateResponse(
     question: string,
-    context: any,
+    context: Record<string, unknown>,
     strategy: TestVariant['strategy']
   ): Promise<string> {
     let response = '';
@@ -181,7 +181,7 @@ class ABTestingFramework {
   async runTest(
     questionId: string,
     question: string,
-    context: any,
+    context: Record<string, unknown>,
     controlVariantId?: string,
     testVariantId?: string
   ): Promise<ABTestSession> {
@@ -370,7 +370,7 @@ class ABTestingFramework {
   /**
    * Generate STAR-focused response
    */
-  private generateSTARResponse(question: string, context: any): string {
+  private generateSTARResponse(question: string, context: Record<string, unknown>): string {
     const response = `To answer this question, let me share a concrete example using the STAR method:
 
 **Situation**: In my previous role, I encountered a scenario where ${this.extractRelevantContext(context, question)}.
@@ -391,7 +391,7 @@ class ABTestingFramework {
   /**
    * Generate concise response
    */
-  private generateConciseResponse(question: string, context: any): string {
+  private generateConciseResponse(question: string, context: Record<string, unknown>): string {
     const response = `Based on my experience with business analysis, I've consistently delivered strong results by:
 
 • Focusing on data-driven insights
@@ -406,7 +406,7 @@ In one specific case, I analyzed market trends and identified a $50K opportunity
   /**
    * Generate detailed response
    */
-  private generateDetailedResponse(question: string, context: any): string {
+  private generateDetailedResponse(question: string, context: Record<string, unknown>): string {
     const response = `This is an excellent question about business analysis. Let me provide a comprehensive answer:
 
 **Background and Context**
@@ -432,7 +432,7 @@ My analyses have consistently delivered measurable business value, including imp
   /**
    * Generate example-driven response
    */
-  private generateExampleDrivenResponse(question: string, context: any): string {
+  private generateExampleDrivenResponse(question: string, context: Record<string, unknown>): string {
     const response = `Let me walk you through a specific example that illustrates my approach:
 
 **Example 1: Financial Analysis Project**
@@ -576,7 +576,7 @@ These examples demonstrate my ability to combine technical skills with business 
   /**
    * Extract relevant context from candidate profile
    */
-  private extractRelevantContext(context: any, question: string): string {
+  private extractRelevantContext(context: Record<string, unknown>, question: string): string {
     if (!context) return 'a challenging business problem';
 
     const keywords = ['analysis', 'data', 'financial', 'process', 'optimization'];
