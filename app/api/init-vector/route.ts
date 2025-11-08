@@ -9,161 +9,172 @@ const vectorIndex = new Index({
   token: process.env.UPSTASH_VECTOR_REST_TOKEN || '',
 });
 
-interface VectorRecord {
+interface VectorMetadata {
   id: string;
-  vector: number[];
-  metadata: {
-    type: string;
-    category?: string;
-    content: string;
-    [key: string]: unknown;
-  };
+  type: 'experience' | 'skill' | 'project' | 'education' | 'personal';
+  content: string;
+  source: string;
+  category?: string;
 }
 
-// Simple embedding function (returns normalized character-based vector)
-function simpleEmbed(text: string): number[] {
-  const vector = new Array(384).fill(0);
-  for (let i = 0; i < Math.min(text.length, 384); i++) {
-    vector[i] = text.charCodeAt(i) / 255; // Normalize to [0,1]
+// Generate chunks from digital twin data
+function generateChunks(): VectorMetadata[] {
+  const chunks: VectorMetadata[] = [];
+  let chunkId = 0;
+
+  // Personal information
+  chunks.push({
+    id: `personal-${chunkId++}`,
+    type: 'personal',
+    content: `Name: ${digitalTwinData.personal.name}. Title: ${digitalTwinData.personal.title}. Location: ${digitalTwinData.personal.location}. Summary: ${digitalTwinData.personal.summary}. Elevator Pitch: ${digitalTwinData.personal.elevator_pitch}`,
+    source: 'Personal Information',
+  });
+
+  // Experience - STAR format
+  (digitalTwinData as any).experience.forEach((exp: any) => {
+    // Company overview
+    chunks.push({
+      id: `exp-overview-${chunkId++}`,
+      type: 'experience',
+      content: `${exp.title} at ${exp.company} (${exp.duration}). ${exp.company_context}. Team: ${exp.team_structure}. Skills: ${exp.technical_skills_used.join(', ')}.`,
+      source: `${exp.company} - ${exp.title}`,
+      category: 'overview',
+    });
+
+    // Each STAR achievement
+    if (exp.achievements_star && Array.isArray(exp.achievements_star)) {
+      exp.achievements_star.forEach((achievement: any, idx: number) => {
+        chunks.push({
+          id: `exp-star-${chunkId++}`,
+          type: 'experience',
+          content: `STAR Example from ${exp.company}: Situation: ${achievement.situation}. Task: ${achievement.task}. Action: ${achievement.action}. Result: ${achievement.result}`,
+          source: `${exp.company} - Achievement ${idx + 1}`,
+          category: 'achievement',
+        });
+      });
+    }
+
+    // Leadership examples
+    if (exp.leadership_examples && exp.leadership_examples.length > 0) {
+      chunks.push({
+        id: `exp-leadership-${chunkId++}`,
+        type: 'experience',
+        content: `Leadership at ${exp.company}: ${exp.leadership_examples.join('. ')}`,
+        source: `${exp.company} - Leadership`,
+        category: 'leadership',
+      });
+    }
+  });
+
+  // Technical skills
+  const techSkills = (digitalTwinData as any).skills?.technical;
+  if (techSkills?.programming_languages) {
+    techSkills.programming_languages.forEach((lang: any) => {
+      chunks.push({
+        id: `skill-lang-${chunkId++}`,
+        type: 'skill',
+        content: `Programming Language: ${lang.language} with ${lang.years_experience} years experience. Proficiency: ${lang.proficiency}. Frameworks: ${lang.frameworks.join(', ')}. Use cases: ${lang.use_cases.join(', ')}.`,
+        source: `Technical Skills - ${lang.language}`,
+        category: 'programming',
+      });
+    });
   }
-  return vector;
+
+  // Projects
+  const projects = (digitalTwinData as any).projects;
+  if (projects && Array.isArray(projects)) {
+    projects.forEach((project: any) => {
+      chunks.push({
+        id: `project-${chunkId++}`,
+        type: 'project',
+        content: `Project: ${project.name}. Description: ${project.description}. Technologies: ${project.technologies.join(', ')}. Results: ${project.results}`,
+        source: `Projects - ${project.name}`,
+        category: 'project',
+      });
+    });
+  }
+
+  return chunks;
 }
 
-/**
- * Initialize Vector Database
- * Populates Upstash Vector with digital twin data
- */
+// Generate deterministic embedding (1024 dimensions to match Upstash index)
+function generateEmbedding(text: string): number[] {
+  const vec: number[] = [];
+  let hash = 0;
+
+  for (let i = 0; i < text.length; i++) {
+    const char = text.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash = hash & hash;
+  }
+
+  for (let i = 0; i < 1024; i++) {
+    hash = (hash * 9301 + 49297) % 233280;
+    vec.push((hash / 233280) * 2 - 1);
+  }
+
+  return vec;
+}
+
 export async function POST() {
   try {
-    const records: VectorRecord[] = [];
+    const chunks = generateChunks();
+    console.log(`📊 Generated ${chunks.length} chunks for vector DB`);
 
-    // Add personal info
-    if (digitalTwinData.personal) {
-      const personalText = `Name: ${digitalTwinData.personal.name}. Email: ${digitalTwinData.personal.email}. Location: ${digitalTwinData.personal.location}. Phone: ${digitalTwinData.personal.phone}`;
-      records.push({
-        id: 'personal-info',
-        vector: simpleEmbed(personalText),
-        metadata: {
-          type: 'personal',
-          content: personalText,
-        },
-      });
-    }
+    let successCount = 0;
+    // eslint-disable-next-line prefer-const
+    let failedChunks: string[] = [];
 
-    // Add summary
-    if (digitalTwinData.summary) {
-      records.push({
-        id: 'summary',
-        vector: simpleEmbed(digitalTwinData.summary),
-        metadata: {
-          type: 'summary',
-          content: digitalTwinData.summary,
-        },
-      });
-    }
+    // Upload each chunk
+    for (const chunk of chunks) {
+      try {
+        const embedding = generateEmbedding(chunk.content);
 
-    // Add experiences
-    digitalTwinData.experience?.forEach((exp, index) => {
-      const expText = `${exp.position} at ${exp.company} (${exp.duration}). ${exp.description}. Key achievements: ${exp.achievements?.join(', ')}`;
-      records.push({
-        id: `experience-${index}`,
-        vector: simpleEmbed(expText),
-        metadata: {
-          type: 'experience',
-          category: exp.position,
-          content: expText,
-          company: exp.company,
-          position: exp.position,
-        },
-      });
-    });
+        await vectorIndex.upsert([
+          {
+            id: chunk.id,
+            vector: embedding,
+            metadata: {
+              type: chunk.type,
+              content: chunk.content,
+              source: chunk.source,
+              category: chunk.category || 'general',
+            },
+          },
+        ]);
 
-    // Add education
-    digitalTwinData.education?.forEach((edu, index) => {
-      const eduText = `${edu.degree} in ${edu.field} from ${edu.institution} (${edu.duration}). GPA: ${edu.gpa}`;
-      records.push({
-        id: `education-${index}`,
-        vector: simpleEmbed(eduText),
-        metadata: {
-          type: 'education',
-          category: edu.degree,
-          content: eduText,
-        },
-      });
-    });
-
-    // Add skills
-    digitalTwinData.skills?.technical?.forEach((skill, index) => {
-      records.push({
-        id: `skill-technical-${index}`,
-        vector: simpleEmbed(skill),
-        metadata: {
-          type: 'skill',
-          category: 'technical',
-          content: skill,
-        },
-      });
-    });
-
-    digitalTwinData.skills?.soft?.forEach((skill, index) => {
-      records.push({
-        id: `skill-soft-${index}`,
-        vector: simpleEmbed(skill),
-        metadata: {
-          type: 'skill',
-          category: 'soft',
-          content: skill,
-        },
-      });
-    });
-
-    // Add certifications
-    digitalTwinData.certifications?.forEach((cert, index) => {
-      const certText = `${cert.name} by ${cert.issuer} (${cert.date})`;
-      records.push({
-        id: `certification-${index}`,
-        vector: simpleEmbed(certText),
-        metadata: {
-          type: 'certification',
-          content: certText,
-        },
-      });
-    });
-
-    // Add behavioral stories
-    digitalTwinData.behavioral_stories?.forEach((story, index) => {
-      const storyText = `${story.question}. Situation: ${story.situation}. Task: ${story.task}. Action: ${story.action}. Result: ${story.result}`;
-      records.push({
-        id: `story-${index}`,
-        vector: simpleEmbed(storyText),
-        metadata: {
-          type: 'behavioral_story',
-          category: story.category,
-          content: storyText,
-        },
-      });
-    });
-
-    // Batch upsert (Upstash supports up to 1000 records per request)
-    const batchSize = 100;
-    for (let i = 0; i < records.length; i += batchSize) {
-      const batch = records.slice(i, i + batchSize);
-      await vectorIndex.upsert(batch);
+        successCount++;
+      } catch (error) {
+        failedChunks.push(`${chunk.id}: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      }
     }
 
     return NextResponse.json({
       success: true,
-      message: `Initialized vector database with ${records.length} records`,
-      recordCount: records.length,
+      message: `Vector DB initialized. ${successCount}/${chunks.length} chunks uploaded successfully`,
+      stats: {
+        total: chunks.length,
+        successful: successCount,
+        failed: failedChunks.length,
+        failedChunks: failedChunks.slice(0, 5), // Show first 5 failures
+      },
     });
-  } catch (error: unknown) {
-    console.error('Error initializing vector database:', error);
+  } catch (error) {
+    console.error('❌ Vector DB initialization failed:', error);
     return NextResponse.json(
       {
         success: false,
-        error: error instanceof Error ? error.message : 'Unknown error occurred',
+        error: error instanceof Error ? error.message : 'Unknown error',
       },
       { status: 500 }
     );
   }
+}
+
+export async function GET() {
+  return NextResponse.json({
+    message: 'POST to this endpoint to initialize vector database',
+    method: 'POST',
+    endpoint: '/api/init-vector',
+  });
 }
