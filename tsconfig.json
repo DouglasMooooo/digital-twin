@@ -22,6 +22,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules", "mcp-server", "vscode-extension", "claude-mcp-server"]
+  "include": ["next-env.d.ts", "app/**/*", "components/**/*", "lib/**/*", "public/**/*", ".next/types/**/*.ts"],
+  "exclude": ["node_modules", "mcp-server", "vscode-extension", "claude-mcp-server", "archived", ".next", "scripts"]
 }

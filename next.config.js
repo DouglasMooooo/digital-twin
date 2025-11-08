@@ -7,7 +7,7 @@ const nextConfig = {
   webpack: (config, { isServer }) => {
     config.watchOptions = {
       ...config.watchOptions,
-      ignored: ['**/mcp-server/**', '**/vscode-extension/**', '**/node_modules/**'],
+      ignored: ['**/mcp-server/**', '**/vscode-extension/**', '**/claude-mcp-server/**', '**/node_modules/**'],
     };
     return config;
   },
