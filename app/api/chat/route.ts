@@ -1,141 +1,123 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { generateAIResponse } from '@/lib/llm';
 import { searchRelevantContext } from '@/lib/vectordb';
-import { generateAIResponse, analyzeQuestionType } from '@/lib/llm';
-import { logChatInteraction } from '@/lib/redis-analytics';
-import { responseCache, generateCacheKey } from '@/lib/cache';
+import { logChatInteraction } from '@/lib/analytics';
+import { Redis } from '@upstash/redis';
 
-export const runtime = 'edge';
+// Initialize Redis client
+const redis = new Redis({
+  url: process.env.UPSTASH_REDIS_REST_URL || '',
+  token: process.env.UPSTASH_REDIS_REST_TOKEN || '',
+});
 
-export async function POST(req: NextRequest) {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+let successResponse = false;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+let isFromCache = false;
+
+/**
+ * POST /api/chat
+ * Handles user interview questions
+ */
+export async function POST(request: NextRequest) {
   const startTime = Date.now();
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  let successResponse = false;
-  let errorMessage: string | undefined;
-  let responseText = '';
-  let contextType: 'screening' | 'hr' | 'technical' | 'manager' | 'executive' = 'hr';
-  let contextChunks = 0;
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  let isFromCache = false;
+  let sessionId = '';
+  let question = '';
+  let ipAddress = '';
 
   try {
-    const { message, conversationHistory, interviewType } = await req.json();
+    // Parse request body
+    const body = await request.json();
+    question = body.question || '';
+    sessionId = body.sessionId || `session-${Date.now()}`;
 
-    if (!message || typeof message !== 'string') {
-      return NextResponse.json(
-        { error: 'Message is required' },
-        { status: 400 }
-      );
+    // Get IP address
+    ipAddress =
+      request.headers.get('x-forwarded-for')?.split(',')[0] ||
+      request.headers.get('x-real-ip') ||
+      'unknown';
+
+    // Validate input
+    if (!question || question.trim().length === 0) {
+      return NextResponse.json({ error: 'Question is required' }, { status: 400 });
     }
 
-    // Check cache for common questions (only if no conversation history)
-    if (!conversationHistory || conversationHistory.length === 0) {
-      const cacheKey = generateCacheKey(message, interviewType);
-      const cachedResponse = responseCache.get(cacheKey);
-      
-      if (cachedResponse) {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        isFromCache = true;
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        successResponse = true;
-        responseText = cachedResponse;
-        
-        const responseTime = Date.now() - startTime;
-        
-        // Log cached response
-        logChatInteraction({
-          userMessage: message,
-          aiResponse: cachedResponse,
-          responseTime,
-          interviewType: interviewType || 'hr',
-          contextChunks: 0,
-          success: true,
-        });
+    // Check cache first
+    const cacheKey = `chat:${question.toLowerCase().trim()}`;
+    const cached = await redis.get(cacheKey);
 
-        return NextResponse.json({
-          response: cachedResponse,
-          fromCache: true,
-          responseTime,
-        });
-      }
+    if (cached && typeof cached === 'string') {
+      const responseTime = Date.now() - startTime;
+
+      // Log analytics
+      await logChatInteraction({
+        sessionId,
+        question,
+        response: cached,
+        responseTime,
+        ipAddress,
+        success: true,
+        fromCache: true,
+      });
+
+      isFromCache = true;
+      return NextResponse.json({
+        response: cached,
+        sessionId,
+        fromCache: true,
+        responseTime,
+      });
     }
 
-    // Get session info from headers
-    const sessionId = req.headers.get('x-session-id') || undefined;
-    const userAgent = req.headers.get('user-agent') || undefined;
-    const ipAddress = req.headers.get('x-forwarded-for') || req.headers.get('x-real-ip') || undefined;
-
-    // Determine interview type if not provided
-    contextType = interviewType || analyzeQuestionType(message);
-
-    // Search for relevant context from vector database (优化: topK=10)
-    const relevantContext = await searchRelevantContext(message, 10);
-    const contextStrings = relevantContext.map((ctx) => ctx.content);
-    contextChunks = relevantContext.length;
+    // Search relevant context from vector database
+    const context = await searchRelevantContext(question);
 
     // Generate AI response
-    responseText = await generateAIResponse(
-      message,
-      {
-        type: contextType,
-        relevantContext: contextStrings,
-      },
-      conversationHistory || []
-    );
+    const response = await generateAIResponse(question, context);
 
+    // Cache the response (expire after 1 hour)
+    await redis.set(cacheKey, response, { ex: 3600 });
+
+    const responseTime = Date.now() - startTime;
+
+    // Log analytics
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     successResponse = true;
-
-    // Cache response for common questions (only if no conversation history)
-    if (!conversationHistory || conversationHistory.length === 0) {
-      const cacheKey = generateCacheKey(message, interviewType);
-      responseCache.set(cacheKey, responseText, 3600); // 1 hour TTL
-    }
-
-    // Log the interaction
-    const responseTime = Date.now() - startTime;
-    logChatInteraction({
-      userMessage: message,
-      aiResponse: responseText,
-      responseTime,
-      interviewType: contextType,
-      contextChunks,
+    await logChatInteraction({
       sessionId,
-      userAgent,
+      question,
+      response,
+      responseTime,
       ipAddress,
       success: true,
+      fromCache: false,
     });
 
     return NextResponse.json({
-      response: responseText,
-      interviewType: contextType,
-      sourcesUsed: relevantContext.map((ctx) => ctx.source),
+      response,
+      sessionId,
+      fromCache: false,
+      responseTime,
     });
-  } catch (error) {
-    console.error('Error in chat API:', error);
-    errorMessage = error instanceof Error ? error.message : 'Unknown error';
-    
-    // Log failed interaction
+  } catch (error: unknown) {
     const responseTime = Date.now() - startTime;
-    const sessionId = req.headers.get('x-session-id') || undefined;
-    const userAgent = req.headers.get('user-agent') || undefined;
-    const ipAddress = req.headers.get('x-forwarded-for') || req.headers.get('x-real-ip') || undefined;
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
 
+    console.error('Error processing chat request:', error);
+
+    // Log error to analytics
     try {
-      const { message } = await req.json();
-      logChatInteraction({
-        userMessage: message || 'Parse error',
-        aiResponse: '',
-        responseTime,
-        interviewType: contextType,
-        contextChunks,
+      await logChatInteraction({
         sessionId,
-        userAgent,
+        question,
+        response: '',
+        responseTime,
         ipAddress,
         success: false,
         error: errorMessage,
       });
-    } catch (_e) {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (_e) {
       // Ignore logging errors
     }
 
@@ -144,4 +126,18 @@ export async function POST(req: NextRequest) {
       { status: 500 }
     );
   }
+}
+
+/**
+ * GET /api/chat
+ * Returns API status
+ */
+export async function GET() {
+  return NextResponse.json({
+    status: 'ok',
+    message: 'Chat API is running',
+    endpoints: {
+      POST: '/api/chat - Send interview questions',
+    },
+  });
 }
