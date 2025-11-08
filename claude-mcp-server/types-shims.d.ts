@@ -50,12 +50,16 @@ declare module '@upstash/redis' {
   }
 }
 
-// clsx utility - correct export
+// clsx utility - correct export pattern
 declare module 'clsx' {
-  type ClassValue = string | { [key: string]: boolean } | ClassValue[];
-  function clsx(...args: ClassValue[]): string;
-  export { ClassValue };
+  type ClassValue = string | { [key: string]: boolean } | ClassValue[] | any;
+  function clsx(...args: any[]): string;
+  namespace clsx {
+    export { ClassValue };
+  }
   export default clsx;
+  export function clsx(...args: any[]): string;
+  export type { ClassValue };
 }
 
 // tailwind-merge utility
