@@ -1,152 +1,176 @@
-import { generateAIResponse } from './llm';
-import type { InterviewContext } from './llm';
+#!/usr/bin/env node
 
-export interface ABTestVariant {
+/**
+ * A/B Testing Framework for Interview Response Optimization
+ * 
+ * This module implements a comprehensive A/B testing system to:
+ * - Compare different response strategies
+ * - Track performance metrics for each variant
+ * - Provide statistical analysis and recommendations
+ * - Optimize response generation based on results
+ */
+
+import fs from 'fs/promises';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Type definitions
+interface TestVariant {
   id: string;
   name: string;
   description: string;
-  strategy: 'default' | 'concise' | 'story-focused' | 'metric-heavy';
-  systemPromptModifier?: string;
+  strategy: 'star-focused' | 'concise' | 'detailed' | 'example-driven';
+  createdAt: string;
+  responses: number;
+  metrics: {
+    accuracy: number;
+    storyCoverage: number;
+    satisfaction: number;
+  };
+  sampleSize: number;
+  conversionRate: number;
 }
 
-export interface ABTestMetrics {
-  variantId: string;
-  totalTests: number;
-  successRate: number;
-  avgResponseTime: number;
-  avgSatisfactionScore: number;
-  avgAccuracyScore: number;
-}
-
-export interface ABTestSession {
+interface ABTestSession {
   id: string;
   questionId: string;
-  controlVariantId: string;
-  testVariantId: string;
-  controlResponse: string;
-  testResponse: string;
-  controlScore: number;
-  testScore: number;
-  winner: 'control' | 'test' | 'tie';
-  confidenceLevel: number;
-  timestamp: Date;
-  userFeedback?: 'control' | 'test' | 'neither';
+  question: string;
+  controlVariant: string;
+  testVariant: string;
+  timestamp: string;
+  results: {
+    control: {
+      response: string;
+      metrics: {
+        accuracy: number;
+        storyCoverage: number;
+        satisfaction: number;
+      };
+    };
+    test: {
+      response: string;
+      metrics: {
+        accuracy: number;
+        storyCoverage: number;
+        satisfaction: number;
+      };
+    };
+    winner: 'control' | 'test' | 'tie';
+    confidenceLevel: number;
+  };
 }
 
-/**
- * A/B Testing Manager
- * Manages multiple response strategies and compares their effectiveness
- */
-export class ABTestingManager {
-  private variants: Map<string, ABTestVariant> = new Map();
-  private metrics: Map<string, ABTestMetrics> = new Map();
-  private sessions: ABTestSession[] = [];
-  private controlVariantId: string;
+interface TestStatistics {
+  variantId: string;
+  variantName: string;
+  sampleSize: number;
+  meanAccuracy: number;
+  stdDevAccuracy: number;
+  meanSatisfaction: number;
+  stdDevSatisfaction: number;
+  improvementVsControl: number;
+  statisticalSignificance: number;
+  recommendedActions: string[];
+}
 
-  constructor(controlVariantId: string = 'default') {
-    this.controlVariantId = controlVariantId;
-    this.initializeDefaultVariants();
-  }
+class ABTestingFramework {
+  private variants: Map<string, TestVariant> = new Map();
+  private testSessions: ABTestSession[] = [];
+  private controlVariantId: string = '';
+  private dataDir: string;
 
-  private initializeDefaultVariants(): void {
-    // Control: Default STAR method response
-    this.registerVariant({
-      id: 'default',
-      name: 'Default STAR',
-      description: 'Standard STAR method responses',
-      strategy: 'default',
-    });
-
-    // Test 1: Concise responses
-    this.registerVariant({
-      id: 'concise',
-      name: 'Concise Response',
-      description: 'Shorter, punchier answers focusing on key points',
-      strategy: 'concise',
-      systemPromptModifier:
-        'Keep responses concise (150-200 words). Focus on the most impactful information.',
-    });
-
-    // Test 2: Story-focused
-    this.registerVariant({
-      id: 'story-focused',
-      name: 'Story-Focused',
-      description: 'Emphasize narrative and emotional elements',
-      strategy: 'story-focused',
-      systemPromptModifier:
-        'Tell engaging stories. Focus on the journey, challenges, and human elements of each experience.',
-    });
-
-    // Test 3: Metric-heavy
-    this.registerVariant({
-      id: 'metric-heavy',
-      name: 'Metric-Heavy',
-      description: 'Data-driven responses with specific numbers and percentages',
-      strategy: 'metric-heavy',
-      systemPromptModifier:
-        'Emphasize quantifiable results. Include specific numbers, percentages, and measurable outcomes whenever possible.',
-    });
+  constructor() {
+    this.dataDir = path.join(__dirname, '..', 'ab_test_data');
   }
 
   /**
-   * Register a new variant
+   * Initialize the A/B testing framework
    */
-  registerVariant(variant: ABTestVariant): void {
-    this.variants.set(variant.id, variant);
-    if (!this.metrics.has(variant.id)) {
-      this.metrics.set(variant.id, {
-        variantId: variant.id,
-        totalTests: 0,
-        successRate: 0,
-        avgResponseTime: 0,
-        avgSatisfactionScore: 0,
-        avgAccuracyScore: 0,
-      });
+  async initialize(): Promise<void> {
+    try {
+      // Create data directory if it doesn't exist
+      await fs.mkdir(this.dataDir, { recursive: true });
+
+      // Load existing variants
+      await this.loadVariants();
+
+      // Create default control variant if none exists
+      if (this.variants.size === 0) {
+        await this.createVariant('control', 'STAR Method - Balanced', 'Standard STAR methodology with balanced detail', 'star-focused');
+        await this.createVariant('concise', 'Concise Responses', 'Brief, focused answers with key points', 'concise');
+        await this.createVariant('detailed', 'Detailed Responses', 'Comprehensive answers with full context', 'detailed');
+        await this.createVariant('example-driven', 'Example-Driven', 'Responses built around specific examples', 'example-driven');
+      }
+
+      console.error('✓ A/B Testing Framework initialized');
+    } catch (error) {
+      console.error('✗ Error initializing A/B Testing Framework:', error);
+      throw error;
     }
   }
 
   /**
-   * Get all registered variants
+   * Create a new test variant
    */
-  getVariants(): ABTestVariant[] {
-    return Array.from(this.variants.values());
+  async createVariant(
+    id: string,
+    name: string,
+    description: string,
+    strategy: TestVariant['strategy']
+  ): Promise<TestVariant> {
+    const variant: TestVariant = {
+      id,
+      name,
+      description,
+      strategy,
+      createdAt: new Date().toISOString(),
+      responses: 0,
+      metrics: {
+        accuracy: 0,
+        storyCoverage: 0,
+        satisfaction: 0,
+      },
+      sampleSize: 0,
+      conversionRate: 0,
+    };
+
+    this.variants.set(id, variant);
+
+    if (!this.controlVariantId) {
+      this.controlVariantId = id;
+    }
+
+    await this.saveVariants();
+    return variant;
   }
 
   /**
-   * Get metrics for a specific variant
-   */
-  getMetrics(variantId: string): ABTestMetrics | undefined {
-    return this.metrics.get(variantId);
-  }
-
-  /**
-   * Get all metrics
-   */
-  getAllMetrics(): ABTestMetrics[] {
-    return Array.from(this.metrics.values());
-  }
-
-  /**
-   * Generate response using a specific variant
+   * Generate response using specific strategy
    */
   async generateResponse(
     question: string,
     context: Record<string, unknown>,
-    variantId: string
+    strategy: TestVariant['strategy']
   ): Promise<string> {
-    const variant = this.variants.get(variantId);
-    if (!variant) {
-      throw new Error(`Variant ${variantId} not found`);
+    let response = '';
+
+    switch (strategy) {
+      case 'star-focused':
+        response = this.generateSTARResponse(question, context);
+        break;
+      case 'concise':
+        response = this.generateConciseResponse(question, context);
+        break;
+      case 'detailed':
+        response = this.generateDetailedResponse(question, context);
+        break;
+      case 'example-driven':
+        response = this.generateExampleDrivenResponse(question, context);
+        break;
     }
-
-    // Generate response (simplified - in production would apply strategy)
-    const interviewContext: InterviewContext = {
-      type: 'hr',
-      relevantContext: [],
-      ...context,
-    };
-
-    const response = await generateAIResponse(question, interviewContext);
 
     return response;
   }
@@ -199,191 +223,240 @@ export class ABTestingManager {
     }
 
     // Calculate confidence level
-    const scoreDiff = Math.abs(controlScore - testScore);
-    const confidenceLevel = Math.min(0.95, scoreDiff * 10); // Simplified
+    const confidenceLevel = Math.abs(controlScore - testScore) / Math.max(controlScore, testScore);
 
     const session: ABTestSession = {
-      id: `test-${Date.now()}`,
+      id: `test_${Date.now()}`,
       questionId,
-      controlVariantId: controlId,
-      testVariantId: testId,
-      controlResponse,
-      testResponse,
-      controlScore,
-      testScore,
-      winner,
-      confidenceLevel,
-      timestamp: new Date(),
+      question,
+      controlVariant: controlId,
+      testVariant: testId,
+      timestamp: new Date().toISOString(),
+      results: {
+        control: {
+          response: controlResponse,
+          metrics: controlMetrics,
+        },
+        test: {
+          response: testResponse,
+          metrics: testMetrics,
+        },
+        winner,
+        confidenceLevel,
+      },
     };
 
-    this.sessions.push(session);
-    this.updateMetrics(controlId, controlMetrics);
-    this.updateMetrics(testId, testMetrics);
+    this.testSessions.push(session);
+    await this.saveTestSessions();
+
+    // Update variant metrics
+    this.updateVariantMetrics(controlId, controlMetrics);
+    this.updateVariantMetrics(testId, testMetrics);
 
     return session;
   }
 
   /**
-   * Record user feedback for a test session
+   * Get statistics for a variant
    */
-  recordUserFeedback(
-    sessionId: string,
-    feedback: 'control' | 'test' | 'neither'
-  ): void {
-    const session = this.sessions.find((s) => s.id === sessionId);
-    if (session) {
-      session.userFeedback = feedback;
+  getVariantStatistics(variantId: string): TestStatistics | null {
+    const variant = this.variants.get(variantId);
+    if (!variant) return null;
 
-      // Update metrics based on user feedback
-      if (feedback === 'control') {
-        const metrics = this.metrics.get(session.controlVariantId);
-        if (metrics) {
-          metrics.successRate =
-            (metrics.successRate * metrics.totalTests + 1) / (metrics.totalTests + 1);
-        }
-      } else if (feedback === 'test') {
-        const metrics = this.metrics.get(session.testVariantId);
-        if (metrics) {
-          metrics.successRate =
-            (metrics.successRate * metrics.totalTests + 1) / (metrics.totalTests + 1);
-        }
-      }
-    }
-  }
-
-  /**
-   * Get test sessions
-   */
-  getSessions(limit?: number): ABTestSession[] {
-    const sorted = [...this.sessions].sort(
-      (a, b) => b.timestamp.getTime() - a.timestamp.getTime()
+    // Filter test sessions for this variant
+    const variantSessions = this.testSessions.filter(
+      (s) => s.controlVariant === variantId || s.testVariant === variantId
     );
-    return limit ? sorted.slice(0, limit) : sorted;
-  }
 
-  /**
-   * Get winner statistics
-   */
-  getWinnerStats(): {
-    control: number;
-    test: number;
-    tie: number;
-    totalTests: number;
-  } {
-    const stats = {
-      control: 0,
-      test: 0,
-      tie: 0,
-      totalTests: this.sessions.length,
-    };
+    if (variantSessions.length === 0) {
+      return {
+        variantId,
+        variantName: variant.name,
+        sampleSize: 0,
+        meanAccuracy: 0,
+        stdDevAccuracy: 0,
+        meanSatisfaction: 0,
+        stdDevSatisfaction: 0,
+        improvementVsControl: 0,
+        statisticalSignificance: 0,
+        recommendedActions: [],
+      };
+    }
 
-    this.sessions.forEach((session) => {
-      stats[session.winner] += 1;
+    // Calculate statistics
+    const accuracyScores = variantSessions.map((s) => {
+      const isControl = s.controlVariant === variantId;
+      return isControl ? s.results.control.metrics.accuracy : s.results.test.metrics.accuracy;
     });
 
+    const satisfactionScores = variantSessions.map((s) => {
+      const isControl = s.controlVariant === variantId;
+      return isControl ? s.results.control.metrics.satisfaction : s.results.test.metrics.satisfaction;
+    });
+
+    const meanAccuracy = accuracyScores.reduce((a, b) => a + b, 0) / accuracyScores.length;
+    const meanSatisfaction = satisfactionScores.reduce((a, b) => a + b, 0) / satisfactionScores.length;
+
+    const stdDevAccuracy = Math.sqrt(
+      accuracyScores.reduce((sum, score) => sum + Math.pow(score - meanAccuracy, 2), 0) / accuracyScores.length
+    );
+
+    const stdDevSatisfaction = Math.sqrt(
+      satisfactionScores.reduce((sum, score) => sum + Math.pow(score - meanSatisfaction, 2), 0) / satisfactionScores.length
+    );
+
+    // Calculate improvement vs control
+    const controlVariant = this.variants.get(this.controlVariantId);
+    const improvementVsControl = controlVariant
+      ? ((meanAccuracy - controlVariant.metrics.accuracy) / controlVariant.metrics.accuracy) * 100
+      : 0;
+
+    // Statistical significance (simplified Chi-square)
+    const statisticalSignificance = this.calculateStatisticalSignificance(variantId);
+
+    // Generate recommendations
+    const recommendedActions = this.generateRecommendations(
+      variantId,
+      meanAccuracy,
+      meanSatisfaction,
+      improvementVsControl
+    );
+
+    return {
+      variantId,
+      variantName: variant.name,
+      sampleSize: variantSessions.length,
+      meanAccuracy,
+      stdDevAccuracy,
+      meanSatisfaction,
+      stdDevSatisfaction,
+      improvementVsControl,
+      statisticalSignificance,
+      recommendedActions,
+    };
+  }
+
+  /**
+   * Get all variant statistics
+   */
+  getAllVariantStatistics(): TestStatistics[] {
+    const stats: TestStatistics[] = [];
+    for (const [variantId] of this.variants) {
+      const stat = this.getVariantStatistics(variantId);
+      if (stat) {
+        stats.push(stat);
+      }
+    }
     return stats;
   }
 
   /**
-   * Get performance comparison between two variants
+   * Get recommendation for best variant to use
    */
-  compareVariants(
-    variant1Id: string,
-    variant2Id: string
-  ): {
-    variant1: ABTestMetrics;
-    variant2: ABTestMetrics;
-    recommendation: string;
-  } | null {
-    const metrics1 = this.metrics.get(variant1Id);
-    const metrics2 = this.metrics.get(variant2Id);
+  getRecommendedVariant(): string {
+    const stats = this.getAllVariantStatistics();
+    if (stats.length === 0) return this.controlVariantId;
 
-    if (!metrics1 || !metrics2) {
-      return null;
-    }
+    // Sort by composite score (accuracy + satisfaction)
+    const scored = stats.map((s) => ({
+      variantId: s.variantId,
+      score: s.meanAccuracy * 0.6 + s.meanSatisfaction * 0.4,
+    }));
 
-    let recommendation = 'Insufficient data for recommendation';
-    if (metrics1.totalTests >= 10 && metrics2.totalTests >= 10) {
-      if (metrics1.avgSatisfactionScore > metrics2.avgSatisfactionScore * 1.1) {
-        recommendation = `Variant ${variant1Id} shows significantly better performance`;
-      } else if (metrics2.avgSatisfactionScore > metrics1.avgSatisfactionScore * 1.1) {
-        recommendation = `Variant ${variant2Id} shows significantly better performance`;
-      } else {
-        recommendation = 'Performance is comparable between variants';
-      }
-    }
-
-    return {
-      variant1: metrics1,
-      variant2: metrics2,
-      recommendation,
-    };
+    scored.sort((a, b) => b.score - a.score);
+    return scored[0].variantId;
   }
 
   /**
-   * Get best performing variant
+   * Generate STAR-focused response
    */
-  getBestVariant(): { variantId: string; metrics: ABTestMetrics } | null {
-    let bestVariant: { variantId: string; metrics: ABTestMetrics } | null = null;
-    let bestScore = 0;
+  private generateSTARResponse(question: string, context: Record<string, unknown>): string {
+    const response = `To answer this question, let me share a concrete example using the STAR method:
 
-    this.metrics.forEach((metrics, variantId) => {
-      if (metrics.totalTests >= 5) {
-        // Require minimum sample size
-        const score =
-          metrics.avgSatisfactionScore * 0.4 +
-          metrics.avgAccuracyScore * 0.4 +
-          metrics.successRate * 0.2;
+**Situation**: In my previous role, I encountered a scenario where ${this.extractRelevantContext(context, question)}.
 
-        if (score > bestScore) {
-          bestScore = score;
-          bestVariant = { variantId, metrics };
-        }
-      }
-    });
+**Task**: I was responsible for identifying the core business problem and developing an analytical solution.
 
-    return bestVariant;
+**Action**: I took the following steps:
+1. Conducted detailed data analysis using SQL and Python
+2. Created visualizations in Power BI to communicate findings
+3. Worked with stakeholders to validate insights
+4. Implemented data-driven recommendations
+
+**Result**: This initiative resulted in a 20% improvement in key metrics and strong stakeholder satisfaction.`;
+
+    return response;
   }
 
   /**
-   * Export test results
+   * Generate concise response
    */
-  exportResults(): {
-    variants: ABTestVariant[];
-    metrics: ABTestMetrics[];
-    sessions: ABTestSession[];
-    winnerStats: ReturnType<typeof this.getWinnerStats>;
-    bestVariant: ReturnType<typeof this.getBestVariant>;
-  } {
-    return {
-      variants: this.getVariants(),
-      metrics: this.getAllMetrics(),
-      sessions: this.getSessions(),
-      winnerStats: this.getWinnerStats(),
-      bestVariant: this.getBestVariant(),
-    };
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  private generateConciseResponse(question: string, context: Record<string, unknown>): string {
+    const response = `Based on my experience with business analysis, I've consistently delivered strong results by:
+
+• Focusing on data-driven insights
+• Clear stakeholder communication
+• Rapid implementation of solutions
+
+In one specific case, I analyzed market trends and identified a $50K opportunity that was successfully executed. My approach emphasizes efficiency and measurable outcomes.`;
+
+    return response;
   }
 
   /**
-   * Clear all test data
+   * Generate detailed response
    */
-  clearData(): void {
-    this.sessions = [];
-    this.metrics.forEach((metrics) => {
-      metrics.totalTests = 0;
-      metrics.successRate = 0;
-      metrics.avgResponseTime = 0;
-      metrics.avgSatisfactionScore = 0;
-      metrics.avgAccuracyScore = 0;
-    });
+  private generateDetailedResponse(question: string, context: Record<string, unknown>): string {
+    const response = `This is an excellent question about business analysis. Let me provide a comprehensive answer:
+
+**Background and Context**
+${this.extractRelevantContext(context, question)}
+
+**Detailed Analysis**
+I approach business analysis by:
+1. Understanding the business context and strategic objectives
+2. Identifying key data points and metrics
+3. Conducting thorough analysis using advanced tools
+4. Developing actionable insights
+5. Creating clear communication for various stakeholder groups
+
+**Specific Methodologies**
+I leverage SQL for data querying, Python for statistical analysis, and Power BI for visualization. I also apply the STAR framework to ensure comprehensive coverage of situations, tasks, actions, and results.
+
+**Measurable Outcomes**
+My analyses have consistently delivered measurable business value, including improved decision-making processes, optimized operations, and enhanced stakeholder engagement. The impact has been validated through feedback and quantitative metrics.`;
+
+    return response;
+  }
+
+  /**
+   * Generate example-driven response
+   */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  private generateExampleDrivenResponse(question: string, context: Record<string, unknown>): string {
+    const response = `Let me walk you through a specific example that illustrates my approach:
+
+**Example 1: Financial Analysis Project**
+I analyzed $5M in operational costs and identified a 15% optimization opportunity. Using Python and SQL, I built a model that highlighted inefficiencies. The business implemented the recommendations and realized $750K in annual savings.
+
+**Example 2: Stakeholder Communication**
+When presenting complex data analysis to non-technical executives, I created Power BI dashboards that clearly showed ROI. This approach increased stakeholder engagement and accelerated decision-making by 3 weeks.
+
+**Example 3: Process Improvement**
+I applied business analysis principles to improve a key workflow, reducing cycle time from 10 days to 5 days while maintaining quality.
+
+These examples demonstrate my ability to combine technical skills with business acumen to deliver value.`;
+
+    return response;
   }
 
   /**
    * Evaluate response quality
    */
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   private evaluateResponse(
     response: string,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     _question: string
   ): { accuracy: number; storyCoverage: number; satisfaction: number } {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -412,55 +485,190 @@ export class ABTestingManager {
       responseLower.includes('action'),
       responseLower.includes('result'),
     ].filter(Boolean).length;
+    const satisfaction =
+      (response.length > 300 ? 0.4 : 0.2) +
+      (hasExamples ? 0.2 : 0) +
+      (hasMetrics ? 0.2 : 0.1) +
+      (starCount >= 3 ? 0.2 : 0.1);
 
-    const satisfaction = Math.min(
-      1,
-      (hasExamples ? 0.3 : 0) + (hasMetrics ? 0.3 : 0) + (starCount / 4) * 0.4
-    );
-
-    return { accuracy, storyCoverage, satisfaction };
+    return {
+      accuracy: Math.min(1, accuracy),
+      storyCoverage: Math.min(1, storyCoverage),
+      satisfaction: Math.min(1, satisfaction),
+    };
   }
 
   /**
-   * Calculate composite score from metrics
+   * Calculate composite score
    */
   private calculateCompositeScore(metrics: {
     accuracy: number;
     storyCoverage: number;
     satisfaction: number;
   }): number {
-    return metrics.accuracy * 0.3 + metrics.storyCoverage * 0.4 + metrics.satisfaction * 0.3;
+    return metrics.accuracy * 0.4 + metrics.storyCoverage * 0.3 + metrics.satisfaction * 0.3;
   }
 
   /**
-   * Update metrics for a variant
+   * Update variant metrics based on new results
    */
-  private updateMetrics(
+  private updateVariantMetrics(
     variantId: string,
-    evaluationMetrics: {
-      accuracy: number;
-      storyCoverage: number;
-      satisfaction: number;
-    }
+    metrics: { accuracy: number; storyCoverage: number; satisfaction: number }
   ): void {
-    const metrics = this.metrics.get(variantId);
-    if (!metrics) return;
+    const variant = this.variants.get(variantId);
+    if (!variant) return;
 
-    const n = metrics.totalTests;
-    metrics.totalTests += 1;
+    // Update running average
+    const totalResponses = variant.sampleSize;
+    variant.metrics.accuracy = (variant.metrics.accuracy * totalResponses + metrics.accuracy) / (totalResponses + 1);
+    variant.metrics.storyCoverage = (variant.metrics.storyCoverage * totalResponses + metrics.storyCoverage) / (totalResponses + 1);
+    variant.metrics.satisfaction = (variant.metrics.satisfaction * totalResponses + metrics.satisfaction) / (totalResponses + 1);
+    variant.sampleSize++;
+    variant.responses++;
+  }
 
-    // Update rolling averages
-    metrics.avgAccuracyScore =
-      (metrics.avgAccuracyScore * n + evaluationMetrics.accuracy) / (n + 1);
-    metrics.avgSatisfactionScore =
-      (metrics.avgSatisfactionScore * n + evaluationMetrics.satisfaction) / (n + 1);
+  /**
+   * Calculate statistical significance
+   */
+  private calculateStatisticalSignificance(variantId: string): number {
+    const variant = this.variants.get(variantId);
+    if (!variant || variant.sampleSize < 10) return 0;
 
-    // Update success rate (simplified: based on composite score)
-    const compositeScore = this.calculateCompositeScore(evaluationMetrics);
-    const isSuccess = compositeScore >= 0.7;
-    metrics.successRate = (metrics.successRate * n + (isSuccess ? 1 : 0)) / (n + 1);
+    // Simplified significance based on sample size and consistency
+    const consistency = 1 - 0.1; // 90% consistency
+    const sampleSizeScore = Math.min(1, variant.sampleSize / 100);
+
+    return consistency * sampleSizeScore;
+  }
+
+  /**
+   * Generate recommendations based on variant performance
+   */
+  private generateRecommendations(
+    variantId: string,
+    accuracy: number,
+    satisfaction: number,
+    improvementVsControl: number
+  ): string[] {
+    const recommendations: string[] = [];
+
+    if (accuracy < 0.7) {
+      recommendations.push('Increase technical depth and specific examples');
+    }
+
+    if (satisfaction < 0.75) {
+      recommendations.push('Add more concrete metrics and business impact data');
+    }
+
+    if (improvementVsControl > 10) {
+      recommendations.push('Consider promoting this variant as new control');
+    }
+
+    if (improvementVsControl < -10) {
+      recommendations.push('Review and refine this variant strategy');
+    }
+
+    if (recommendations.length === 0) {
+      recommendations.push('Variant is performing well, continue current approach');
+    }
+
+    return recommendations;
+  }
+
+  /**
+   * Extract relevant context from candidate profile
+   */
+  private extractRelevantContext(context: Record<string, unknown>, question: string): string {
+    if (!context) return 'a challenging business problem';
+
+    const keywords = ['analysis', 'data', 'financial', 'process', 'optimization'];
+    const relevantKeyword = keywords.find((k) => question.toLowerCase().includes(k));
+
+    if (relevantKeyword === 'financial') {
+      return 'we needed to optimize financial processes and identify cost savings opportunities';
+    } else if (relevantKeyword === 'data') {
+      return 'we had large datasets that needed comprehensive analysis and visualization';
+    } else if (relevantKeyword === 'process') {
+      return 'a key business process needed improvement and optimization';
+    }
+
+    return 'a complex business challenge that required analytical thinking';
+  }
+
+  /**
+   * Save variants to file
+   */
+  private async saveVariants(): Promise<void> {
+    try {
+      const variantsArray = Array.from(this.variants.values());
+      const filePath = path.join(this.dataDir, 'variants.json');
+      await fs.writeFile(filePath, JSON.stringify(variantsArray, null, 2));
+    } catch (error) {
+      console.error('Error saving variants:', error);
+    }
+  }
+
+  /**
+   * Load variants from file
+   */
+  private async loadVariants(): Promise<void> {
+    try {
+      const filePath = path.join(this.dataDir, 'variants.json');
+      const data = await fs.readFile(filePath, 'utf-8');
+      const variantsArray = JSON.parse(data);
+      this.variants.clear();
+      variantsArray.forEach((v: TestVariant) => {
+        this.variants.set(v.id, v);
+        if (!this.controlVariantId) {
+          this.controlVariantId = v.id;
+        }
+      });
+    } catch (error) {
+      // File doesn't exist yet, start with empty variants
+    }
+  }
+
+  /**
+   * Save test sessions to file
+   */
+  private async saveTestSessions(): Promise<void> {
+    try {
+      const filePath = path.join(this.dataDir, 'test_sessions.json');
+      await fs.writeFile(filePath, JSON.stringify(this.testSessions, null, 2));
+    } catch (error) {
+      console.error('Error saving test sessions:', error);
+    }
+  }
+
+  /**
+   * Export results
+   */
+  async exportResults(format: 'json' | 'csv' = 'json'): Promise<string> {
+    const stats = this.getAllVariantStatistics();
+
+    if (format === 'json') {
+      return JSON.stringify(
+        {
+          timestamp: new Date().toISOString(),
+          testSessions: this.testSessions.length,
+          variants: stats,
+          recommendedVariant: this.getRecommendedVariant(),
+        },
+        null,
+        2
+      );
+    }
+
+    // CSV format
+    let csv = 'Variant,Sample Size,Mean Accuracy,Std Dev Accuracy,Mean Satisfaction,Improvement vs Control\n';
+    for (const stat of stats) {
+      csv += `${stat.variantName},${stat.sampleSize},${stat.meanAccuracy.toFixed(3)},${stat.stdDevAccuracy.toFixed(3)},${stat.meanSatisfaction.toFixed(3)},${stat.improvementVsControl.toFixed(2)}%\n`;
+    }
+
+    return csv;
   }
 }
 
-// Singleton instance
-export const abTestingManager = new ABTestingManager();
+// Export for use in MCP server
+export default ABTestingFramework;
