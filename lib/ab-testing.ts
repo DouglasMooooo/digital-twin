@@ -1,171 +1,392 @@
+import { generateAIResponse } from './llm';
+import type { InterviewContext } from './llm';
 
-import { performance } from 'perf_hooks';
-
-export interface TestResult {
-  method: string;
-  responseText: string;
-  accuracy: number;
-  storyCoverage: number;
-  satisfaction: number;
-  executionTime: number;
+export interface ABTestVariant {
+  id: string;
+  name: string;
+  description: string;
+  strategy: 'default' | 'concise' | 'story-focused' | 'metric-heavy';
+  systemPromptModifier?: string;
 }
 
-export interface TestConfig {
-  question: string;
-  context: Record<string, unknown>;
-  interviewType?: 'screening' | 'hr' | 'technical' | 'manager' | 'executive';
+export interface ABTestMetrics {
+  variantId: string;
+  totalTests: number;
+  successRate: number;
+  avgResponseTime: number;
+  avgSatisfactionScore: number;
+  avgAccuracyScore: number;
 }
 
-export class ABTestingFramework {
-  private results: TestResult[] = [];
-  private baselineMethod = 'standard';
+export interface ABTestSession {
+  id: string;
+  questionId: string;
+  controlVariantId: string;
+  testVariantId: string;
+  controlResponse: string;
+  testResponse: string;
+  controlScore: number;
+  testScore: number;
+  winner: 'control' | 'test' | 'tie';
+  confidenceLevel: number;
+  timestamp: Date;
+  userFeedback?: 'control' | 'test' | 'neither';
+}
+
+/**
+ * A/B Testing Manager
+ * Manages multiple response strategies and compares their effectiveness
+ */
+export class ABTestingManager {
+  private variants: Map<string, ABTestVariant> = new Map();
+  private metrics: Map<string, ABTestMetrics> = new Map();
+  private sessions: ABTestSession[] = [];
+  private controlVariantId: string;
+
+  constructor(controlVariantId: string = 'default') {
+    this.controlVariantId = controlVariantId;
+    this.initializeDefaultVariants();
+  }
+
+  private initializeDefaultVariants(): void {
+    // Control: Default STAR method response
+    this.registerVariant({
+      id: 'default',
+      name: 'Default STAR',
+      description: 'Standard STAR method responses',
+      strategy: 'default',
+    });
+
+    // Test 1: Concise responses
+    this.registerVariant({
+      id: 'concise',
+      name: 'Concise Response',
+      description: 'Shorter, punchier answers focusing on key points',
+      strategy: 'concise',
+      systemPromptModifier:
+        'Keep responses concise (150-200 words). Focus on the most impactful information.',
+    });
+
+    // Test 2: Story-focused
+    this.registerVariant({
+      id: 'story-focused',
+      name: 'Story-Focused',
+      description: 'Emphasize narrative and emotional elements',
+      strategy: 'story-focused',
+      systemPromptModifier:
+        'Tell engaging stories. Focus on the journey, challenges, and human elements of each experience.',
+    });
+
+    // Test 3: Metric-heavy
+    this.registerVariant({
+      id: 'metric-heavy',
+      name: 'Metric-Heavy',
+      description: 'Data-driven responses with specific numbers and percentages',
+      strategy: 'metric-heavy',
+      systemPromptModifier:
+        'Emphasize quantifiable results. Include specific numbers, percentages, and measurable outcomes whenever possible.',
+    });
+  }
 
   /**
-   * Run A/B test comparing two response generation methods
+   * Register a new variant
    */
-  public runTest(config: TestConfig): {
-    methodA: TestResult;
-    methodB: TestResult;
-    winner: string;
-    improvement: number;
+  registerVariant(variant: ABTestVariant): void {
+    this.variants.set(variant.id, variant);
+    if (!this.metrics.has(variant.id)) {
+      this.metrics.set(variant.id, {
+        variantId: variant.id,
+        totalTests: 0,
+        successRate: 0,
+        avgResponseTime: 0,
+        avgSatisfactionScore: 0,
+        avgAccuracyScore: 0,
+      });
+    }
+  }
+
+  /**
+   * Get all registered variants
+   */
+  getVariants(): ABTestVariant[] {
+    return Array.from(this.variants.values());
+  }
+
+  /**
+   * Get metrics for a specific variant
+   */
+  getMetrics(variantId: string): ABTestMetrics | undefined {
+    return this.metrics.get(variantId);
+  }
+
+  /**
+   * Get all metrics
+   */
+  getAllMetrics(): ABTestMetrics[] {
+    return Array.from(this.metrics.values());
+  }
+
+  /**
+   * Generate response using a specific variant
+   */
+  async generateResponse(
+    question: string,
+    context: Record<string, unknown>,
+    variantId: string
+  ): Promise<string> {
+    const variant = this.variants.get(variantId);
+    if (!variant) {
+      throw new Error(`Variant ${variantId} not found`);
+    }
+
+    // Generate response (simplified - in production would apply strategy)
+    const interviewContext: InterviewContext = {
+      type: 'hr',
+      relevantContext: [],
+      ...context,
+    };
+
+    const response = await generateAIResponse(question, interviewContext);
+
+    return response;
+  }
+
+  /**
+   * Run A/B test comparing two variants
+   */
+  async runTest(
+    questionId: string,
+    question: string,
+    context: Record<string, unknown>,
+    controlVariantId?: string,
+    testVariantId?: string
+  ): Promise<ABTestSession> {
+    const controlId = controlVariantId || this.controlVariantId;
+    const testId = testVariantId || 'concise'; // Default test variant
+
+    const controlVariant = this.variants.get(controlId);
+    const testVariant = this.variants.get(testId);
+
+    if (!controlVariant || !testVariant) {
+      throw new Error('Variant not found');
+    }
+
+    // Generate responses
+    const controlResponse = await this.generateResponse(
+      question,
+      context,
+      controlVariant.strategy
+    );
+    const testResponse = await this.generateResponse(
+      question,
+      context,
+      testVariant.strategy
+    );
+
+    // Evaluate responses (simplified scoring)
+    const controlMetrics = this.evaluateResponse(controlResponse, question);
+    const testMetrics = this.evaluateResponse(testResponse, question);
+
+    // Determine winner
+    const controlScore = this.calculateCompositeScore(controlMetrics);
+    const testScore = this.calculateCompositeScore(testMetrics);
+
+    let winner: 'control' | 'test' | 'tie' = 'tie';
+    if (controlScore > testScore * 1.05) {
+      winner = 'control';
+    } else if (testScore > controlScore * 1.05) {
+      winner = 'test';
+    }
+
+    // Calculate confidence level
+    const scoreDiff = Math.abs(controlScore - testScore);
+    const confidenceLevel = Math.min(0.95, scoreDiff * 10); // Simplified
+
+    const session: ABTestSession = {
+      id: `test-${Date.now()}`,
+      questionId,
+      controlVariantId: controlId,
+      testVariantId: testId,
+      controlResponse,
+      testResponse,
+      controlScore,
+      testScore,
+      winner,
+      confidenceLevel,
+      timestamp: new Date(),
+    };
+
+    this.sessions.push(session);
+    this.updateMetrics(controlId, controlMetrics);
+    this.updateMetrics(testId, testMetrics);
+
+    return session;
+  }
+
+  /**
+   * Record user feedback for a test session
+   */
+  recordUserFeedback(
+    sessionId: string,
+    feedback: 'control' | 'test' | 'neither'
+  ): void {
+    const session = this.sessions.find((s) => s.id === sessionId);
+    if (session) {
+      session.userFeedback = feedback;
+
+      // Update metrics based on user feedback
+      if (feedback === 'control') {
+        const metrics = this.metrics.get(session.controlVariantId);
+        if (metrics) {
+          metrics.successRate =
+            (metrics.successRate * metrics.totalTests + 1) / (metrics.totalTests + 1);
+        }
+      } else if (feedback === 'test') {
+        const metrics = this.metrics.get(session.testVariantId);
+        if (metrics) {
+          metrics.successRate =
+            (metrics.successRate * metrics.totalTests + 1) / (metrics.totalTests + 1);
+        }
+      }
+    }
+  }
+
+  /**
+   * Get test sessions
+   */
+  getSessions(limit?: number): ABTestSession[] {
+    const sorted = [...this.sessions].sort(
+      (a, b) => b.timestamp.getTime() - a.timestamp.getTime()
+    );
+    return limit ? sorted.slice(0, limit) : sorted;
+  }
+
+  /**
+   * Get winner statistics
+   */
+  getWinnerStats(): {
+    control: number;
+    test: number;
+    tie: number;
+    totalTests: number;
   } {
-    const startA = performance.now();
-    const responseA = this.generateResponse(config.question, config.context);
-    const timeA = performance.now() - startA;
-
-    const evaluationA = this.evaluateResponse(responseA, config.question);
-    const resultA: TestResult = {
-      method: 'standard',
-      responseText: responseA,
-      accuracy: evaluationA.accuracy,
-      storyCoverage: evaluationA.storyCoverage,
-      satisfaction: evaluationA.satisfaction,
-      executionTime: timeA,
+    const stats = {
+      control: 0,
+      test: 0,
+      tie: 0,
+      totalTests: this.sessions.length,
     };
 
-    const startB = performance.now();
-    const responseB = this.generateConciseResponse(config.question, config.context);
-    const timeB = performance.now() - startB;
+    this.sessions.forEach((session) => {
+      stats[session.winner] += 1;
+    });
 
-    const evaluationB = this.evaluateResponse(responseB, config.question);
-    const resultB: TestResult = {
-      method: 'concise',
-      responseText: responseB,
-      accuracy: evaluationB.accuracy,
-      storyCoverage: evaluationB.storyCoverage,
-      satisfaction: evaluationB.satisfaction,
-      executionTime: timeB,
-    };
+    return stats;
+  }
 
-    this.results.push(resultA, resultB);
+  /**
+   * Get performance comparison between two variants
+   */
+  compareVariants(
+    variant1Id: string,
+    variant2Id: string
+  ): {
+    variant1: ABTestMetrics;
+    variant2: ABTestMetrics;
+    recommendation: string;
+  } | null {
+    const metrics1 = this.metrics.get(variant1Id);
+    const metrics2 = this.metrics.get(variant2Id);
 
-    // Determine winner based on weighted score
-    const scoreA = evaluationA.accuracy * 0.3 + evaluationA.satisfaction * 0.7;
-    const scoreB = evaluationB.accuracy * 0.3 + evaluationB.satisfaction * 0.7;
+    if (!metrics1 || !metrics2) {
+      return null;
+    }
 
-    const winner = scoreA > scoreB ? 'standard' : 'concise';
-    const improvement = ((Math.max(scoreA, scoreB) - Math.min(scoreA, scoreB)) / Math.min(scoreA, scoreB)) * 100;
+    let recommendation = 'Insufficient data for recommendation';
+    if (metrics1.totalTests >= 10 && metrics2.totalTests >= 10) {
+      if (metrics1.avgSatisfactionScore > metrics2.avgSatisfactionScore * 1.1) {
+        recommendation = `Variant ${variant1Id} shows significantly better performance`;
+      } else if (metrics2.avgSatisfactionScore > metrics1.avgSatisfactionScore * 1.1) {
+        recommendation = `Variant ${variant2Id} shows significantly better performance`;
+      } else {
+        recommendation = 'Performance is comparable between variants';
+      }
+    }
 
     return {
-      methodA: resultA,
-      methodB: resultB,
-      winner,
-      improvement,
+      variant1: metrics1,
+      variant2: metrics2,
+      recommendation,
     };
   }
 
   /**
-   * Generate standard response with full coverage
+   * Get best performing variant
    */
-  private generateResponse(question: string, context: Record<string, unknown>): string {
-    const response = `Thank you for the question about ${this._extractTopic(question)}. Let me provide a comprehensive answer.
+  getBestVariant(): { variantId: string; metrics: ABTestMetrics } | null {
+    let bestVariant: { variantId: string; metrics: ABTestMetrics } | null = null;
+    let bestScore = 0;
 
-**Situation**: In my previous role, I encountered a scenario where ${this.extractRelevantContext(context, question)}.
+    this.metrics.forEach((metrics, variantId) => {
+      if (metrics.totalTests >= 5) {
+        // Require minimum sample size
+        const score =
+          metrics.avgSatisfactionScore * 0.4 +
+          metrics.avgAccuracyScore * 0.4 +
+          metrics.successRate * 0.2;
 
-**Task**: The challenge was to deliver high-quality results while maintaining team efficiency and stakeholder satisfaction.
+        if (score > bestScore) {
+          bestScore = score;
+          bestVariant = { variantId, metrics };
+        }
+      }
+    });
 
-**Action**: I took the following steps:
-1. Analyzed the problem systematically using data-driven methods
-2. Collaborated with cross-functional teams to identify solutions
-3. Implemented best practices and standards
-4. Monitored outcomes and adjusted approach as needed
-
-**Result**: This initiative resulted in measurable improvements and positive feedback from stakeholders.`;
-
-    return response;
+    return bestVariant;
   }
 
   /**
-   * Generate concise response
+   * Export test results
    */
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  private generateConciseResponse(question: string, context: Record<string, unknown>): string {
-    const response = `Based on my experience with business analysis, I've consistently delivered strong results by:
-
-• Focusing on data-driven insights
-• Clear stakeholder communication
-• Rapid implementation of solutions
-
-In one specific case, I analyzed market trends and identified a $50K opportunity that was successfully executed. My approach emphasizes efficiency and measurable outcomes.`;
-
-    return response;
+  exportResults(): {
+    variants: ABTestVariant[];
+    metrics: ABTestMetrics[];
+    sessions: ABTestSession[];
+    winnerStats: ReturnType<typeof this.getWinnerStats>;
+    bestVariant: ReturnType<typeof this.getBestVariant>;
+  } {
+    return {
+      variants: this.getVariants(),
+      metrics: this.getAllMetrics(),
+      sessions: this.getSessions(),
+      winnerStats: this.getWinnerStats(),
+      bestVariant: this.getBestVariant(),
+    };
   }
 
   /**
-   * Generate detailed response
+   * Clear all test data
    */
-  private generateDetailedResponse(question: string, context: Record<string, unknown>): string {
-    const response = `This is an excellent question about business analysis. Let me provide a comprehensive answer:
-
-**Background and Context**
-${this.extractRelevantContext(context, question)}
-
-**Detailed Analysis**
-I approach business analysis by:
-1. Understanding the business context and strategic objectives
-2. Identifying key data points and metrics
-3. Conducting thorough analysis using advanced tools
-4. Developing actionable insights
-5. Creating clear communication for various stakeholder groups
-
-**Specific Methodologies**
-I leverage SQL for data querying, Python for statistical analysis, and Power BI for visualization. I also apply the STAR framework to ensure comprehensive coverage of situations, tasks, actions, and results.
-
-**Measurable Outcomes**
-My analyses have consistently delivered measurable business value, including improved decision-making processes, optimized operations, and enhanced stakeholder engagement. The impact has been validated through feedback and quantitative metrics.`;
-
-    return response;
-  }
-
-  /**
-   * Generate example-driven response
-   */
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  private generateExampleDrivenResponse(question: string, context: Record<string, unknown>): string {
-    const response = `Let me walk you through a specific example that illustrates my approach:
-
-**Example 1: Financial Analysis Project**
-I analyzed $5M in operational costs and identified a 15% optimization opportunity. Using Python and SQL, I built a model that highlighted inefficiencies. The business implemented the recommendations and realized $750K in annual savings.
-
-**Example 2: Stakeholder Communication**
-When presenting complex data analysis to non-technical executives, I created Power BI dashboards that clearly showed ROI. This approach increased stakeholder engagement and accelerated decision-making by 3 weeks.
-
-**Example 3: Process Improvement**
-I applied business analysis principles to improve a key workflow, reducing cycle time from 10 days to 5 days while maintaining quality.
-
-These examples demonstrate my ability to combine technical skills with business acumen to deliver value.`;
-
-    return response;
+  clearData(): void {
+    this.sessions = [];
+    this.metrics.forEach((metrics) => {
+      metrics.totalTests = 0;
+      metrics.successRate = 0;
+      metrics.avgResponseTime = 0;
+      metrics.avgSatisfactionScore = 0;
+      metrics.avgAccuracyScore = 0;
+    });
   }
 
   /**
    * Evaluate response quality
    */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   private evaluateResponse(
     response: string,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    question: string
+    _question: string
   ): { accuracy: number; storyCoverage: number; satisfaction: number } {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const responseLower = response.toLowerCase();
 
     // Accuracy: Check for relevant technical terms
@@ -191,100 +412,55 @@ These examples demonstrate my ability to combine technical skills with business 
       responseLower.includes('action'),
       responseLower.includes('result'),
     ].filter(Boolean).length;
-    const satisfaction =
-      (response.length > 300 ? 0.4 : 0.2) +
-      (hasExamples ? 0.2 : 0) +
-      (hasMetrics ? 0.2 : 0.1) +
-      (starCount >= 3 ? 0.2 : 0.1);
 
-    return {
-      accuracy: Math.min(1, accuracy),
-      storyCoverage: Math.min(1, storyCoverage),
-      satisfaction: Math.min(1, satisfaction),
-    };
-  }
-
-  /**
-   * Extract main topic from question
-   */
-  private _extractTopic(question: string): string {
-    const words = question.split(/\s+/).slice(0, 3);
-    return words.join(' ').toLowerCase();
-  }
-
-  /**
-   * Extract relevant context from context object
-   */
-  private extractRelevantContext(context: Record<string, unknown>, question: string): string {
-    if (!context || Object.keys(context).length === 0) {
-      return 'we needed to solve a complex business challenge';
-    }
-
-    const keys = Object.keys(context);
-    const randomKey = keys[Math.floor(Math.random() * keys.length)];
-    const value = context[randomKey];
-
-    if (typeof value === 'string') {
-      return value;
-    } else if (typeof value === 'object') {
-      return JSON.stringify(value).substring(0, 100);
-    }
-
-    return 'we encountered a significant opportunity for improvement';
-  }
-
-  /**
-   * Get test results summary
-   */
-  public getResultsSummary(): {
-    totalTests: number;
-    averageAccuracy: number;
-    bestMethod: string;
-    recommendations: string[];
-  } {
-    if (this.results.length === 0) {
-      return {
-        totalTests: 0,
-        averageAccuracy: 0,
-        bestMethod: 'none',
-        recommendations: ['Run tests first'],
-      };
-    }
-
-    const averageAccuracy = this.results.reduce((sum, r) => sum + r.accuracy, 0) / this.results.length;
-    const methodResults = this.results.reduce(
-      (acc: Record<string, { count: number; totalScore: number }>, result) => {
-        if (!acc[result.method]) {
-          acc[result.method] = { count: 0, totalScore: 0 };
-        }
-        acc[result.method].count++;
-        acc[result.method].totalScore += result.satisfaction;
-        return acc;
-      },
-      {}
+    const satisfaction = Math.min(
+      1,
+      (hasExamples ? 0.3 : 0) + (hasMetrics ? 0.3 : 0) + (starCount / 4) * 0.4
     );
 
-    let bestMethod = this.baselineMethod;
-    let bestScore = 0;
-    for (const [method, stats] of Object.entries(methodResults)) {
-      const avgScore = stats.totalScore / stats.count;
-      if (avgScore > bestScore) {
-        bestScore = avgScore;
-        bestMethod = method;
-      }
+    return { accuracy, storyCoverage, satisfaction };
+  }
+
+  /**
+   * Calculate composite score from metrics
+   */
+  private calculateCompositeScore(metrics: {
+    accuracy: number;
+    storyCoverage: number;
+    satisfaction: number;
+  }): number {
+    return metrics.accuracy * 0.3 + metrics.storyCoverage * 0.4 + metrics.satisfaction * 0.3;
+  }
+
+  /**
+   * Update metrics for a variant
+   */
+  private updateMetrics(
+    variantId: string,
+    evaluationMetrics: {
+      accuracy: number;
+      storyCoverage: number;
+      satisfaction: number;
     }
+  ): void {
+    const metrics = this.metrics.get(variantId);
+    if (!metrics) return;
 
-    const recommendations = [
-      `Best performing method: ${bestMethod} (avg satisfaction: ${bestScore.toFixed(2)})`,
-      `Overall accuracy: ${(averageAccuracy * 100).toFixed(1)}%`,
-      `Total tests run: ${this.results.length}`,
-    ];
+    const n = metrics.totalTests;
+    metrics.totalTests += 1;
 
-    return {
-      totalTests: this.results.length,
-      averageAccuracy,
-      bestMethod,
-      recommendations,
-    };
+    // Update rolling averages
+    metrics.avgAccuracyScore =
+      (metrics.avgAccuracyScore * n + evaluationMetrics.accuracy) / (n + 1);
+    metrics.avgSatisfactionScore =
+      (metrics.avgSatisfactionScore * n + evaluationMetrics.satisfaction) / (n + 1);
+
+    // Update success rate (simplified: based on composite score)
+    const compositeScore = this.calculateCompositeScore(evaluationMetrics);
+    const isSuccess = compositeScore >= 0.7;
+    metrics.successRate = (metrics.successRate * n + (isSuccess ? 1 : 0)) / (n + 1);
   }
 }
+
+// Singleton instance
+export const abTestingManager = new ABTestingManager();
