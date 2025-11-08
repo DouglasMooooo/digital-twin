@@ -25,7 +25,7 @@ jobs:
         run: npm ci
 
       - name: Run ESLint
-        run: npm run lint -- --ext .js,.jsx,.ts,.tsx app lib components
+        run: npx eslint --ext .js,.jsx,.ts,.tsx --ignore-pattern node_modules --ignore-pattern .next app lib components
 
       - name: TypeScript type check
         run: npx tsc --noEmit
