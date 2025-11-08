@@ -391,6 +391,7 @@ class ABTestingFramework {
   /**
    * Generate concise response
    */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   private generateConciseResponse(question: string, context: Record<string, unknown>): string {
     const response = `Based on my experience with business analysis, I've consistently delivered strong results by:
 
@@ -432,6 +433,7 @@ My analyses have consistently delivered measurable business value, including imp
   /**
    * Generate example-driven response
    */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   private generateExampleDrivenResponse(question: string, context: Record<string, unknown>): string {
     const response = `Let me walk you through a specific example that illustrates my approach:
 

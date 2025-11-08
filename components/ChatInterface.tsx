@@ -27,7 +27,7 @@ function getSessionId(): string {
   return sessionId;
 }
 
-export default function ChatInterface({ initialMessage }: ChatInterfaceProps) {
+export default function ChatInterface({}: ChatInterfaceProps): JSX.Element {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
