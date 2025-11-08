@@ -53,6 +53,14 @@
       {
         "command": "douglas-digital-twin.enableMCP",
         "title": "Douglas Digital Twin: Enable MCP Connection"
+      },
+      {
+        "command": "douglas-digital-twin.showInterviewPanel",
+        "title": "Douglas Digital Twin: Show Interview Preparation Panel"
+      },
+      {
+        "command": "douglas-digital-twin.recordPerformance",
+        "title": "Douglas Digital Twin: Record Interview Performance"
       }
     ]
   },

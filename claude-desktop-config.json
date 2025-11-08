@@ -1,0 +1,27 @@
+{
+  "mcpServers": {
+    "douglas-digital-twin": {
+      "command": "node",
+      "args": [
+        "D:\\上课\\Ai agent\\digital twin\\claude-mcp-server\\index.js"
+      ],
+      "env": {},
+      "metadata": {
+        "name": "Douglas Mo Digital Twin",
+        "version": "2.0.0",
+        "description": "AI-powered digital twin with interview preparation, A/B testing, and advanced analytics",
+        "author": "Douglas Mo",
+        "features": [
+          "Professional profile query",
+          "Job scraping and analysis",
+          "Interview simulation (30-min Junior BA)",
+          "Response evaluation and feedback",
+          "A/B testing for response optimization",
+          "Performance analytics and trends",
+          "Personalized recommendations",
+          "Milestone tracking"
+        ]
+      }
+    }
+  }
+}

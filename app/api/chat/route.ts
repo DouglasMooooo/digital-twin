@@ -63,8 +63,8 @@ export async function POST(req: NextRequest) {
     // Determine interview type if not provided
     contextType = interviewType || analyzeQuestionType(message);
 
-    // Search for relevant context from vector database
-    const relevantContext = await searchRelevantContext(message, 5);
+    // Search for relevant context from vector database (优化: topK=10)
+    const relevantContext = await searchRelevantContext(message, 10);
     const contextStrings = relevantContext.map((ctx) => ctx.content);
     contextChunks = relevantContext.length;
 

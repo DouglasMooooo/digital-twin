@@ -1,0 +1,60 @@
+{
+  "timestamp": "2025-11-07T14:03:17.501Z",
+  "summary": {
+    "passed": 8,
+    "failed": 0,
+    "total": 8,
+    "passRate": "100.0",
+    "totalTime": 1
+  },
+  "details": [
+    {
+      "testName": "✓ Test 1.1: Parse Job Requirements",
+      "passed": true,
+      "duration": 0,
+      "message": "Successfully parsed skills from 2 job listings"
+    },
+    {
+      "testName": "✓ Test 1.2: Job Matching Algorithm",
+      "passed": true,
+      "duration": 0,
+      "message": "Best job match: Business Analyst (75.0% fit)"
+    },
+    {
+      "testName": "✓ Test 2: Question Generation",
+      "passed": true,
+      "duration": 0,
+      "message": "Generated 8 questions across 4 categories"
+    },
+    {
+      "testName": "✓ Test 3: Response Evaluation",
+      "passed": true,
+      "duration": 1,
+      "message": "Evaluated 2 responses - Avg Accuracy: 52.0%, Avg Coverage: 40.1%"
+    },
+    {
+      "testName": "✓ Test 4: Performance Metrics Tracking",
+      "passed": true,
+      "duration": 0,
+      "message": "Performance is improving (0.72 → 0.85)"
+    },
+    {
+      "testName": "✓ Test 4.2: Statistics Calculation",
+      "passed": true,
+      "duration": 0,
+      "message": "Mean Accuracy: 78.3%, Std Dev: 5.31%"
+    },
+    {
+      "testName": "✓ Test 5: A/B Testing",
+      "passed": true,
+      "duration": 0,
+      "message": "Winner: Detailed (85.0% vs 80.0%, 6.2% improvement)"
+    },
+    {
+      "testName": "✓ Test 6: Analytics Reporting",
+      "passed": true,
+      "duration": 0,
+      "message": "Generated report with 3 recommendations and 3 milestones"
+    }
+  ]
+}

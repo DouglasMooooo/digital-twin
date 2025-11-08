@@ -3,7 +3,7 @@
   "name_for_human": "Douglas Mo Digital Twin",
   "name_for_model": "douglas_digital_twin",
   "description_for_human": "Chat with Douglas Mo's AI-powered digital twin to learn about his professional experience, technical skills, project portfolio, and career achievements.",
-  "description_for_model": "Douglas Mo Digital Twin provides access to comprehensive professional information about Douglas Mo, an AI/ML specialist and business strategist with expertise in Python, machine learning, financial modeling, and business operations. You can query his work experience, technical skills, project portfolio, interview preparation materials, and career achievements. The system uses RAG (Retrieval-Augmented Generation) to provide accurate, context-aware responses based on his actual profile data.",
+  "description_for_model": "Douglas Mo Digital Twin provides access to comprehensive professional information about Douglas Mo, an AI/ML specialist and business strategist with expertise in Python, machine learning, financial modeling, and business operations. You can query his work experience, technical skills, project portfolio, interview preparation materials, and career achievements. The system uses RAG (Retrieval-Augmented Generation) to provide accurate, context-aware responses based on his actual profile data. NEW in v2.0: Interview simulation, A/B testing for response optimization, advanced analytics with performance trends, personalized recommendations, and milestone tracking.",
   "auth": {
     "type": "none"
   },
@@ -25,27 +25,27 @@
       "category": "projects"
     },
     {
-      "text": "What was your role and impact at BF Suma?",
-      "category": "work_experience"
+      "text": "Start a 30-minute Business Analyst interview simulation",
+      "category": "interview_simulation"
+    },
+    {
+      "text": "Run an A/B test on interview response strategies",
+      "category": "ab_testing"
+    },
+    {
+      "text": "Show me my performance analytics and trends",
+      "category": "analytics"
+    },
+    {
+      "text": "What are personalized recommendations for improving my interview responses?",
+      "category": "recommendations"
+    },
+    {
+      "text": "What are my next learning milestones?",
+      "category": "milestones"
     },
     {
       "text": "How should I introduce myself in an interview?",
-      "category": "interview_prep"
-    },
-    {
-      "text": "What are your key leadership and business strategy skills?",
-      "category": "skills"
-    },
-    {
-      "text": "Describe your financial modeling and data analysis experience",
-      "category": "technical_skills"
-    },
-    {
-      "text": "What technologies have you used in production systems?",
-      "category": "projects"
-    },
-    {
-      "text": "What are your career goals and strengths?",
       "category": "interview_prep"
     }
   ],
@@ -55,7 +55,12 @@
     "provides_sources": true,
     "real_time_updates": false,
     "feedback_collection": true,
-    "quality_analysis": true
+    "quality_analysis": true,
+    "interview_simulation": true,
+    "ab_testing": true,
+    "performance_analytics": true,
+    "personalized_recommendations": true,
+    "milestone_tracking": true
   },
   "usage_instructions": {
     "query_formats": [

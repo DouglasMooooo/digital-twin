@@ -51,6 +51,7 @@ exports.deactivate = deactivate;
 const vscode = __importStar(require("vscode"));
 const child_process_1 = require("child_process");
 const path = __importStar(require("path"));
+const InterviewPanel_1 = require("./InterviewPanel");
 // Dynamic import for MCP SDK (ES modules)
 let Client;
 let StdioClientTransport;
@@ -124,6 +125,7 @@ const DEFAULT_DIGITAL_TWIN_DATA = {
 };
 let mcpClient;
 let digitalTwinData = DEFAULT_DIGITAL_TWIN_DATA;
+let interviewPanel;
 /**
  * Initialize MCP client connection to digital twin server
  */
@@ -367,6 +369,71 @@ async function activate(context) {
     // Register enable MCP command
     context.subscriptions.push(vscode.commands.registerCommand('douglas-digital-twin.enableMCP', async () => {
         await initializeMCPClient(context);
+    }));
+    // Register interview preparation panel command
+    context.subscriptions.push(vscode.commands.registerCommand('douglas-digital-twin.showInterviewPanel', async () => {
+        if (!interviewPanel) {
+            interviewPanel = new InterviewPanel_1.InterviewPanel(context.extensionUri, mcpClient);
+        }
+        await interviewPanel.show();
+    }));
+    // Register performance recording command
+    context.subscriptions.push(vscode.commands.registerCommand('douglas-digital-twin.recordPerformance', async () => {
+        if (!mcpClient) {
+            vscode.window.showErrorMessage('MCP client not connected. Please enable MCP first.');
+            return;
+        }
+        // Prompt user for performance metrics
+        const accuracy = await vscode.window.showInputBox({
+            prompt: 'Enter accuracy score (0-1)',
+            placeHolder: '0.85',
+            validateInput: (value) => {
+                const num = parseFloat(value);
+                return (isNaN(num) || num < 0 || num > 1) ? 'Please enter a number between 0 and 1' : undefined;
+            }
+        });
+        if (!accuracy)
+            return;
+        const storyCoverage = await vscode.window.showInputBox({
+            prompt: 'Enter story coverage score (0-1)',
+            placeHolder: '0.75',
+            validateInput: (value) => {
+                const num = parseFloat(value);
+                return (isNaN(num) || num < 0 || num > 1) ? 'Please enter a number between 0 and 1' : undefined;
+            }
+        });
+        if (!storyCoverage)
+            return;
+        const satisfaction = await vscode.window.showInputBox({
+            prompt: 'Enter satisfaction score (0-1)',
+            placeHolder: '0.90',
+            validateInput: (value) => {
+                const num = parseFloat(value);
+                return (isNaN(num) || num < 0 || num > 1) ? 'Please enter a number between 0 and 1' : undefined;
+            }
+        });
+        if (!satisfaction)
+            return;
+        const category = await vscode.window.showQuickPick(['behavioral', 'technical', 'business', 'situational'], { placeHolder: 'Select question category' });
+        if (!category)
+            return;
+        // Record performance
+        try {
+            await mcpClient.callTool({
+                name: 'record_performance',
+                arguments: {
+                    accuracy: parseFloat(accuracy),
+                    storyCoverage: parseFloat(storyCoverage),
+                    satisfaction: parseFloat(satisfaction),
+                    responseTime: 120,
+                    category
+                }
+            });
+            vscode.window.showInformationMessage('✅ Performance recorded successfully!');
+        }
+        catch (error) {
+            vscode.window.showErrorMessage(`Failed to record performance: ${error}`);
+        }
     }));
     console.log('Chat participant @douglas registered successfully');
 }

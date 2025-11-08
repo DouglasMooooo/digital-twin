@@ -181,10 +181,11 @@ export function generateChunks(): VectorMetadata[] {
 
 /**
  * Search vector database for relevant context
+ * 优化1: 增加默认 topK 到 10 以提高召回率
  */
 export async function searchRelevantContext(
   query: string,
-  topK: number = 5,
+  topK: number = 10,
   filter?: { type?: string; category?: string }
 ): Promise<VectorMetadata[]> {
   try {
