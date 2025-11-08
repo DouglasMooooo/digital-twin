@@ -1,21 +1,38 @@
-# Build outputs
+# Build outputs and caches
 .next
 .vercel
+.playwright-mcp
 dist
 build
 coverage
+.nuxt
+out
 
 # Dependencies
 node_modules
+pnpm-lock.yaml
+yarn.lock
+package-lock.json
 
-# Project artifacts
+# Non-core projects and archived work
 archived
 submission
 vscode-extension
+claude-mcp-server
+chatgpt-actions
+
+# Static files and config
 public
 .github
-scripts
+.vscode
+.git
 
-# Log files
+# Scripts and utilities
+scripts
+monitoring
+nginx
+
+# Logs and debug files
 *.log
 *.debug
+.DS_Store
