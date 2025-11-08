@@ -1,14 +1,21 @@
-node_modules/
-.next/
-.vercel/
-.playwright-mcp/
-dist/
-build/
-coverage/
-archived/
-submission/
-vscode-extension/
-public/
-.github/
-scripts/
+# Build outputs
+.next
+.vercel
+dist
+build
+coverage
+
+# Dependencies
+node_modules
+
+# Project artifacts
+archived
+submission
+vscode-extension
+public
+.github
+scripts
+
+# Log files
 *.log
+*.debug
