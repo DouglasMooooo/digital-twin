@@ -1,10 +1,23 @@
 import Groq from 'groq-sdk';
 import digitalTwinData from '../digitaltwin.json' assert { type: 'json' };
 
-// Initialize Groq client
-const groq = new Groq({
-  apiKey: process.env.GROQ_API_KEY!,
-});
+// Lazy initialize Groq client to avoid build-time errors when GROQ_API_KEY is missing
+let groqInstance: Groq | null = null;
+
+function getGroq(): Groq {
+  if (!groqInstance) {
+    const apiKey = process.env.GROQ_API_KEY;
+    if (!apiKey) {
+      console.warn('[Groq] Missing GROQ_API_KEY, creating dummy instance');
+      // Create a dummy instance to avoid build-time errors
+      // In production, this should fail gracefully at runtime
+      groqInstance = new Groq({ apiKey: 'dummy' });
+    } else {
+      groqInstance = new Groq({ apiKey });
+    }
+  }
+  return groqInstance;
+}
 
 export interface ChatMessage {
   role: 'system' | 'user' | 'assistant';
@@ -147,7 +160,7 @@ export async function generateAIResponse(
       },
     ];
 
-    const response = await groq.chat.completions.create({
+    const response = await getGroq().chat.completions.create({
       model: 'llama-3.3-70b-versatile', // Updated to new model (llama-3.1-70b deprecated)
       messages: messages as unknown as Array<{role: string; content: string}>,
       temperature: 0.7,
