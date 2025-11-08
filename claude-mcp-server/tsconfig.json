@@ -5,7 +5,11 @@
   "moduleResolution": "node",
   "lib": ["ES2022", "DOM"],
     "outDir": "./dist",
-    "rootDir": ".",
+    "rootDir": "..",
+    "baseUrl": "..",
+    "paths": {
+      "lib/*": ["lib/*"]
+    },
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
@@ -19,6 +23,6 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["index.ts", "*.ts"],
+  "include": ["index.ts", "*.ts", "../lib/**/*.ts"],
   "exclude": ["node_modules", "dist"]
 }
