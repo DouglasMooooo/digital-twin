@@ -11,10 +11,6 @@ interface Message {
   interviewType?: string;
 }
 
-interface ChatInterfaceProps {
-  initialMessage?: string;
-}
-
 // Generate or retrieve session ID
 function getSessionId(): string {
   if (typeof window === 'undefined') return '';
@@ -27,7 +23,7 @@ function getSessionId(): string {
   return sessionId;
 }
 
-export default function ChatInterface({}: ChatInterfaceProps): JSX.Element {
+export default function ChatInterface(): JSX.Element {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',

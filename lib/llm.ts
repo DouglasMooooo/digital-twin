@@ -16,10 +16,15 @@ export interface InterviewContext {
   relevantContext: string[];
 }
 
+// Keep systemPrompt for potential future use
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const _systemPrompt = 'Digital Twin System Prompt';
+
 /**
  * Generate core profile context from digitaltwin.json
  */
 function getCoreProfileContext(): string {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { personal, experience } = digitalTwinData as any;
   
   return `DOUGLAS MO - PROFESSIONAL PROFILE
@@ -35,6 +40,7 @@ ${personal.elevator_pitch}
 
 RECENT WORK EXPERIENCE:
 ${experience.slice(0, 2).map((exp: Record<string, unknown>) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const result = (exp as any).achievements_star?.[0]?.result || (exp as any).key_responsibilities?.[0] || '';
   return `
 • ${exp.title} at ${exp.company} (${exp.duration})
