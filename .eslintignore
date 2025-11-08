@@ -32,6 +32,11 @@ scripts
 monitoring
 nginx
 
+# Documentation files (Markdown)
+*.md
+README.md
+**/*.md
+
 # Logs and debug files
 *.log
 *.debug
