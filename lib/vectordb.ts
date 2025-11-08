@@ -3,27 +3,42 @@ import digitalTwinData from '../digitaltwin.json' assert { type: 'json' };
 
 // Initialize Upstash Vector client with lazy initialization to avoid build-time errors
 let vectorIndexInstance: Index | null = null;
+let credentialsMissing = false;
 
-export const getVectorIndex = (): Index => {
-  if (!vectorIndexInstance) {
-    const url = process.env.UPSTASH_VECTOR_REST_URL;
-    const token = process.env.UPSTASH_VECTOR_REST_TOKEN;
-    
-    if (!url || !token) {
-      console.warn('[Upstash Vector] Missing credentials, creating dummy instance');
-      // Return a dummy instance that will fail at runtime, not build time
-      vectorIndexInstance = new Index({ url: 'https://dummy.upstash.io', token: 'dummy' });
-    } else {
-      vectorIndexInstance = new Index({ url, token });
+export const getVectorIndex = (): Index | null => {
+  if (vectorIndexInstance !== null) return vectorIndexInstance;
+  
+  const url = process.env.UPSTASH_VECTOR_REST_URL;
+  const token = process.env.UPSTASH_VECTOR_REST_TOKEN;
+  
+  if (!url || !token) {
+    if (!credentialsMissing) {
+      console.warn('[Upstash Vector] Missing credentials (UPSTASH_VECTOR_REST_URL or UPSTASH_VECTOR_REST_TOKEN). Vector search disabled.');
+      credentialsMissing = true;
     }
+    return null; // Return null instead of dummy instance
   }
-  return vectorIndexInstance;
+  
+  try {
+    vectorIndexInstance = new Index({ url, token });
+    credentialsMissing = false;
+    return vectorIndexInstance;
+  } catch (error) {
+    console.error('[Upstash Vector] Failed to initialize:', error);
+    credentialsMissing = true;
+    return null;
+  }
 };
 
-// Legacy export for backward compatibility
+// Legacy export for backward compatibility - guards all property access
 export const vectorIndex = new Proxy({} as Index, {
   get(_target, prop) {
-    return getVectorIndex()[prop as keyof Index];
+    const instance = getVectorIndex();
+    if (!instance) {
+      console.warn(`[Upstash Vector] Attempted to access property "${String(prop)}" but vector search is disabled.`);
+      return undefined;
+    }
+    return instance[prop as keyof Index];
   }
 });
 
@@ -212,6 +227,11 @@ export async function searchRelevantContext(
     // In production, you would query the actual vector database
     // For now, we'll use the Upstash Vector query method
     const index = getVectorIndex();
+    if (!index) {
+      console.warn('[searchRelevantContext] Vector database not available - returning empty results');
+      return [];
+    }
+
     const results = await index.query({
       data: query,
       topK,
@@ -239,6 +259,11 @@ export async function initializeVectorDB() {
   // Upsert chunks to Upstash Vector
   // Note: In production, you'd batch this and use proper embedding generation
   const index = getVectorIndex();
+  if (!index) {
+    console.warn('[initializeVectorDB] Vector database not available - skipping initialization');
+    return;
+  }
+
   for (const chunk of chunks) {
     try {
       await index.upsert({

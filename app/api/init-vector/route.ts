@@ -1,13 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextResponse } from 'next/server';
-import { Index } from '@upstash/vector';
+import { getVectorIndex } from '@/lib/vectordb';
 import digitalTwinData from '../../../digitaltwin.json';
-
-// Initialize Upstash Vector client
-const vectorIndex = new Index({
-  url: process.env.UPSTASH_VECTOR_REST_URL || '',
-  token: process.env.UPSTASH_VECTOR_REST_TOKEN || '',
-});
 
 interface VectorMetadata {
   id: string;
@@ -118,6 +112,15 @@ function generateEmbedding(text: string): number[] {
 
 export async function POST() {
   try {
+    const vectorIndex = getVectorIndex();
+    if (!vectorIndex) {
+      return NextResponse.json({
+        success: false,
+        message: 'Vector DB credentials not configured. Skipping initialization.',
+        stats: { total: 0, successful: 0, failed: 0 },
+      }, { status: 503 });
+    }
+
     const chunks = generateChunks();
     console.log(`📊 Generated ${chunks.length} chunks for vector DB`);
 

@@ -1,0 +1,64 @@
+{
+  "name": "Douglas Mo - Digital Twin | AI-Powered Professional Profile",
+  "short_name": "Douglas Mo",
+  "description": "Interactive AI-powered professional profile for Douglas Mo. Business Analytics graduate with expertise in AI/ML systems, RAG architecture, Python, TypeScript, and data analytics.",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#ffffff",
+  "theme_color": "#2563eb",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon",
+      "purpose": "any"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "categories": [
+    "technology",
+    "business",
+    "portfolio"
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshot-1.png",
+      "sizes": "540x720",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Chat with AI Twin",
+      "short_name": "Chat",
+      "description": "Start chatting with Douglas Mo's AI Digital Twin",
+      "url": "#ai-chat",
+      "icons": [
+        {
+          "src": "/favicon.ico",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "View Experience",
+      "short_name": "Experience",
+      "description": "View Douglas Mo's work experience and achievements",
+      "url": "#experience",
+      "icons": [
+        {
+          "src": "/favicon.ico",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ]
+}

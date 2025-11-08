@@ -1,22 +1,32 @@
 import Groq from 'groq-sdk';
 import digitalTwinData from '../digitaltwin.json' assert { type: 'json' };
 
-// Lazy initialize Groq client to avoid build-time errors when GROQ_API_KEY is missing
+// Lazy initialization of Groq client to avoid build-time errors
 let groqInstance: Groq | null = null;
+let groqCredentialsMissing = false;
 
-function getGroq(): Groq {
-  if (!groqInstance) {
-    const apiKey = process.env.GROQ_API_KEY;
-    if (!apiKey) {
-      console.warn('[Groq] Missing GROQ_API_KEY, creating dummy instance');
-      // Create a dummy instance to avoid build-time errors
-      // In production, this should fail gracefully at runtime
-      groqInstance = new Groq({ apiKey: 'dummy' });
-    } else {
-      groqInstance = new Groq({ apiKey });
+function getGroqClient(): Groq | null {
+  if (groqInstance !== null) return groqInstance;
+  
+  const apiKey = process.env.GROQ_API_KEY;
+  
+  if (!apiKey) {
+    if (!groqCredentialsMissing) {
+      console.warn('[Groq LLM] Missing API key (GROQ_API_KEY). LLM responses disabled.');
+      groqCredentialsMissing = true;
     }
+    return null;
   }
-  return groqInstance;
+  
+  try {
+    groqInstance = new Groq({ apiKey });
+    groqCredentialsMissing = false;
+    return groqInstance;
+  } catch (error) {
+    console.error('[Groq LLM] Failed to initialize:', error);
+    groqCredentialsMissing = true;
+    return null;
+  }
 }
 
 export interface ChatMessage {
@@ -141,6 +151,12 @@ export async function generateAIResponse(
   conversationHistory: ChatMessage[] = []
 ): Promise<string> {
   try {
+    const groq = getGroqClient();
+    if (!groq) {
+      console.warn('[generateAIResponse] Groq client not available - returning fallback response');
+      return 'I apologize, but the AI service is currently unavailable. Please try again later or contact support if this persists.';
+    }
+    
     const systemPrompt = generateSystemPrompt(context.type);
     
     // Build context from relevant information
@@ -160,7 +176,7 @@ export async function generateAIResponse(
       },
     ];
 
-    const response = await getGroq().chat.completions.create({
+    const response = await groq.chat.completions.create({
       model: 'llama-3.3-70b-versatile', // Updated to new model (llama-3.1-70b deprecated)
       messages: messages as unknown as Array<{role: string; content: string}>,
       temperature: 0.7,
