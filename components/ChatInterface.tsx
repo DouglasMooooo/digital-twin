@@ -64,14 +64,15 @@ export default function ChatInterface(): JSX.Element {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'X-Session-ID': sessionId,
+          'x-session-id': sessionId,
         },
         body: JSON.stringify({
           message: input,
-          conversationHistory: messages.slice(-6).map((m) => ({
+          conversationHistory: messages.map((m) => ({
             role: m.role,
             content: m.content,
           })),
+          interviewType: 'hr',
         }),
       });
 
@@ -84,18 +85,18 @@ export default function ChatInterface(): JSX.Element {
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: data.response,
+        content: data.response || 'I apologize, but I could not generate a response.',
         timestamp: new Date(),
         interviewType: data.interviewType,
       };
 
       setMessages((prev) => [...prev, assistantMessage]);
     } catch (error) {
-      console.error('Error sending message:', error);
+      console.error('Chat error:', error);
       const errorMessage: Message = {
-        id: (Date.now() + 1).toString(),
+        id: (Date.now() + 2).toString(),
         role: 'assistant',
-        content: "I apologize, but I encountered an error. Please try again or check if the API is properly configured.",
+        content: 'Sorry, I encountered an error. Please try again.',
         timestamp: new Date(),
       };
       setMessages((prev) => [...prev, errorMessage]);
@@ -104,120 +105,83 @@ export default function ChatInterface(): JSX.Element {
     }
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      sendMessage();
-    }
-  };
-
-  const quickQuestions = [
-    'Tell me about yourself',
-    'What are your key strengths?',
-    'Walk me through your digital twin project',
-    'Why are you transitioning from accounting to tech?',
-    'What are your salary expectations?',
-  ];
-
   return (
-    <div className="flex flex-col h-[600px] max-w-4xl mx-auto bg-white rounded-lg shadow-xl border border-gray-200">
+    <div className="flex flex-col h-screen bg-gradient-to-b from-blue-50 to-white">
       {/* Header */}
-      <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-4 rounded-t-lg">
-        <h2 className="text-xl font-bold flex items-center gap-2">
-          <Bot className="w-6 h-6" />
-          Douglas Mo&apos;s AI Digital Twin
-        </h2>
-        <p className="text-sm text-blue-100 mt-1">Ask me anything about my professional background</p>
+      <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-6 shadow-lg">
+        <h1 className="text-3xl font-bold">Douglas Mo - AI Digital Twin</h1>
+        <p className="text-blue-100 mt-2">Interview Preparation & Experience Sharing</p>
       </div>
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4">
+      <div className="flex-1 overflow-y-auto p-6 space-y-4">
         {messages.map((message) => (
           <div
             key={message.id}
-            className={`flex gap-3 ${
-              message.role === 'user' ? 'justify-end' : 'justify-start'
-            }`}
+            className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
           >
-            {message.role === 'assistant' && (
-              <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center flex-shrink-0">
-                <Bot className="w-5 h-5 text-white" />
-              </div>
-            )}
             <div
-              className={`max-w-[70%] rounded-lg p-4 shadow-sm ${
-                message.role === 'user'
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-white border-2 border-gray-300'
+              className={`flex items-start gap-3 max-w-2xl ${
+                message.role === 'user' ? 'flex-row-reverse' : 'flex-row'
               }`}
             >
-              <p className="text-base whitespace-pre-wrap font-extrabold leading-relaxed text-black">{message.content}</p>
-              {message.interviewType && (
-                <span className="text-sm mt-2 block font-medium text-gray-700">
-                  Context: {message.interviewType}
-                </span>
+              {message.role === 'user' ? (
+                <User className="w-6 h-6 text-blue-600 flex-shrink-0 mt-1" />
+              ) : (
+                <Bot className="w-6 h-6 text-green-600 flex-shrink-0 mt-1" />
               )}
-            </div>
-            {message.role === 'user' && (
-              <div className="w-8 h-8 rounded-full bg-gray-600 flex items-center justify-center flex-shrink-0">
-                <User className="w-5 h-5 text-white" />
+
+              <div
+                className={`px-4 py-2 rounded-lg ${
+                  message.role === 'user'
+                    ? 'bg-blue-600 text-white rounded-br-none'
+                    : 'bg-gray-200 text-gray-800 rounded-bl-none'
+                }`}
+              >
+                <p className="text-sm break-words">{message.content}</p>
+                <p
+                  className={`text-xs mt-1 ${
+                    message.role === 'user' ? 'text-blue-100' : 'text-gray-500'
+                  }`}
+                >
+                  {message.timestamp.toLocaleTimeString()}
+                </p>
               </div>
-            )}
+            </div>
           </div>
         ))}
+
         {isLoading && (
-          <div className="flex gap-3 justify-start">
-            <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center flex-shrink-0">
-              <Bot className="w-5 h-5 text-white" />
-            </div>
-            <div className="bg-white border-2 border-gray-300 rounded-lg p-4 shadow-sm">
-              <Loader2 className="w-5 h-5 animate-spin text-blue-600" />
+          <div className="flex justify-start">
+            <div className="flex items-center gap-2">
+              <Loader2 className="w-5 h-5 text-green-600 animate-spin" />
+              <span className="text-sm text-gray-600">Thinking...</span>
             </div>
           </div>
         )}
+
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Quick Questions */}
-      {messages.length === 1 && (
-        <div className="px-4 py-2 border-t border-gray-200">
-          <p className="text-xs text-gray-600 mb-2">Quick questions:</p>
-          <div className="flex flex-wrap gap-2">
-            {quickQuestions.map((question, index) => (
-              <button
-                key={index}
-                onClick={() => setInput(question)}
-                className="text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1 rounded-full transition-colors"
-              >
-                {question}
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
-
       {/* Input */}
-      <div className="p-4 border-t border-gray-200">
-        <div className="flex gap-2">
+      <div className="bg-white border-t p-6 shadow-lg">
+        <div className="flex gap-3">
           <input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            onKeyPress={handleKeyPress}
-            placeholder="Ask about my experience, skills, or interview scenarios..."
-            className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent text-gray-900 font-medium placeholder:text-gray-400"
+            onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
+            placeholder="Ask me anything..."
+            className="flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
             disabled={isLoading}
           />
           <button
             onClick={sendMessage}
             disabled={isLoading || !input.trim()}
-            className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white px-6 py-2 rounded-lg flex items-center gap-2 transition-colors"
+            className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-400 transition-colors flex items-center gap-2"
           >
-            {isLoading ? (
-              <Loader2 className="w-5 h-5 animate-spin" />
-            ) : (
-              <Send className="w-5 h-5" />
-            )}
+            <Send className="w-4 h-4" />
+            Send
           </button>
         </div>
       </div>

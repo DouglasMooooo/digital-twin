@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import digitaltwinData from '@/digitaltwin.json';
 
 export async function GET() {
