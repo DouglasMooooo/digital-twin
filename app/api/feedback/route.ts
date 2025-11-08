@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * Feedback Collection API
  * Stores user feedback for quality improvement

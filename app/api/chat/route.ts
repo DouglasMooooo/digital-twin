@@ -8,11 +8,13 @@ export const runtime = 'edge';
 
 export async function POST(req: NextRequest) {
   const startTime = Date.now();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let successResponse = false;
   let errorMessage: string | undefined;
   let responseText = '';
   let contextType: 'screening' | 'hr' | 'technical' | 'manager' | 'executive' = 'hr';
   let contextChunks = 0;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let isFromCache = false;
 
   try {
@@ -130,6 +132,7 @@ export async function POST(req: NextRequest) {
         error: errorMessage,
       });
     } catch (e) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       // Ignore logging errors
     }
 

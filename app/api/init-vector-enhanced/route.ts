@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextRequest, NextResponse } from 'next/server';
 import { exec } from 'child_process';
 import { promisify } from 'util';
@@ -9,7 +10,7 @@ const execAsync = promisify(exec);
  * Enhanced vector initialization endpoint
  * Runs the Python script with multilingual model and fine-grained chunking
  */
-export async function POST(request: NextRequest) {
+export async function POST(_request: NextRequest) {
   try {
     const scriptPath = path.join(process.cwd(), 'scripts', 'init-vector-enhanced.py');
     
