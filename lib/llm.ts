@@ -20,7 +20,7 @@ export interface InterviewContext {
  * Generate core profile context from digitaltwin.json
  */
 function getCoreProfileContext(): string {
-  const { personal, experience, skills, education } = digitalTwinData as any;
+  const { personal, experience } = digitalTwinData as any;
   
   return `DOUGLAS MO - PROFESSIONAL PROFILE
 
@@ -34,10 +34,13 @@ ELEVATOR PITCH:
 ${personal.elevator_pitch}
 
 RECENT WORK EXPERIENCE:
-${experience.slice(0, 2).map((exp: any) => `
+${experience.slice(0, 2).map((exp: Record<string, unknown>) => {
+  const result = (exp as any).achievements_star?.[0]?.result || (exp as any).key_responsibilities?.[0] || '';
+  return `
 • ${exp.title} at ${exp.company} (${exp.duration})
-  ${exp.achievements_star?.[0]?.result || exp.key_responsibilities?.[0] || ''}
-`).join('\n')}
+  ${result}
+`;
+}).join('\n')}
 
 KEY TECHNICAL SKILLS:
 - Programming: Python (1.5 years), JavaScript, SQL
@@ -140,7 +143,7 @@ export async function generateAIResponse(
 
     const response = await groq.chat.completions.create({
       model: 'llama-3.3-70b-versatile', // Updated to new model (llama-3.1-70b deprecated)
-      messages: messages as any,
+      messages: messages as unknown as Array<{role: string; content: string}>,
       temperature: 0.7,
       max_tokens: 1024,
       top_p: 0.9,

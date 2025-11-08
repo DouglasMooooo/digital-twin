@@ -115,7 +115,7 @@ export async function analyzeFeedback(minRating: number = 3): Promise<Improvemen
   const averageAccuracy = accuracyScores.reduce((sum, s) => sum + s.overall, 0) / accuracyScores.length || 0;
   
   // Identify data gaps by clustering topics
-  const dataGaps = await identifyDataGaps(lowScoringFeedback, accuracyScores);
+  const dataGaps = await identifyDataGaps(lowScoringFeedback);
   
   // Generate priority recommendations
   const priorityRecommendations = generatePriorityRecommendations(dataGaps);
@@ -139,8 +139,7 @@ export async function analyzeFeedback(minRating: number = 3): Promise<Improvemen
  * Identify data gaps by analyzing low-scoring queries
  */
 async function identifyDataGaps(
-  lowScoringFeedback: FeedbackEntry[],
-  accuracyScores: AccuracyScore[]
+  lowScoringFeedback: FeedbackEntry[]
 ): Promise<DataGap[]> {
   // Cluster queries by topic/keywords
   const topicClusters = clusterByTopic(lowScoringFeedback);

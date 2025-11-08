@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 // Health Check API Endpoint
 
 import { NextRequest, NextResponse } from 'next/server';

@@ -95,8 +95,8 @@ class SimpleCache<T> {
 
 // Export singleton instances for different cache types
 export const responseCache = new SimpleCache<string>(3600); // 1 hour TTL for responses
-export const vectorCache = new SimpleCache<any>(7200); // 2 hour TTL for vector results
-export const analyticsCache = new SimpleCache<any>(300); // 5 minute TTL for analytics
+export const vectorCache = new SimpleCache<Record<string, unknown>>(7200); // 2 hour TTL for vector results
+export const analyticsCache = new SimpleCache<Record<string, unknown>>(300); // 5 minute TTL for analytics
 
 /**
  * Generate cache key from message and context

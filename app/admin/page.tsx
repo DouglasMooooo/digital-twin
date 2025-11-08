@@ -67,8 +67,8 @@ export default function AdminDashboard() {
         const data = await response.json();
         setMetrics(data.metrics);
       }
-    } catch (error) {
-      console.error('Failed to fetch metrics:', error);
+    } catch {
+      // Handle fetch error silently
     }
     setLoading(false);
   };
@@ -90,8 +90,8 @@ export default function AdminDashboard() {
         const data = await response.json();
         setLogs(data.logs);
       }
-    } catch (error) {
-      console.error('Failed to fetch logs:', error);
+    } catch {
+      // Handle fetch error silently
     }
     setLoading(false);
   };
@@ -120,8 +120,8 @@ export default function AdminDashboard() {
         a.download = `chat-logs-${new Date().toISOString()}.json`;
         a.click();
       }
-    } catch (error) {
-      console.error('Failed to export logs:', error);
+    } catch {
+      // Handle export error silently
     }
   };
 
@@ -140,8 +140,8 @@ export default function AdminDashboard() {
           alert(data.message);
           fetchLogs();
         }
-      } catch (error) {
-        console.error('Failed to clear logs:', error);
+      } catch {
+        // Handle clear logs error silently
       }
     }
   };

@@ -95,6 +95,7 @@ async function updateSession(
     const sessionKey = `${SESSIONS_KEY}:${sessionId}`;
     const existing = await redis.get(sessionKey);
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let session: any;
     if (existing) {
       session = typeof existing === 'string' ? JSON.parse(existing) : existing;
