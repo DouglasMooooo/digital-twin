@@ -1,10 +1,30 @@
 import { Index } from '@upstash/vector';
 import digitalTwinData from '../digitaltwin.json' assert { type: 'json' };
 
-// Initialize Upstash Vector client
-export const vectorIndex = new Index({
-  url: process.env.UPSTASH_VECTOR_REST_URL || '',
-  token: process.env.UPSTASH_VECTOR_REST_TOKEN || '',
+// Initialize Upstash Vector client with lazy initialization to avoid build-time errors
+let vectorIndexInstance: Index | null = null;
+
+export const getVectorIndex = (): Index => {
+  if (!vectorIndexInstance) {
+    const url = process.env.UPSTASH_VECTOR_REST_URL;
+    const token = process.env.UPSTASH_VECTOR_REST_TOKEN;
+    
+    if (!url || !token) {
+      console.warn('[Upstash Vector] Missing credentials, creating dummy instance');
+      // Return a dummy instance that will fail at runtime, not build time
+      vectorIndexInstance = new Index({ url: 'https://dummy.upstash.io', token: 'dummy' });
+    } else {
+      vectorIndexInstance = new Index({ url, token });
+    }
+  }
+  return vectorIndexInstance;
+};
+
+// Legacy export for backward compatibility
+export const vectorIndex = new Proxy({} as Index, {
+  get(_target, prop) {
+    return getVectorIndex()[prop as keyof Index];
+  }
 });
 
 // Types for vector data
@@ -191,7 +211,8 @@ export async function searchRelevantContext(
   try {
     // In production, you would query the actual vector database
     // For now, we'll use the Upstash Vector query method
-    const results = await vectorIndex.query({
+    const index = getVectorIndex();
+    const results = await index.query({
       data: query,
       topK,
       includeMetadata: true,
@@ -217,9 +238,10 @@ export async function initializeVectorDB() {
 
   // Upsert chunks to Upstash Vector
   // Note: In production, you'd batch this and use proper embedding generation
+  const index = getVectorIndex();
   for (const chunk of chunks) {
     try {
-      await vectorIndex.upsert({
+      await index.upsert({
         id: chunk.id,
         data: chunk.content, // Upstash will auto-generate embeddings
         metadata: {
