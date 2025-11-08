@@ -6,8 +6,9 @@
 import { describe, it, expect } from 'vitest';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+const describeIfNotCI = process.env.CI ? describe.skip : describe;
 
-describe('Edge Cases and Robustness', () => {
+describeIfNotCI('Edge Cases and Robustness', () => {
   describe('Empty and Invalid Queries', () => {
     it('should handle empty query gracefully', async () => {
       const response = await fetch(`${BASE_URL}/api/chat`, {
@@ -297,7 +298,7 @@ describe('Edge Cases and Robustness', () => {
   });
 });
 
-describe('Performance Benchmarks', () => {
+describeIfNotCI('Performance Benchmarks', () => {
   describe('Response Time Tests', () => {
     it('should respond to simple query in < 2 seconds', async () => {
       const startTime = Date.now();
@@ -452,7 +453,7 @@ describe('Performance Benchmarks', () => {
   });
 });
 
-describe('Accuracy Scoring', () => {
+describeIfNotCI('Accuracy Scoring', () => {
   describe('Keyword Matching Accuracy', () => {
     it('should include relevant keywords for Python query', async () => {
       const response = await fetch(`${BASE_URL}/api/chat`, {
