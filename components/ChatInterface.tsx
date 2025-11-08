@@ -11,10 +11,14 @@ interface Message {
   interviewType?: string;
 }
 
-// Generate or retrieve session ID
+// Generate or retrieve session ID (safe for both SSR and CSR)
 function getSessionId(): string {
-  if (typeof window === 'undefined') return `session-ssr-${Math.random().toString(36).substr(2, 9)}`;
+  if (typeof window === 'undefined') {
+    // Server-side: generate temporary ID
+    return `session-ssr-${Math.random().toString(36).substr(2, 9)}`;
+  }
   
+  // Client-side: use sessionStorage
   let sessionId = sessionStorage.getItem('chat-session-id');
   if (!sessionId) {
     sessionId = `session-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
@@ -34,11 +38,13 @@ export default function ChatInterface(): JSX.Element {
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [sessionId, setSessionId] = useState('');
+  const [sessionId, setSessionId] = useState<string | null>(null);
+  const [isClient, setIsClient] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // Hydration safe initialization
+  // Initialize sessionId only on client-side to avoid hydration mismatch
   useEffect(() => {
+    setIsClient(true);
     setSessionId(getSessionId());
   }, []);
 
@@ -51,6 +57,7 @@ export default function ChatInterface(): JSX.Element {
   }, [messages]);
 
   const sendMessage = async () => {
+    // Don't send if input is empty, already loading, or sessionId not ready
     if (!input.trim() || isLoading || !sessionId) return;
 
     const userMessage: Message = {
