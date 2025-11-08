@@ -196,34 +196,7 @@ jobs:
         run: npm audit --audit-level=moderate || true
         continue-on-error: true
 
-  # Job 6: Deploy to Production
-  deploy:
-    name: Deploy to Production
-    runs-on: ubuntu-latest
-    needs: [docker, security]
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    environment:
-      name: production
-      url: https://douglasmo.vercel.app
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Deploy to Vercel
-        uses: amondnet/vercel-action@v25
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          vercel-args: '--prod'
-
-      - name: Notify deployment success
-        if: success()
-        run: |
-          echo "✅ Deployment successful!"
-          echo "🔗 URL: https://douglasmo.vercel.app"
-
-      - name: Notify deployment failure
-        if: failure()
-        run: |
-          echo "❌ Deployment failed!"
+  # Note: Vercel deployment job removed (can be added back with proper secrets later)
+  # To enable Vercel deployment:
+  # 1. Add VERCEL_TOKEN, VERCEL_ORG_ID, VERCEL_PROJECT_ID secrets to GitHub
+  # 2. Uncomment the deploy job below
