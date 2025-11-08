@@ -187,6 +187,100 @@ class AdvancedAnalytics extends EventEmitter {
       // File doesn't exist yet
     }
   }
+
+  /**
+   * Generate a report for a given period
+   */
+  public generateReport(period: string = 'daily'): Record<string, unknown> {
+    const timeLimit = this.getTimeLimitForPeriod(period);
+    const recentEvents = this.getEventsByTimeRange(timeLimit, Date.now());
+    const summary = this.getMetricsSummary();
+
+    return {
+      period,
+      generatedAt: new Date().toISOString(),
+      eventsCount: recentEvents.length,
+      eventTypes: this.groupByType(recentEvents),
+      metrics: summary,
+    };
+  }
+
+  /**
+   * Record a snapshot of metrics
+   */
+  public async recordSnapshot(
+    accuracy?: number,
+    storyCoverage?: number,
+    satisfaction?: number,
+    responseTime?: number,
+    category?: string
+  ): Promise<void> {
+    const metrics: Record<string, unknown> = {};
+    if (accuracy !== undefined) metrics.accuracy = accuracy;
+    if (storyCoverage !== undefined) metrics.storyCoverage = storyCoverage;
+    if (satisfaction !== undefined) metrics.satisfaction = satisfaction;
+    if (responseTime !== undefined) metrics.responseTime = responseTime;
+    if (category !== undefined) metrics.category = category;
+
+    this.trackSnapshot(metrics);
+  }
+
+  /**
+   * Initialize analytics
+   */
+  public async initialize(): Promise<void> {
+    try {
+      await fs.mkdir(this.dataDir, { recursive: true });
+      await this.initializeEvents();
+      await this.initializeSnapshots();
+    } catch (error) {
+      console.error('Error initializing analytics:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Helper: Get time limit based on period
+   */
+  private getTimeLimitForPeriod(period: string): number {
+    const now = Date.now();
+    switch (period.toLowerCase()) {
+      case 'hourly':
+        return now - 3600000; // 1 hour
+      case 'daily':
+        return now - 86400000; // 24 hours
+      case 'weekly':
+        return now - 604800000; // 7 days
+      case 'monthly':
+        return now - 2592000000; // 30 days
+      default:
+        return now - 86400000; // Default to 24 hours
+    }
+  }
+
+  /**
+   * Helper: Group events by type
+   */
+  private groupByType(events: AnalyticsEvent[]): Record<string, number> {
+    return events.reduce((acc, event) => {
+      acc[event.type] = (acc[event.type] || 0) + 1;
+      return acc;
+    }, {} as Record<string, number>);
+  }
+
+  /**
+   * Initialize events from file
+   */
+  private async initializeEvents(): Promise<void> {
+    try {
+      const filePath = path.join(this.dataDir, 'events.json');
+      const data = await fs.readFile(filePath, 'utf-8');
+      this.events = JSON.parse(data);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (_error) {
+      // File doesn't exist yet
+    }
+  }
 }
 
 export default AdvancedAnalytics;

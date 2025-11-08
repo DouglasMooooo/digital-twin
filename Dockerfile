@@ -19,36 +19,17 @@ COPY public ./public
 COPY next.config.js ./
 COPY tailwind.config.ts ./
 COPY postcss.config.js ./
+COPY digitaltwin.json ./
+COPY chatgpt-actions ./chatgpt-actions
 
 # Build Next.js application
 RUN npm run build
 
-# Stage 2: MCP Server Build
-FROM node:18-alpine AS mcp-builder
+# Build MCP server in the builder stage (has full dev deps available)
+COPY claude-mcp-server ./claude-mcp-server
+RUN cd claude-mcp-server && npm ci && npm run build
 
-WORKDIR /mcp
-
-# Install main app dependencies in a shared location
-COPY package*.json /build-deps/
-RUN cd /build-deps && npm ci --production
-
-# Install MCP server dependencies
-COPY claude-mcp-server/package*.json ./
-RUN npm ci
-
-# Copy all needed files
-COPY claude-mcp-server/index.ts ./
-COPY claude-mcp-server/tsconfig.json ./
-COPY lib ../lib/
-COPY digitaltwin.json ../
-
-# Copy main app's node_modules for lib imports (groq-sdk, @upstash/*, clsx, tailwind-merge, etc.)
-RUN cp -r /build-deps/node_modules/* ./node_modules/ 2>/dev/null || true
-
-# Compile TypeScript with skipLibCheck to avoid type checking errors in node_modules
-RUN npx tsc --skipLibCheck
-
-# Stage 3: Production Runtime
+# Stage 2: Production Runtime
 FROM node:18-alpine AS runner
 
 WORKDIR /app
@@ -62,9 +43,9 @@ COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/next.config.js ./
 
-# Copy MCP server
-COPY --from=mcp-builder /mcp/dist /app/mcp-server/
-COPY --from=mcp-builder /mcp/node_modules /app/mcp-server/node_modules
+# Copy MCP server built artifacts
+COPY --from=builder /app/claude-mcp-server/dist ./mcp-server/dist
+COPY --from=builder /app/claude-mcp-server/node_modules ./mcp-server/node_modules
 COPY digitaltwin.json ./
 
 # Environment variables

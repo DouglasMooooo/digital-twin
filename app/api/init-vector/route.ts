@@ -1,7 +1,30 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextResponse } from 'next/server';
-import { getVectorIndex } from '@/lib/vectordb';
+import { Index } from '@upstash/vector';
 import digitalTwinData from '../../../digitaltwin.json';
+
+// Lazy initialization of Upstash Vector client
+let vectorIndexInstance: Index | null = null;
+
+function getVectorIndex(): Index | null {
+  if (!vectorIndexInstance) {
+    const url = process.env.UPSTASH_VECTOR_REST_URL;
+    const token = process.env.UPSTASH_VECTOR_REST_TOKEN;
+
+    if (!url || !token) {
+      console.warn('[init-vector] Missing Upstash credentials, skipping initialization');
+      return null;
+    }
+
+    try {
+      vectorIndexInstance = new Index({ url, token });
+    } catch (error) {
+      console.error('[init-vector] Failed to initialize Upstash Vector:', error);
+      return null;
+    }
+  }
+  return vectorIndexInstance;
+}
 
 interface VectorMetadata {
   id: string;
