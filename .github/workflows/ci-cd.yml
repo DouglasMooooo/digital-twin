@@ -197,6 +197,7 @@ jobs:
         continue-on-error: true
 
   # Job 6: Deploy to Vercel (Production)
+  # Using Vercel CLI for reliable production deployment
   deploy:
     name: Deploy to Vercel (Production)
     runs-on: ubuntu-latest
