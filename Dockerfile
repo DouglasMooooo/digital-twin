@@ -19,6 +19,8 @@ COPY public ./public
 COPY next.config.js ./
 COPY tailwind.config.ts ./
 COPY postcss.config.js ./
+COPY digitaltwin.json ./
+COPY chatgpt-actions ./chatgpt-actions
 
 # Build Next.js application
 RUN npm run build
