@@ -23,34 +23,20 @@ COPY postcss.config.js ./
 # Build Next.js application
 RUN npm run build
 
-# Stage 2: MCP Server Build
+# Build MCP server in the builder stage (use full dev deps available here)
+# Copy the MCP server source into the builder and build it here to avoid compiling inside the smaller mcp-builder stage
+COPY claude-mcp-server ./claude-mcp-server
+RUN cd claude-mcp-server && npm ci && npm run build
+
 FROM node:18-alpine AS mcp-builder
 
 WORKDIR /mcp
 
-# Install main app dependencies in a shared location
-COPY package*.json /build-deps/
-RUN cd /build-deps && npm ci --production
-
-# Install MCP server dependencies
-COPY claude-mcp-server/package*.json ./
-RUN npm ci
-
-# Copy all needed files
-COPY claude-mcp-server/index.ts ./
-COPY claude-mcp-server/tsconfig.json ./
+# Copy built MCP server and its node_modules from the builder stage
+COPY --from=builder /app/claude-mcp-server/dist ./dist
+COPY --from=builder /app/claude-mcp-server/node_modules ./node_modules
 COPY lib ../lib/
 COPY digitaltwin.json ../
-
-# Copy main app's node_modules for lib imports (groq-sdk, @upstash/*, clsx, tailwind-merge, etc.)
-# Ensure destination exists then copy all contents (use dot to include scoped packages)
-RUN mkdir -p ./node_modules \
-  && cp -r /build-deps/node_modules/. ./node_modules/ 2>/dev/null || true
-
-# Compile TypeScript. Relax strictness during CI build to avoid failing on implicit-any in
-# ancillary library files; keep skipLibCheck to ignore node_modules declaration checks.
-# These flags only affect the build inside the container and don't change source files.
-RUN npx tsc --project ./tsconfig.json --skipLibCheck --noImplicitAny false --strict false
 
 # Stage 3: Production Runtime
 FROM node:18-alpine AS runner
