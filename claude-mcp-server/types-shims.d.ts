@@ -26,18 +26,35 @@ declare module '@upstash/vector' {
   export { Index };
 }
 
-// Upstash Redis
+// Upstash Redis - complete API
 declare module '@upstash/redis' {
   export class Redis {
     constructor(config?: any);
     get(key: string): Promise<any>;
     set(key: string, value: any, options?: any): Promise<any>;
+    del(...keys: string[]): Promise<any>;
+    lpush(key: string, ...values: any[]): Promise<any>;
+    rpush(key: string, ...values: any[]): Promise<any>;
+    lpop(key: string, count?: number): Promise<any>;
+    rpop(key: string, count?: number): Promise<any>;
+    lrange(key: string, start: number, stop: number): Promise<any>;
+    ltrim(key: string, start: number, stop: number): Promise<any>;
+    llen(key: string): Promise<any>;
+    hget(key: string, field: string): Promise<any>;
+    hset(key: string, field: string, value: any): Promise<any>;
+    hdel(key: string, ...fields: string[]): Promise<any>;
+    hgetall(key: string): Promise<any>;
+    incr(key: string): Promise<number>;
+    decr(key: string): Promise<number>;
+    [key: string]: any;
   }
 }
 
-// clsx utility
+// clsx utility - correct export
 declare module 'clsx' {
-  function clsx(...args: any[]): string;
+  type ClassValue = string | { [key: string]: boolean } | ClassValue[];
+  function clsx(...args: ClassValue[]): string;
+  export { ClassValue };
   export default clsx;
 }
 
@@ -46,12 +63,5 @@ declare module 'tailwind-merge' {
   export function twMerge(...args: any[]): string;
 }
 
-// AdvancedAnalytics extension
-declare module '../lib/advanced-analytics' {
-  class AdvancedAnalytics {
-    generateReport(period?: any): any;
-    recordSnapshot(accuracy?: any, storyCoverage?: any, satisfaction?: any, responseTime?: any, category?: any): Promise<void>;
-    initialize(): Promise<void>;
-  }
-  export { AdvancedAnalytics };
-}
+// Global browser APIs for Node.js environment
+declare const window: any;
