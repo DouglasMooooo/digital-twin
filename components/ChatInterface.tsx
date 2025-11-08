@@ -13,7 +13,7 @@ interface Message {
 
 // Generate or retrieve session ID
 function getSessionId(): string {
-  if (typeof window === 'undefined') return '';
+  if (typeof window === 'undefined') return `session-ssr-${Math.random().toString(36).substr(2, 9)}`;
   
   let sessionId = sessionStorage.getItem('chat-session-id');
   if (!sessionId) {
@@ -34,8 +34,13 @@ export default function ChatInterface(): JSX.Element {
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [sessionId] = useState(getSessionId);
+  const [sessionId, setSessionId] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Hydration safe initialization
+  useEffect(() => {
+    setSessionId(getSessionId());
+  }, []);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -46,7 +51,7 @@ export default function ChatInterface(): JSX.Element {
   }, [messages]);
 
   const sendMessage = async () => {
-    if (!input.trim() || isLoading) return;
+    if (!input.trim() || isLoading || !sessionId) return;
 
     const userMessage: Message = {
       id: Date.now().toString(),
