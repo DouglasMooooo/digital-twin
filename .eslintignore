@@ -1,0 +1,14 @@
+node_modules/
+.next/
+.vercel/
+.playwright-mcp/
+dist/
+build/
+coverage/
+archived/
+submission/
+vscode-extension/
+public/
+.github/
+scripts/
+*.log
