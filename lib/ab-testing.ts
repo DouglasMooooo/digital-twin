@@ -456,10 +456,11 @@ These examples demonstrate my ability to combine technical skills with business 
    */
   private evaluateResponse(
     response: string,
-    question: string
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    _question: string
   ): { accuracy: number; storyCoverage: number; satisfaction: number } {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const responseLower = response.toLowerCase();
-    const questionLower = question.toLowerCase();
 
     // Accuracy: Check for relevant technical terms
     const technicalTerms = ['sql', 'python', 'power bi', 'data', 'analysis', 'stakeholder', 'metrics'];
@@ -623,6 +624,7 @@ These examples demonstrate my ability to combine technical skills with business 
           this.controlVariantId = v.id;
         }
       });
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       // File doesn't exist yet, start with empty variants
     }

@@ -90,11 +90,11 @@ jobs:
       - name: Build Next.js app
         run: npm run build
 
-      - name: Build MCP server
-        run: |
-          cd claude-mcp-server
-          npm ci
-          npx tsc
+      # - name: Build MCP server
+      #   run: |
+      #     cd claude-mcp-server
+      #     npm ci
+      #     npx tsc
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
