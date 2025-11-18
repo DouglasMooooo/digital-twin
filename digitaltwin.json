@@ -209,6 +209,61 @@
             "https://github.com/DouglasMooooo/ragfood-chatbot"
           ],
           "notes": "Beginner in raw coding, but Advanced in AI-assisted development using GitHub Copilot and Cursor for production-grade applications"
+        },
+        {
+          "language": "SQL",
+          "years_experience": 3,
+          "proficiency": "Advanced",
+          "confidence_score": 80,
+          "last_used": "2025-10",
+          "frameworks": ["PostgreSQL", "MySQL", "SQL Server"],
+          "certifications": [],
+          "projects_count": 12,
+          "use_cases": [
+            "Business intelligence queries and reporting",
+            "Data warehousing and ETL processes",
+            "Financial data analysis and reconciliation",
+            "Database optimization and performance tuning",
+            "Complex JOINs and window functions"
+          ],
+          "notes": "Strong understanding of query logic and data structures, leverages AI-assisted coding for complex transformations"
+        },
+        {
+          "language": "TypeScript/JavaScript",
+          "years_experience": 1,
+          "proficiency": "Intermediate",
+          "confidence_score": 75,
+          "last_used": "2025-10",
+          "frameworks": ["Next.js", "React", "Node.js", "Express"],
+          "certifications": [],
+          "projects_count": 3,
+          "use_cases": [
+            "Full-stack web development (Digital Twin, RAGFood)",
+            "AI application interfaces",
+            "API development and integration",
+            "Frontend component design"
+          ],
+          "code_samples": [
+            "https://github.com/DouglasMooooo/digital-twin",
+            "https://github.com/DouglasMooooo/ragfood-chatbot"
+          ],
+          "notes": "Rapid learning through AI-assisted development, strong architectural understanding"
+        },
+        {
+          "language": "R",
+          "years_experience": 2,
+          "proficiency": "Intermediate",
+          "confidence_score": 70,
+          "last_used": "2025-09",
+          "frameworks": ["tidyverse", "ggplot2", "caret", "dplyr"],
+          "certifications": [],
+          "projects_count": 6,
+          "use_cases": [
+            "Statistical analysis for academic projects",
+            "Data visualization and reporting",
+            "Academic research and assignments"
+          ],
+          "notes": "Primarily used in Victoria University coursework for statistical analysis"
         }
       ],
       "databases": [
@@ -230,19 +285,53 @@
         "Digital Twin Framework Design",
         "Prompt Engineering - Optimized for business applications",
         "Machine Learning for Business - Coursework in progress"
+      ],
+      "data_tools": [
+        "Power BI - Advanced dashboards and visualization",
+        "Excel - Advanced (VBA, Power Query, Pivot Tables)",
+        "Python (Pandas, NumPy) - Data manipulation",
+        "Statistical Analysis - Business Statistics background"
+      ],
+      "development_tools": [
+        "VS Code Insiders - Primary IDE",
+        "GitHub Copilot - AI-assisted development",
+        "Claude Desktop - AI integration",
+        "Git - Version control",
+        "GitHub - Collaboration and CI/CD",
+        "Postman - API testing"
+      ],
+      "financial_systems": [
+        "SAP - ERP testing and usage",
+        "QuickBooks - Small business accounting",
+        "ERP Systems - Multi-module experience",
+        "CRM Platforms - Testing and optimization"
+      ],
+      "financial_accounting": [
+        "Financial Statement Preparation & Analysis - GAAP/IFRS compliant",
+        "Tax Accounting - Corporate and individual tax compliance (China, Kenya)",
+        "Cost Accounting - Activity-based costing, variance analysis",
+        "Management Accounting - Budgeting, forecasting, KPI tracking",
+        "Accounts Payable/Receivable - Full-cycle management",
+        "Month-End/Year-End Close - Led financial closing processes",
+        "Audit Coordination - Internal and external audit support",
+        "Financial Reporting - P&L, Balance Sheet, Cash Flow statements",
+        "Inventory Accounting - Stock valuation, variance reconciliation",
+        "Bank Reconciliation - Multi-currency account management",
+        "Regulatory Compliance - Local tax laws and corporate governance",
+        "Financial Forecasting - Budget planning and variance analysis"
       ]
     },
     "soft_skills": [
-      "Analytical Thinking",
-      "Problem-Solving",
-      "Cross-Cultural Communication",
-      "Team Collaboration",
-      "Adaptability",
-      "Attention to Detail",
-      "Project Management",
-      "Client Service",
-      "Time Management",
-      "Technical Documentation"
+      "Analytical Thinking - Applied across accounting and AI development",
+      "Problem-Solving - Systematic approach to complex challenges",
+      "Cross-Cultural Communication - International work experience",
+      "Team Collaboration - Agile environments and cross-functional teams",
+      "Adaptability - Successfully transitioned from accounting to AI development",
+      "Attention to Detail - Critical for both financial accuracy and code quality",
+      "Project Management - Academic and bootcamp project delivery",
+      "Client Service - Professional and retail experience",
+      "Time Management - Balancing full-time study with part-time work",
+      "Technical Documentation - System architecture and user guides"
     ]
   },
   "education": {
