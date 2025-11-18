@@ -140,7 +140,7 @@ export default function ChatInterface(): JSX.Element {
                 className={`px-4 py-2 rounded-lg ${
                   message.role === 'user'
                     ? 'bg-blue-600 text-white rounded-br-none'
-                    : 'bg-gray-200 text-gray-800 rounded-bl-none'
+                    : 'bg-gray-100 text-gray-900 rounded-bl-none font-medium'
                 }`}
               >
                 <p className="text-sm break-words">{message.content}</p>
