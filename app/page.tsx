@@ -85,7 +85,7 @@ export default function Home() {
       <section id="about" className="bg-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h3 className="text-4xl font-bold text-gray-900 mb-12 text-center">
-            About<span className="text-blue-600">Me</span>
+            About <span className="text-blue-600">Me</span>
           </h3>
           
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
@@ -106,7 +106,7 @@ export default function Home() {
             </div>
             <div className="bg-gradient-to-br from-orange-50 to-orange-100 p-8 rounded-2xl shadow-md hover:shadow-xl transition-shadow">
               <Award className="w-12 h-12 text-orange-600 mb-4" />
-              <p className="text-4xl font-bold text-gray-900 mb-2">3</p>
+              <p className="text-4xl font-bold text-gray-900 mb-2">4</p>
               <p className="text-gray-700 font-medium">Countries Worked</p>
             </div>
           </div>
@@ -136,7 +136,7 @@ export default function Home() {
           <p className="text-gray-600 text-center mb-12 max-w-2xl mx-auto">
             My professional journey across international accounting, AI development, and data analytics
           </p>
-
+          
           <div className="space-y-8">
             {digitalTwinData.experience.map((exp, index) => (
               <div key={index} className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border-l-4 border-blue-600">
@@ -626,7 +626,7 @@ export default function Home() {
             </h3>
             <p className="text-gray-600 max-w-2xl mx-auto">
               Powered by RAG (Retrieval-Augmented Generation) and optimized for interview scenarios.
-              Ask about my experience, skills, projects, or how I&apos;d handle specific interview questions.
+              Ask about my experience, skills, projects, or how I'd handle specific interview questions.
             </p>
           </div>
           <ChatInterface />
@@ -643,14 +643,18 @@ export default function Home() {
               </h3>
               <p className="text-gray-400">Business Analytics Graduate | AI Systems Developer</p>
             </div>
+            
             <div className="flex gap-6">
-              <a href={digitalTwinData.personal.contact.github} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
+              <a href={digitalTwinData.personal.contact.github} target="_blank" rel="noopener noreferrer" 
+                 className="text-gray-400 hover:text-white transition-colors">
                 <Github className="w-6 h-6" />
               </a>
-              <a href={digitalTwinData.personal.contact.linkedin} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
+              <a href={digitalTwinData.personal.contact.linkedin} target="_blank" rel="noopener noreferrer"
+                 className="text-gray-400 hover:text-white transition-colors">
                 <Linkedin className="w-6 h-6" />
               </a>
-              <a href={`mailto:${digitalTwinData.personal.contact.email}`} className="text-gray-400 hover:text-white transition-colors">
+              <a href={`mailto:${digitalTwinData.personal.contact.email}`}
+                 className="text-gray-400 hover:text-white transition-colors">
                 <Mail className="w-6 h-6" />
               </a>
             </div>
