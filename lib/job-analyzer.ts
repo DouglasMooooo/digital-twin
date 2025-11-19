@@ -30,8 +30,7 @@ export interface CareerGapAnalysis {
  */
 export function analyzeSkillGaps(
   currentSkills: string[],
-  targetSkills: string[],
-  experience: number
+  targetSkills: string[]
 ): SkillGap[] {
   const gaps: SkillGap[] = [];
 
@@ -172,7 +171,7 @@ export function generateCareerPlan(
   targetRole: string,
   targetSkills: string[]
 ): CareerGapAnalysis {
-  const skillGaps = analyzeSkillGaps(currentProfile.skills, targetSkills, 3);
+  const skillGaps = analyzeSkillGaps(currentProfile.skills, targetSkills);
   const readinessScore = calculateReadinessScore(
     currentProfile.skills,
     targetSkills,
@@ -215,7 +214,7 @@ ${gap.learningResources.slice(0, 2).map((r) => `   • ${r}`).join('\n')}
   });
 
   // Recommended certifications
-  const certifications = getRecommendedCertifications(targetRole, targetSkills);
+  const certifications = getRecommendedCertifications(targetRole);
   plan += `
 🏆 RECOMMENDED CERTIFICATIONS
 ${certifications.map((c) => `• ${c}`).join('\n')}
@@ -258,7 +257,7 @@ Week 12: Final Preparation
 /**
  * Get recommended certifications for target role
  */
-function getRecommendedCertifications(role: string, skills: string[]): string[] {
+function getRecommendedCertifications(role: string): string[] {
   const certs: { [key: string]: string[] } = {
     'Senior Software Engineer': [
       'AWS Certified Solutions Architect',
