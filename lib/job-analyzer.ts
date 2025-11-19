@@ -399,9 +399,11 @@ Required Skills: ${skills.join(', ')}
   return guide;
 }
 
-export default {
+const jobAnalyzerExports = {
   analyzeSkillGaps,
   calculateReadinessScore,
   generateCareerPlan,
   generateRoleSpecificInterview,
 };
+
+export default jobAnalyzerExports;

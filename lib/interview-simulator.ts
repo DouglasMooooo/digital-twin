@@ -449,7 +449,7 @@ Role: ${role}
 Level: ${level.toUpperCase()}
 Date: ${new Date().toLocaleDateString()}
 
-🎯 INTERVIEW QUESTIONS & TIPS
+🎤 INTERVIEW QUESTIONS & TIPS
 `;
 
   questions.forEach((q, i) => {
@@ -490,10 +490,12 @@ ${q.followUpQuestions.map((fq) => `   • ${fq}`).join('\n')}
   return guide;
 }
 
-export default {
+const interviewSimulatorExports = {
   generateInterviewQuestions,
   evaluateSTARCompliance,
   evaluateResponse,
   createInterviewSession,
   generateInterviewPrep,
 };
+
+export default interviewSimulatorExports;
