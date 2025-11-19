@@ -150,10 +150,11 @@ export function generateChunks(): VectorMetadata[] {
 
   // Projects
   digitalTwinData.projects_portfolio.forEach((project) => {
+    const keyFeatures = (project as Record<string, unknown>).key_features as string[] | undefined;
     chunks.push({
       id: `project-${chunkId++}`,
       type: 'project',
-      content: `Project: ${project.name}. Description: ${project.description}. Technologies: ${project.technologies.join(', ')}. Impact: ${project.impact}. ${(project as any).key_features ? 'Features: ' + (project as any).key_features.join('. ') : ''}`,
+      content: `Project: ${project.name}. Description: ${project.description}. Technologies: ${project.technologies.join(', ')}. Impact: ${project.impact}. ${keyFeatures ? 'Features: ' + keyFeatures.join('. ') : ''}`,
       source: `Project - ${project.name}`,
     });
   });
