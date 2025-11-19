@@ -12,6 +12,25 @@
 			"isBackground": true,
 			"problemMatcher": [],
 			"group": "build"
+		},
+		{
+			"label": "Verify Project Structure",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"run",
+				"lint"
+			]
+		},
+		{
+			"label": "Build for Production",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"run",
+				"build"
+			],
+			"group": "build"
 		}
 	]
 }
