@@ -48,7 +48,7 @@ const _systemPrompt = 'Digital Twin System Prompt';
  */
 function getCoreProfileContext(): string {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { personal, experience } = digitalTwinData as any;
+  const { personal, experience, education, skills } = digitalTwinData as any;
   
   return `DOUGLAS MO - PROFESSIONAL PROFILE
 
@@ -72,15 +72,18 @@ ${experience.slice(0, 2).map((exp: Record<string, unknown>) => {
 }).join('\n')}
 
 KEY TECHNICAL SKILLS:
-- Programming: Python (1.5 years), JavaScript, SQL
-- AI/ML: RAG Systems, Vector Databases (ChromaDB, Upstash), LLM Integration (Groq, OpenAI)
-- Web Development: Next.js, React, Tailwind CSS, REST APIs
-- Cloud & Tools: Vercel, GitHub Actions, Git
-- Data Analysis: Pandas, NumPy, Power BI, Excel
+${skills.technical.programming_languages.slice(0, 3).map((lang: Record<string, unknown>) => 
+  `- ${lang.language}: ${lang.proficiency} (${lang.years_experience} years)`
+).join('\n')}
+- AI/ML: ${skills.technical.ai_ml.slice(0, 5).join(', ')}
+- Databases: ${skills.technical.databases.slice(0, 4).join(', ')}
+- Cloud: ${skills.technical.cloud_platforms.slice(0, 3).join(', ')}
 
 EDUCATION:
-- Master of Business Analytics - QUT (June 2026)
-- Bachelor of Commerce - UNSW (2022)
+- ${education.current.degree} at ${education.current.university} (Expected: ${education.current.expected_graduation})
+  Location: ${education.current.location}
+- ${education.undergraduate.degree} from ${education.undergraduate.university} (Graduated ${education.undergraduate.graduation_year})
+  Location: ${education.undergraduate.location}
 `;
 }
 
