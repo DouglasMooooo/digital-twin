@@ -139,7 +139,7 @@ async function initializeMCPClient(context) {
             vscode.window.showWarningMessage('Douglas Digital Twin: No workspace folder found. MCP integration disabled.');
             return;
         }
-        const mcpServerPath = path.join(workspaceFolder.uri.fsPath, 'mcp-server', 'index.ts');
+        const mcpServerPath = path.join(workspaceFolder.uri.fsPath, 'claude-mcp-server', 'index.ts');
         // Check if MCP server exists
         const fs = require('fs');
         if (!fs.existsSync(mcpServerPath)) {
