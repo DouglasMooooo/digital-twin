@@ -531,7 +531,7 @@ export default function Home() {
               </div>
               <div className="space-y-3">
                 <a 
-                  href="https://github.com/DouglasMooooo/digital-twin/blob/main/CLAUDE_DESKTOP_QUICKSTART.md"
+                  href="https://github.com/DouglasMooooo/digital-twin/blob/main/CLAUDE_MCP_SETUP.md"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="block w-full bg-gradient-to-r from-orange-600 to-orange-700 text-white px-4 py-3 rounded-lg text-center font-semibold hover:from-orange-700 hover:to-orange-800 transition-all shadow-md hover:shadow-lg"
@@ -539,7 +539,7 @@ export default function Home() {
                   ⚙️ Setup Guide
                 </a>
                 <a 
-                  href="https://github.com/DouglasMooooo/digital-twin/tree/main/mcp-server"
+                  href="https://github.com/DouglasMooooo/digital-twin/tree/main/claude-mcp-server"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="block w-full border-2 border-orange-600 text-orange-600 px-4 py-3 rounded-lg text-center font-semibold hover:bg-orange-50 transition-all"
