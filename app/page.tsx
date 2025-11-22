@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /* eslint-disable jsx-a11y/no-static-element-interactions, react/no-unescaped-entities */
 import ChatInterface from '@/components/ChatInterface';
 import { Github, Linkedin, Mail, Phone, MapPin, Briefcase, GraduationCap, Code, Award, Calendar, Building2, Sparkles } from 'lucide-react';
