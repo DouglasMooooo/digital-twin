@@ -670,5 +670,3 @@ export default function Home() {
     </main>
   );
 }
-=======
->>>>>>> origin/main
