@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* eslint-disable jsx-a11y/no-static-element-interactions, react/no-unescaped-entities */
 import ChatInterface from '@/components/ChatInterface';
 import { Github, Linkedin, Mail, Phone, MapPin, Briefcase, GraduationCap, Code, Award, Calendar, Building2, Sparkles } from 'lucide-react';
@@ -462,7 +463,7 @@ export default function Home() {
             {/* ChatGPT GPT */}
             <div className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-8 border-t-4 border-green-600">
               <div className="text-5xl mb-4">🤖</div>
-              <h4 className="text-2xl font-bold text-gray-900 mb-3">ChatGPT GPT</h4>
+              <h4 className="text-2xl font-bold text-gray-900 mb-3">ChatGPT Extension</h4>
               <p className="text-gray-600 mb-6 min-h-[60px]">
                 Chat with my AI digital twin powered by RAG and OpenAI models - no installation needed
               </p>
@@ -669,3 +670,5 @@ export default function Home() {
     </main>
   );
 }
+=======
+>>>>>>> origin/main

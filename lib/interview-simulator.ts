@@ -319,7 +319,7 @@ export function generateInterviewQuestions(
 /**
  * Evaluate STAR methodology compliance
  */
-export function evaluateSTARCompliance(response: string, question: InterviewQuestion): number {
+export function evaluateSTARCompliance(response: string): number {
   let score = 0;
 
   // Check for STAR components
@@ -377,7 +377,7 @@ export function evaluateResponse(
   // For behavioral questions, check STAR compliance
   let starScore = 0;
   if (question.category === 'behavioral') {
-    starScore = evaluateSTARCompliance(userResponse, question);
+    starScore = evaluateSTARCompliance(userResponse);
     score = (score * 0.5 + starScore * 0.5) | 0; // Blend with base score
   }
 
@@ -449,7 +449,7 @@ Role: ${role}
 Level: ${level.toUpperCase()}
 Date: ${new Date().toLocaleDateString()}
 
-🎯 INTERVIEW QUESTIONS & TIPS
+🎤 INTERVIEW QUESTIONS & TIPS
 `;
 
   questions.forEach((q, i) => {
@@ -490,10 +490,12 @@ ${q.followUpQuestions.map((fq) => `   • ${fq}`).join('\n')}
   return guide;
 }
 
-export default {
+const interviewSimulatorExports = {
   generateInterviewQuestions,
   evaluateSTARCompliance,
   evaluateResponse,
   createInterviewSession,
   generateInterviewPrep,
 };
+
+export default interviewSimulatorExports;
