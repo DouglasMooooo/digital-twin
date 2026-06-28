@@ -92,6 +92,6 @@ Power BI solution reducing monthly churn 22% → 16% (27% improvement), saving $
 ## ADDITIONAL INFORMATION
 
 **Languages:** English (Fluent), Mandarin Chinese (Native)  
-**Work Authorization:** International Student Visa (full work rights until June 2026, will require sponsorship post-graduation)  
+**Work Authorization:** 485 Graduate Visa (Active, full-time work rights; may require sponsorship long-term)  
 **Availability:** June 2026 for full-time roles, immediate for internships/part-time  
 **Location Preferences:** Brisbane, Melbourne, Sydney, Remote, Hybrid (open to relocating within Australia)

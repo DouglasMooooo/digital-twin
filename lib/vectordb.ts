@@ -163,7 +163,7 @@ export function generateChunks(): VectorMetadata[] {
   chunks.push({
     id: `edu-current-${chunkId++}`,
     type: 'education',
-    content: `Current Education: ${digitalTwinData.education.current.degree} at ${digitalTwinData.education.current.university}. Expected graduation: ${digitalTwinData.education.current.expected_graduation}. Courses: ${digitalTwinData.education.current.relevant_coursework.join(', ')}.`,
+    content: `Current Education: ${digitalTwinData.education.current.degree} at ${digitalTwinData.education.current.university}. ${digitalTwinData.education.current.status?.toLowerCase() === 'completed' ? 'Graduated' : 'Expected graduation'}: ${digitalTwinData.education.current.expected_graduation}. Courses: ${digitalTwinData.education.current.relevant_coursework.join(', ')}.`,
     source: 'Education - Current',
   });
 

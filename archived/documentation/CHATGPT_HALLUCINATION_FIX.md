@@ -199,7 +199,7 @@ GET https://douglasmo.vercel.app/api/profile/education
     "university": "Victoria University",
     "degree": "Master of Business Analytics",
     "location": "Brisbane, Australia",
-    "duration": "July 2024 - Present",
+    "duration": "July 2024 - June 2026",
     "expected_graduation": "June 2026",
     "focus": "Bridging business strategy with AI/ML implementation"
   },

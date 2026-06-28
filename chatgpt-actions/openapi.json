@@ -200,7 +200,7 @@
                         },
                         "duration": {
                           "type": "string",
-                          "example": "July 2024 - Present"
+                          "example": "July 2024 - June 2026"
                         },
                         "expected_graduation": {
                           "type": "string",

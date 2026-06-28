@@ -4,6 +4,9 @@ import { Github, Linkedin, Mail, Phone, MapPin, Briefcase, GraduationCap, Code, 
 import digitalTwinData from '@/digitaltwin.json';
 
 export default function Home() {
+  const isCurrentEducationCompleted =
+    digitalTwinData.education.current.status?.toLowerCase() === 'completed';
+
   return (
     <main className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
       {/* Header Navigation */}
@@ -322,8 +325,8 @@ export default function Home() {
               <div className="p-8">
                 <div className="flex items-center gap-3 mb-4">
                   <GraduationCap className="w-8 h-8 text-blue-600" />
-                  <span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-semibold">
-                    In Progress
+                  <span className={`px-3 py-1 rounded-full text-xs font-semibold ${isCurrentEducationCompleted ? 'bg-green-100 text-green-700' : 'bg-blue-100 text-blue-700'}`}>
+                    {isCurrentEducationCompleted ? 'Completed' : 'In Progress'}
                   </span>
                 </div>
                 <h4 className="text-2xl font-bold text-gray-900 mb-2">
@@ -334,7 +337,7 @@ export default function Home() {
                   {digitalTwinData.education.current.location} • {digitalTwinData.education.current.duration}
                 </p>
                 <p className="text-sm text-gray-700 mb-4">
-                  <strong>Expected Graduation:</strong> {digitalTwinData.education.current.expected_graduation}
+                  <strong>{isCurrentEducationCompleted ? 'Graduated:' : 'Expected Graduation:'}</strong> {digitalTwinData.education.current.expected_graduation}
                 </p>
                 
                 <div className="mb-4">

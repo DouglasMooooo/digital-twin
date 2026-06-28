@@ -3,8 +3,8 @@
     "name": "Douglas Mo",
     "title": "Business Analytics Graduate | AI Systems Developer",
     "location": "Brisbane, Australia",
-    "summary": "Analytically-driven professional transitioning from financial accounting to AI/data systems development. Master's student in Business Analytics with hands-on experience building production RAG systems, digital twins, and full-stack AI applications. Combines 2+ years of international accounting experience with cutting-edge AI development skills including vector databases, LLM integration, and cloud deployment.",
-    "elevator_pitch": "I'm Douglas Mo, a Business Analytics graduate student who bridges the gap between business operations and AI technology. With international accounting experience and recent training in AI systems development, I build intelligent solutions that solve real business problems—from RAG-powered chatbots to digital twin frameworks. My unique background helps me understand both the technical implementation and business impact of AI systems.",
+    "summary": "Analytically-driven professional transitioning from financial accounting to AI/data systems development. Business Analytics graduate with hands-on experience building production RAG systems, digital twins, and full-stack AI applications. Combines 2+ years of international accounting experience with cutting-edge AI development skills including vector databases, LLM integration, and cloud deployment.",
+    "elevator_pitch": "I'm Douglas Mo, a Business Analytics graduate who bridges the gap between business operations and AI technology. With international accounting experience and recent training in AI systems development, I build intelligent solutions that solve real business problems—from RAG-powered chatbots to digital twin frameworks. My unique background helps me understand both the technical implementation and business impact of AI systems.",
     "contact": {
       "email": "d157156@gmail.com",
       "phone": "0434 001 262",
@@ -21,7 +21,7 @@
     "relocation_notes": "Open to relocating within Australia for the right opportunity",
     "remote_experience": "Built and deployed cloud-based AI systems remotely during AI Builder Bootcamp",
     "travel_availability": "Available for interstate/international travel up to 30%",
-    "work_authorization": "485 Graduate Visa (Active)  full-time work rights",
+    "work_authorization": "485 Graduate Visa (Active) - full-time work rights",
     "visa_sponsorship": "Will require visa sponsorship post-graduation"
   },
   "experience": [
@@ -287,7 +287,7 @@
         "AI Agent Development - MCP protocol",
         "Digital Twin Framework Design",
         "Prompt Engineering - Optimized for business applications",
-        "Machine Learning for Business - Coursework in progress"
+        "Machine Learning for Business - Completed coursework"
       ],
       "data_tools": [
         "Power BI - Advanced dashboards and visualization",
@@ -346,9 +346,10 @@
         "validation_url": "https://ausbis.com.au"
       },
       {
-        "name": "Master of Business Analytics (In Progress)",
+        "name": "Master of Business Analytics (Completed)",
         "issuer": "Victoria University",
         "expected_completion": "Jun 2026",
+        "completion_date": "June 2026",
         "current_gpa": "Distinction Average",
         "skills": ["Machine Learning", "Data Mining", "Statistical Analysis", "Business Intelligence", "Python Programming"]
       }
@@ -401,9 +402,10 @@
       "university": "Victoria University",
       "degree": "Master of Business Analytics",
       "location": "Brisbane, Australia",
-      "duration": "July 2024 - Present",
+      "duration": "July 2024 - June 2026",
       "expected_graduation": "June 2026",
-      "gpa": "Not yet available (in progress)",
+      "gpa": "Distinction Average",
+      "status": "Completed",
       "relevant_coursework": [
         "Data Analysis - Statistical analysis, data manipulation, and interpretation using Python and R",
         "Project Management - Agile methodologies, project planning, and stakeholder management",
@@ -833,7 +835,7 @@
       {
         "weakness": "International student requiring future visa sponsorship",
         "mitigation": "Transparent about visa situation while emphasizing long-term commitment to Australian career. Full work rights currently and through graduation. Many companies sponsor talented graduates.",
-        "talking_point": "I'm currently on a student visa with full work rights through June 2026 graduation, and would require sponsorship afterward. I'm committed to building my career in Australia long-term and bringing strong ROI through my unique blend of business and technical skills."
+        "talking_point": "I currently hold an active 485 Graduate Visa with full-time work rights and may require sponsorship for long-term residence after the 485 period. I'm committed to building my career in Australia long-term and bringing strong ROI through my unique blend of business and technical skills."
       },
       {
         "weakness": "Career transition from accounting to tech may raise questions about commitment",

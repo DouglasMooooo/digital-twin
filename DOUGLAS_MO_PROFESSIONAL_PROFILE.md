@@ -9,7 +9,7 @@
 
 ## SUMMARY
 
-Finance + AI bridge: 2+ years international accounting ($12M revenue) combined with production-grade AI systems development. Master's in Business Analytics (in progress). Unique blend of financial rigor + technical AI capabilities delivering measurable ROI.
+Finance + AI bridge: 2+ years international accounting ($12M revenue) combined with production-grade AI systems development. Master of Business Analytics (graduated June 2026). Unique blend of financial rigor + technical AI capabilities delivering measurable ROI.
 
 ---
 
@@ -112,8 +112,8 @@ Led 8-person finance team, managed $12M annual revenue
 
 ## AVAILABILITY
 
-- **Current:** International Student Visa (24 hrs/week until Jun 2026)
-- **After Graduation:** 485 Graduate Visa (full-time work, Jul 2026+)
+- **Current:** 485 Graduate Visa (Active, full-time work rights)
+- **Sponsorship:** May require employer sponsorship for long-term residence after 485 period
 - **Salary:** $65K-80K (graduate), $80K-95K (mid-level)
 - **Locations:** Brisbane, Melbourne, Sydney, Remote, Hybrid
 

@@ -141,7 +141,7 @@ Analytically-driven professional transitioning from financial accounting to AI/d
 ## EDUCATION
 
 ### Master of Business Analytics | Victoria University
-**July 2024 - Present (Expected Graduation: June 2026) | Brisbane, Australia**
+**July 2024 - June 2026 (Graduated June 2026) | Brisbane, Australia**
 
 **Relevant Coursework:**
 - Artificial Intelligence and Machine Learning for Business
@@ -251,7 +251,7 @@ Analytically-driven professional transitioning from financial accounting to AI/d
 
 ## ADDITIONAL INFORMATION
 
-- **Work Authorization:** International Student Visa (full work rights upon graduation June 2026, will require sponsorship post-graduation)
+- **Work Authorization:** 485 Graduate Visa (Active, full-time work rights; may require sponsorship long-term)
 - **Location Preferences:** Brisbane, Melbourne, Sydney, Remote, Hybrid (open to relocating within Australia)
 - **Salary Expectations:** $65,000 - $80,000 AUD for graduate roles, $80,000 - $95,000 AUD for mid-level AI/Data roles
 - **Languages:** English (Fluent), Mandarin Chinese (Native)
